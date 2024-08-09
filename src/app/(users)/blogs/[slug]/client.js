@@ -1,26 +1,31 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
-import api from '@/src/utils/api';
-import BlogDetails from '@/src/components/Blog/BlogDetails';
-import RenderMdx from '@/src/components/Blog/RenderMdx';
-import Tag from '@/src/components/Elements/Tag';
-import siteMetadata from '@/src/utils/siteMetaData';
-import Image from 'next/image';
-import { slug as slugify } from 'github-slugger';
-import { modifyDropboxUrl } from '@/src/utils/modifyDropboxUrl';
-import SuggestionList from '@/src/components/Doctors/DoctorSuggestionList';
-import { format, isValid } from 'date-fns';
-import { checkSession } from '@/src/utils/auth';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Head from "next/head";
+import api from "@/src/utils/api";
+import BlogDetails from "@/src/components/Blog/BlogDetails";
+import RenderMdx from "@/src/components/Blog/RenderMdx";
+import Tag from "@/src/components/ELements/Tag";
+import siteMetadata from "@/src/utils/siteMetaData";
+import Image from "next/image";
+import { slug as slugify } from "github-slugger";
+import { modifyDropboxUrl } from "@/src/utils/modifyDropboxUrl";
+import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
+import { format, isValid } from "date-fns";
+import { checkSession } from "@/src/utils/auth";
 
 const BlogLayoutThree = ({ blog }) => {
   const date = new Date(blog.publishedAt);
-  const formattedDate = isValid(date) ? format(date, 'MMMM dd, yyyy') : 'Invalid date';
+  const formattedDate = isValid(date)
+    ? format(date, "MMMM dd, yyyy")
+    : "Invalid date";
 
   return (
-    <Link href={`/blogs/${blog.id}`} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg p-3 h-full">
+    <Link
+      href={`/blogs/${blog.id}`}
+      className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg p-3 h-full"
+    >
       <div className="relative h-56 w-full rounded-xl overflow-hidden">
         {blog.imageUrl ? (
           <Image
@@ -50,7 +55,10 @@ const BlogLayoutThree = ({ blog }) => {
             </span>
             <div className="flex">
               {blog.tags.map((tag, index) => (
-                <span key={index} className="text-primary text-sm tajawal-medium">
+                <span
+                  key={index}
+                  className="text-primary text-sm tajawal-medium"
+                >
                   {tag.name}
                 </span>
               ))}
@@ -80,10 +88,16 @@ const BlogPageClient = ({ initialBlog }) => {
   useEffect(() => {
     const fetchRelatedBlogs = async () => {
       try {
-        const response = await api.get('/Post');
+        const response = await api.get("/Post");
         const allBlogs = response.data.items;
 
-        const otherBlogs = allBlogs.filter(item => item.id !== blog.id && item.tags.some(tag => blog.tags.map(t => t.id).includes(tag.id)));
+        const otherBlogs = allBlogs.filter(
+          (item) =>
+            item.id !== blog.id &&
+            item.tags.some((tag) =>
+              blog.tags.map((t) => t.id).includes(tag.id),
+            ),
+        );
 
         const related = otherBlogs.slice(0, 3);
         setRelatedBlogs(related);
@@ -101,8 +115,7 @@ const BlogPageClient = ({ initialBlog }) => {
   if (isLoading) {
     return (
       <div className="flex justify-center bg-neutral-300 items-center tajawal-bold text-5xl">
-        <div className="w-[70%] h-[500px] bg-neutral-300 flex justify-center items-center">
-        </div>
+        <div className="w-[70%] h-[500px] bg-neutral-300 flex justify-center items-center"></div>
       </div>
     );
   }
@@ -117,16 +130,18 @@ const BlogPageClient = ({ initialBlog }) => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    "headline": title,
-    "description": content,
-    "image": [modifiedImageUrl],
-    "datePublished": new Date(blog.createdAt).toISOString(),
-    "dateModified": new Date(blog.updatedAt || blog.createdAt).toISOString(),
-    "author": [{
-      "@type": "Person",
-      "name": siteMetadata.author,
-      "url": siteMetadata.twitter,
-    }]
+    headline: title,
+    description: content,
+    image: [modifiedImageUrl],
+    datePublished: new Date(blog.createdAt).toISOString(),
+    dateModified: new Date(blog.updatedAt || blog.createdAt).toISOString(),
+    author: [
+      {
+        "@type": "Person",
+        name: siteMetadata.author,
+        url: siteMetadata.twitter,
+      },
+    ],
   };
 
   return (
@@ -137,7 +152,10 @@ const BlogPageClient = ({ initialBlog }) => {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={title} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : ''} />
+        <meta
+          property="og:url"
+          content={typeof window !== "undefined" ? window.location.href : ""}
+        />
       </Head>
       <script
         type="application/ld+json"
@@ -175,7 +193,9 @@ const BlogPageClient = ({ initialBlog }) => {
               <RenderMdx content={content} preview={!isLoggedIn} />
               {!isLoggedIn && (
                 <div className="mt-8 mb-10 p-8 rounded-lg shadow-2xl bg-white">
-                  <p className="text-center tajawal-regular text-black mb-4">يرجى تسجيل الدخول لعرض المحتوى الكامل. التسجيل مجاني!</p>
+                  <p className="text-center tajawal-regular text-black mb-4">
+                    يرجى تسجيل الدخول لعرض المحتوى الكامل. التسجيل مجاني!
+                  </p>
                   <Link href="/login">
                     <div className="rounded bg-primary tajawal-bold text-white px-4 py-2 cursor-pointer text-center">
                       تسجيل الدخول

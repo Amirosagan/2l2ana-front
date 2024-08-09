@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Tag from "../Elements/Tag";
+import Tag from "@/src/components/ELements/Tag";
 import YouTube from "react-youtube";
 import { format, isValid } from "date-fns";
 
@@ -17,10 +17,12 @@ const VideoLayoutOne = ({ video }) => {
     return <div>Invalid video data</div>;
   }
 
-  const nonFeaturedTags = video.tags.filter(tag => tag.name !== "featured");
+  const nonFeaturedTags = video.tags.filter((tag) => tag.name !== "featured");
 
   const date = new Date(video.lastUpdate);
-  const formattedDate = isValid(date) ? format(date, "MMMM dd, yyyy") : "Invalid date";
+  const formattedDate = isValid(date)
+    ? format(date, "MMMM dd, yyyy")
+    : "Invalid date";
 
   return (
     <Link href={`/videos/${video.id}`} legacyBehavior>
@@ -48,9 +50,15 @@ const VideoLayoutOne = ({ video }) => {
         <div className="absolute inset-0 flex flex-col justify-between p-4 text-white h-full">
           <div className="flex justify-between items-start">
             <div className="flex flex-wrap">
-              {nonFeaturedTags.length > 0 && nonFeaturedTags.map(tag => (
-                <Tag key={tag.id} link={`/categories/${tag.name}`} name={tag.name} className="px-2 py-1 text-xs w-fit sm:text-sm border border-white mr-1 mb-1" />
-              ))}
+              {nonFeaturedTags.length > 0 &&
+                nonFeaturedTags.map((tag) => (
+                  <Tag
+                    key={tag.id}
+                    link={`/categories/${tag.name}`}
+                    name={tag.name}
+                    className="px-2 py-1 text-xs w-fit sm:text-sm border border-white mr-1 mb-1"
+                  />
+                ))}
             </div>
             <span className="capitalize text-white font-semibold text-sm">
               {formattedDate}

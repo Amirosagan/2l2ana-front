@@ -2,10 +2,12 @@ import { format, isValid } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Tag from "../Elements/Tag";
+import Tag from "@/src/components/ELements/Tag";
 
 const BlogLayoutOne = ({ blog }) => {
-  const formattedDate = blog.createdAt ? format(new Date(blog.createdAt), "MMMM dd, yyyy") : "Unknown Date";
+  const formattedDate = blog.createdAt
+    ? format(new Date(blog.createdAt), "MMMM dd, yyyy")
+    : "Unknown Date";
   const blogUrl = blog.url || "/";
 
   return (
@@ -31,9 +33,16 @@ const BlogLayoutOne = ({ blog }) => {
         <div className="absolute inset-0 flex flex-col justify-between p-4 text-white h-full">
           <div className="flex justify-between items-start">
             <div className="flex flex-wrap">
-              {blog.tags && blog.tags.length > 0 && blog.tags.map(tag => (
-                <Tag key={tag.id} link={`/categories/${tag.name}`} name={tag.name} className="px-2 py-1 text-xs w-fit sm:text-sm border border-white mr-1 mb-1" />
-              ))}
+              {blog.tags &&
+                blog.tags.length > 0 &&
+                blog.tags.map((tag) => (
+                  <Tag
+                    key={tag.id}
+                    link={`/categories/${tag.name}`}
+                    name={tag.name}
+                    className="px-2 py-1 text-xs w-fit sm:text-sm border border-white mr-1 mb-1"
+                  />
+                ))}
             </div>
             <span className="capitalize text-gray-200 font-semibold text-sm">
               {formattedDate}
