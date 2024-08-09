@@ -2,26 +2,348 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.container1 {
+    width: 83%;
+    margin: 0 auto;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    background-color: #eae6e6;
+    font-family: 'Tajwal', sans-serif;
+}
+
+  .tajawal-extralight {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .tajawal-light {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .tajawal-regular {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .tajawal-medium , p {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .tajawal-bold , h1 ,button ,.button {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .tajawal-extrabold {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .tajawal-black {
+    font-family: "Tajawal", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  #headerr {
+    transition: top 0.3s ease-in-out;
+  }
+  
+  .top-0 {
+    top: 0;
+  }
+  
+  .top-8 {
+    top: 2rem; 
+  }
+  
+
+
+.lhover:hover {
+  background-color: rgb(8 74 75);
+}
+
+.active {
+  background-color: rgb(8 74 75);
+}
+
+
+buttonm:disabled{
+  cursor: not-allowed;
+  background-color: #797979 !important;
+}
+
+.form1 input , .form1 textarea, .form1 select {
+padding:20px;
+background-color: transparent;
+color:white;
+border-radius: 5px;
+margin-bottom: 30px;
+border: 2px solid rgb(177, 177, 177);
+
+
+}
+.form1 input , .form1 select {
+  width: 45%;
+  height: 10px;
+}
+.form2 input , .form2 textarea, .form2 select {
+  padding:15px;
+  background-color: transparent;
+  color:black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 2px solid rgb(177, 177, 177);
+  
+  
+  }
+  .form2 label {
+    color: rgb(21 99 101);
+    font-weight: bold;
+  
+  }
+  .cont3 {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .form3 {
+background-color: white;
+padding: 50px;
+width: 500px;
+height: 500px;
+display: flex;
+flex-direction: column;
+gap: 30px;
+justify-content: center;
+border-radius: 10px;
+align-items: center;
+  }
+  .form3 input { 
+    padding: 30px;
+    border: 2px solid teal;
+    border-radius: 5px;
+    color: black;
+    width: 100%;
+  }
+  .form3 button {
+    padding: 30px;
+    background-color: teal;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    font-weight: bold;
+    width: 100%;
+  }
+  .form3 h1 {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+ .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border: #797979 solid 1px;
+
+
+ }
+ .form-group input {
+  border: solid rgb(1, 1, 123) 1px;
+border-radius: 10px;
+width: 100%;
+ }
+
+ .aref-ruqaa-regular {
+  font-family: "Aref Ruqaa", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.aref-ruqaa-bold {
+  font-family: "Aref Ruqaa", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.tag-button {
+  margin: 0 5px;
+  background-color: #dbdbdb;
+}
+
+.tag-button.selected {
+  background-color: #000;
+  color: #fff;
+}
+
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #d21414; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.youtube-video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.youtube-video {
+  width: 100%;
+  height: 100%;
+}
+
+
+.small-youtube-video {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-quill .ql-editor {
+  direction: rtl;
+  text-align: right;
+  font-size: 1.2rem; /* Increase the base font size */
+}
+
+.custom-quill .ql-editor h1,
+.custom-quill .ql-editor h2,
+.custom-quill .ql-editor h3,
+.custom-quill .ql-editor h4,
+.custom-quill .ql-editor h5,
+.custom-quill .ql-editor h6 {
+  position: relative;
+  padding-bottom: 1rem; /* Space between heading and line */
+  font-size: 1.5rem; /* Increase heading font size */
+  color: rgb(39, 126, 133);
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor h1,
+.custom-quill .ql-editor h2 {
+  margin-top: 1rem;
+
+}
+.custom-quill .ql-editor h1{
+  font-family: "Tajawal", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor h1::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px; /* Thickness of the line */
+  background-color: rgb(218, 218, 218); /* Color of the line */
+
+}
+
+.custom-quill .ql-editor p {
+  line-height: 1.6; /* Increase line height for readability */
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor .prose-blockquote {
+  background: var(--accent-bg, rgba(255, 255, 255, 0.2));
+  padding: 2rem;
+  padding-right: 6rem; /* Adjust padding for RTL */
+  border-right: 4px solid var(--accent-border, #ffcc00); /* Adjust border for RTL */
+  font-style: normal;
+  border-radius: 1rem 0 0 1rem; /* Adjust border radius for RTL */
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor ul {
+  padding-right: 2rem; /* Adjust padding for RTL */
+  list-style: none;
+
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor ol {
+  padding-right: 2rem; /* Adjust padding for RTL */
+
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor li {
+  position: relative;
+  padding-right: 1.5em; /* Adjust padding for RTL */
+  margin-bottom: 0.5rem; /* Add margin between list items */
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor ul li::before {
+  content: "\2022"; /* Unicode for bullet point */
+  color: rgb(94 193 198); /* Change bullet color to blue */
+  position: absolute;
+  right: 0; /* Adjust position for RTL */
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.custom-quill .ql-editor ol li {
+  counter-increment: list-counter;
+}
+
+.custom-quill .ql-editor ol li::before {
+  content: counter(list-counter) ". ";
+  color: rgb(94 193 198); /* Change number color to blue */
+  position: absolute;
+  right: 0; /* Adjust position for RTL */
+  font-family: "Tajawal", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+select, input {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
+
+
+.rtl {
+  direction: rtl;
+  text-align: right;
 }

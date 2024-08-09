@@ -1,0 +1,53 @@
+import { format, isValid } from "date-fns";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
+const BlogLayoutThree = ({ blog }) => {
+  const date = new Date(blog.publishedAt);
+  const formattedDate = isValid(date) ? format(date, "MMMM dd, yyyy") : "Invalid date";
+
+  return (
+    <Link href={`${blog.url}`} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg p-3 h-full">
+      <div className="relative h-32 md:h-56 w-full rounded-xl overflow-hidden">
+        {blog.image.filePath ? (
+          <Image
+            src={blog.image.filePath}
+            alt={blog.title}
+            width={700}
+            height={540}
+            className="aspect-[4/3] w-full h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        ) : (
+          <div className="w-full h-full flex justify-center items-center bg-gray-200">
+            No Image Available
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col w-full mt-2 flex-grow">
+        <h2 className="font-semibold capitalize text-base sm:text-lg line-clamp-2">
+          <span className="bg-gradient-to-r from-primary/50 to-primary/50 text-black bg-[length:0px_6px] group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500">
+            {blog.title}
+          </span>
+        </h2>
+        <div className="flex flex-col justify-end mt-2 flex-grow">
+          <div className="flex flex-row justify-between items-center mt-2">
+            <span className="capitalize text-gray-500 font-semibold text-sm sm:text-base">
+              {formattedDate}
+            </span>
+            <div className="flex">
+              {blog.tags.map((tag, index) => (
+                <span key={index} className="text-primary text-sm tajawal-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default BlogLayoutThree;
