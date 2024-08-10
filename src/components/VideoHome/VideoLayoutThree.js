@@ -49,7 +49,7 @@ const VideoLayoutThree = ({ video }) => {
         </h2>
         <div className="flex flex-col justify-end flex-grow">
           <div className="flex flex-row justify-between items-center mt-1 md:mt-2">
-            <span className="capitalize text-gray dark:text-light/50 font-semibold text-sm sm:text-base">
+            <span className="capitalize text-gray  font-semibold text-sm sm:text-base">
               {formattedDate}
             </span>
             <div className="flex">

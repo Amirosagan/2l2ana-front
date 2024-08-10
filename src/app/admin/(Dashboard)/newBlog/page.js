@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import Image from "next/image";
 import * as z from "zod";
@@ -21,6 +21,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import api from "@/src/utils/api";
 import withAuth from "@/src/utils/withAuth";
+
+// Dynamically import ReactQuill with SSR disabled
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const formSchema = z.object({
   title: z.string().min(10, "Title must be at least 10 characters"),
@@ -44,7 +47,7 @@ const NewBlog = ({ token }) => {
         });
         if (response.data && Array.isArray(response.data.tags)) {
           const filteredTags = response.data.tags.filter(
-            (tag) => tag.name !== "featured",
+            (tag) => tag.name !== "featured"
           );
           setAvailableTags(filteredTags);
         } else {
@@ -107,7 +110,7 @@ const NewBlog = ({ token }) => {
           { name: newTag },
           {
             headers: { Authorization: `Bearer ${token}` },
-          },
+          }
         );
         const addedTag = { id: response.data.id, name: newTag };
         setAvailableTags([...availableTags, addedTag]);
@@ -242,7 +245,7 @@ const NewBlog = ({ token }) => {
                   className="bg-transparent text-blue-800"
                   onClick={() => {
                     handleAddTag(field.value);
-                    field.onChange("");
+                    field.onChange(""); // Clear the input after adding the tag
                   }}
                 >
                   Add Tag
