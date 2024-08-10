@@ -11,16 +11,16 @@ const SearchComponent = ({
   setSearchText,
   isFeatured,
   setIsFeatured,
-  handleSearch
+  handleSearch,
 }) => {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/Tags")
+      .get("https://api.2l2ana.com/api/Tags")
       .then((response) => {
         const filteredTags = response.data.tags.filter(
-          (tag) => tag.name !== "featured"
+          (tag) => tag.name !== "featured",
         );
         setTags([{ id: 0, name: "الكل" }, ...filteredTags]);
       })
@@ -29,10 +29,10 @@ const SearchComponent = ({
       });
   }, []);
 
-  const tagOptions = tags.map(tag => ({ value: tag.id, label: tag.name }));
+  const tagOptions = tags.map((tag) => ({ value: tag.id, label: tag.name }));
   const optionOptions = [
     { value: "فيديوهات", label: "فيديوهات" },
-    { value: "مقالات", label: "مقالات" }
+    { value: "مقالات", label: "مقالات" },
   ];
 
   return (
@@ -44,7 +44,11 @@ const SearchComponent = ({
         <input
           type="text"
           id="search"
-          placeholder={selectedOption === "فيديوهات" ? "دور علي اسم الفيديو" : "دور علي اسم المقال"}
+          placeholder={
+            selectedOption === "فيديوهات"
+              ? "دور علي اسم الفيديو"
+              : "دور علي اسم المقال"
+          }
           className="w-full tajawal-bold px-2 py-2 text-right bg-white text-black border-none outline-none mb-4 rounded"
           style={{ direction: "rtl" }}
           value={searchText}
@@ -56,10 +60,12 @@ const SearchComponent = ({
         <label className="mb-2 tajawal-bold text-white">النوع:</label>
         <Select
           options={optionOptions}
-          value={optionOptions.find(option => option.value === selectedOption)}
+          value={optionOptions.find(
+            (option) => option.value === selectedOption,
+          )}
           onChange={(selected) => setSelectedOption(selected.value)}
           className="tajawal-bold text-black border-none outline-none cursor-pointer w-full rounded"
-          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+          styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
         />
       </div>
 
@@ -67,10 +73,10 @@ const SearchComponent = ({
         <label className="mb-2 tajawal-bold text-white">التخصص:</label>
         <Select
           options={tagOptions}
-          value={tagOptions.find(tag => tag.value === selectedTag)}
+          value={tagOptions.find((tag) => tag.value === selectedTag)}
           onChange={(selected) => setSelectedTag(selected.value)}
           className="tajawal-bold text-black border-none outline-none cursor-pointer w-full rounded"
-          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+          styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
         />
       </div>
 

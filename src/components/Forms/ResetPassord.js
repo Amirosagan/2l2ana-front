@@ -9,13 +9,15 @@ import { TextField, Button, Box } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const formSchema = z.object({
-  newPassword: z.string().min(6, "كلمة السر يجب أن تكون على الأقل 6 أحرف"),
-  confirmPassword: z.string().min(6, "يجب تأكيد كلمة السر")
-}).refine(data => data.newPassword === data.confirmPassword, {
-  message: "كلمة السر غير متطابقة",
-  path: ["confirmPassword"],
-});
+const formSchema = z
+  .object({
+    newPassword: z.string().min(6, "كلمة السر يجب أن تكون على الأقل 6 أحرف"),
+    confirmPassword: z.string().min(6, "يجب تأكيد كلمة السر"),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "كلمة السر غير متطابقة",
+    path: ["confirmPassword"],
+  });
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -36,7 +38,7 @@ const ResetPassword = () => {
     let tokenParam = decodeURIComponent(searchParams.get("token") || "");
 
     // Replace spaces with '+' in the token
-    tokenParam = tokenParam.replace(/ /g, '+');
+    tokenParam = tokenParam.replace(/ /g, "+");
 
     if (emailParam && tokenParam) {
       setEmail(emailParam);
@@ -51,13 +53,16 @@ const ResetPassword = () => {
     console.log("Request Body:", requestBody);
 
     try {
-      const response = await fetch("http://localhost:8080/api/Auth/ResetPassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://api.2l2ana.com/api/Auth/ResetPassword",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
         },
-        body: JSON.stringify(requestBody),
-      });
+      );
 
       const responseData = await response.json();
       console.log("Response Status:", response.status);
@@ -78,7 +83,11 @@ const ResetPassword = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full h-full">
       <h1 className="tajawal-bold text-lg">إعادة تعيين كلمة السر</h1>
-      <Box component="form" onSubmit={form.handleSubmit(handleSubmit)} sx={{ mt: 2, width: '100%', maxWidth: 400 }}>
+      <Box
+        component="form"
+        onSubmit={form.handleSubmit(handleSubmit)}
+        sx={{ mt: 2, width: "100%", maxWidth: 400 }}
+      >
         <TextField
           label="البريد الإلكتروني"
           value={email}

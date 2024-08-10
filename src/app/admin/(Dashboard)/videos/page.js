@@ -5,7 +5,14 @@ import AdminPage from "@/src/components/admin/getId/AdminPage";
 
 const VideoPage = () => {
   const headers = ["Title", "Tags", "ID", "Created At", "Action"];
-  return <AdminPage type="videos" apiUrl="http://localhost:8080/api/Youtube" addNewLink="/admin/newVideo" headers={headers} />;
+  return (
+    <AdminPage
+      type="videos"
+      apiUrl="https://api.2l2ana.com/api/Youtube"
+      addNewLink="/admin/newVideo"
+      headers={headers}
+    />
+  );
 };
 
 export default VideoPage;

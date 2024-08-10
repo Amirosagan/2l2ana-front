@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Image from 'next/image';
+import Image from "next/image";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ToastContainer, toast } from "react-toastify";
@@ -30,7 +30,7 @@ const formSchema = z.object({
   featured: z.boolean().optional(),
 });
 
-const NewBlog = ({ token }) => { 
+const NewBlog = ({ token }) => {
   const [availableTags, setAvailableTags] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
@@ -40,10 +40,12 @@ const NewBlog = ({ token }) => {
     const fetchTags = async () => {
       try {
         const response = await api.get("/Tags", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && Array.isArray(response.data.tags)) {
-          const filteredTags = response.data.tags.filter(tag => tag.name !== "featured");
+          const filteredTags = response.data.tags.filter(
+            (tag) => tag.name !== "featured",
+          );
           setAvailableTags(filteredTags);
         } else {
           setAvailableTags([]);
@@ -65,7 +67,7 @@ const NewBlog = ({ token }) => {
       Tags: undefined,
       newTag: "",
       featured: false,
-    }
+    },
   });
 
   const onSubmit = async (data) => {
@@ -84,7 +86,7 @@ const NewBlog = ({ token }) => {
 
     try {
       await api.post("/Post/add", requestData, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Form submitted successfully");
       form.reset();
@@ -100,9 +102,13 @@ const NewBlog = ({ token }) => {
   const handleAddTag = async (newTag) => {
     if (newTag && !availableTags.find((tag) => tag.name === newTag)) {
       try {
-        const response = await api.post("/Tags/create", { name: newTag }, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.post(
+          "/Tags/create",
+          { name: newTag },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         const addedTag = { id: response.data.id, name: newTag };
         setAvailableTags([...availableTags, addedTag]);
         form.setValue("Tags", response.data.id);
@@ -123,7 +129,7 @@ const NewBlog = ({ token }) => {
         const uploadResponse = await api.post("/Upload", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
         });
         const imageUrl = uploadResponse.data.fileUrl;
@@ -141,7 +147,10 @@ const NewBlog = ({ token }) => {
     <div>
       <ToastContainer />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 w-[70%] mt-20 p-5 m-auto">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 w-[70%] mt-20 p-5 m-auto"
+        >
           <FormField
             control={form.control}
             name="title"
@@ -205,7 +214,9 @@ const NewBlog = ({ token }) => {
                     onChange={(e) => field.onChange(Number(e.target.value))}
                     value={field.value || ""}
                   >
-                    <option value="" disabled>Select a tag</option>
+                    <option value="" disabled>
+                      Select a tag
+                    </option>
                     {availableTags.map((tag) => (
                       <option key={tag.id} value={tag.id}>
                         {tag.name}
@@ -247,11 +258,7 @@ const NewBlog = ({ token }) => {
               <FormItem>
                 <FormControl>
                   <label className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      {...field}
-                      checked={field.value}
-                    />
+                    <input type="checkbox" {...field} checked={field.value} />
                     <span>Featured</span>
                   </label>
                 </FormControl>
@@ -269,7 +276,11 @@ const NewBlog = ({ token }) => {
               />
             </div>
           )}
-          <Button type="submit" className="w-full bg-black text-white font-bold" disabled={!imageUrl}>
+          <Button
+            type="submit"
+            className="w-full bg-black text-white font-bold"
+            disabled={!imageUrl}
+          >
             Submit
           </Button>
         </form>

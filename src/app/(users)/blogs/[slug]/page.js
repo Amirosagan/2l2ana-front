@@ -1,21 +1,19 @@
 import BlogPageClient from "./client";
-import api from "@/src/utils/api";
-
-export async function generateStaticParams() {
-  const res = await api.get("/Post");
-  const data = res.data.items;
-
-  return data.map((blog) => ({
-    slug: blog.id,
-  }));
-}
+// import api from "@/src/utils/api";
 
 export async function generateMetadata({ params }) {
   const { slug } = params;
 
   try {
-    const res = await api.get(`/Post/${slug}`);
-    const blog = res.data;
+    const responseSerilezed = await fetch(
+      `https://api.2l2ana.com/api/Post/${slug}`,
+      {
+        cache: "no-cache",
+      },
+    );
+    const res = await responseSerilezed.json();
+    const blog = res;
+    console.log(blog);
 
     return {
       title: `${blog.title} | قلقانة`,
@@ -49,20 +47,27 @@ export async function generateMetadata({ params }) {
 
 const BlogPage = async ({ params }) => {
   const { slug } = params;
+  const responseSerilezed = await fetch(
+    `https://api.2l2ana.com/api/Post/${slug}`,
+    {
+      cache: "no-cache",
+    },
+  );
 
-  try {
-    const response = await api.get(`/Post/${slug}`);
-    const blog = response.data;
+  const response = await responseSerilezed.json();
+  const blog = response;
+  // console.log(response);
 
-    return (
-      <div>
-        <BlogPageClient initialBlog={blog} />
-      </div>
-    );
-  } catch (error) {
-    console.error("Error fetching blog data:", error);
-    return <div>Error fetching blog data</div>;
+  if (!blog) {
+    return <div>Blog not found</div>;
   }
+  return (
+    <div>
+      <BlogPageClient initialBlog={blog} />
+    </div>
+  );
+  // console.error("Error fetching blog data:", error);
+  // return <div>Error fetching blog data</div>;
 };
 
 export default BlogPage;

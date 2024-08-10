@@ -5,7 +5,13 @@ import AdminPage from "@/src/components/admin/getId/AdminPage";
 
 const UserPage = () => {
   const headers = ["Name", "Email", "ID", "Phone Number", "Action"];
-  return <AdminPage type="users" apiUrl="http://localhost:8080/api/User"  headers={headers} />;
+  return (
+    <AdminPage
+      type="users"
+      apiUrl="https://api.2l2ana.com/api/User"
+      headers={headers}
+    />
+  );
 };
 
 export default UserPage;
