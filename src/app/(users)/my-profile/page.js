@@ -1,4 +1,6 @@
-import MyProfileClient from "./client";
+import dynamic from "next/dynamic";
+
+const MyProfileClient = dynamic(() => import("./client"), { ssr: false });
 
 export async function generateMetadata() {
   return {
