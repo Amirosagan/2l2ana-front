@@ -74,7 +74,7 @@ const CoverSection = () => {
   return (
     <div className="w-full">
       <h1
-        className="text-3xl mx-4 mb-5 md:hidden"
+        className="text-3xl mx-4 mb-5 mt-2 md:hidden"
         style={{ color: "rgb(92, 194, 198)" }}
       >
         {" "}

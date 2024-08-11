@@ -57,23 +57,41 @@ export default function BookAppointment({ doctorId }) {
     const [bookingSuccess, setBookingSuccess] = useState(false);
     const [meetingUrl, setMeetingUrl] = useState("");
     const [isFreeConsultation, setIsFreeConsultation] = useState(false);
+    const [bookingTrigger, setBookingTrigger] = useState(0);
+    const [session, setSession] = useState(null);
 
     const nextWeekDays = getNextWeekDays();
 
     useEffect(() => {
+        async function initializeSession() {
+            const sessionData = await checkSession();
+            if (sessionData) {
+                setSession(sessionData.session);
+            }
+        }
+
+        initializeSession();
+
         if (doctorId) {
             fetchDoctorData(doctorId);
             fetchNotAvailableConsultations(doctorId);
         }
     }, [doctorId]);
 
+    useEffect(() => {
+        if (bookingTrigger > 0) {
+            fetchNotAvailableConsultations(doctorId);
+        }
+    }, [bookingTrigger]);
+
     const fetchDoctorData = async (id) => {
         try {
-            const { session, token } = await checkSession();
-            if (!session || !token) {
+            const sessionData = await checkSession();
+            if (!sessionData || !sessionData.session) {
                 return;
             }
 
+            const { token } = sessionData;
             const response = await api.get(`/Doctor/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -94,9 +112,20 @@ export default function BookAppointment({ doctorId }) {
             setTimeSlot(timeList);
             setAvailableDays(validDays);
 
-            const nextValidDay = getNextAvailableDay(validDays, timeList);
-            if (nextValidDay) {
-                setSelectedDay(nextValidDay.value);
+            const firstAvailableDay = nextWeekDays.find(day => {
+                if (!validDays.some(validDay => validDay.value === day.value)) {
+                    return false;
+                }
+                const date = day.date;
+                const hasAvailableTime = timeList.some(time => 
+                    !isPastTime(date, time.time) && 
+                    !isTimeUnavailable(date, time.time)
+                );
+                return hasAvailableTime;
+            });
+
+            if (firstAvailableDay) {
+                setSelectedDay(firstAvailableDay.value);
             }
         } catch (error) {
             console.error('Error fetching doctor data:', error);
@@ -105,11 +134,12 @@ export default function BookAppointment({ doctorId }) {
 
     const fetchNotAvailableConsultations = async (id) => {
         try {
-            const { session, token } = await checkSession();
-            if (!session || !token) {
+            const sessionData = await checkSession();
+            if (!sessionData || !sessionData.session) {
                 return;
             }
 
+            const { token } = sessionData;
             const response = await api.get(`/Consultation/GetNotAvailableConsultationsForDoctor`, {
                 params: { DoctorId: id },
                 headers: { Authorization: `Bearer ${token}` }
@@ -119,16 +149,6 @@ export default function BookAppointment({ doctorId }) {
         } catch (error) {
             console.error('Error fetching not available consultations:', error);
         }
-    };
-
-    const getNextAvailableDay = (validDays, timeList) => {
-        for (let day of validDays) {
-            const date = nextWeekDays.find(d => d.value === day.value)?.date;
-            if (date && timeList.some(time => !isPastTime(date, time.time) && !isTimeUnavailable(date, time.time))) {
-                return day;
-            }
-        }
-        return null;
     };
 
     const isPastTime = (selectedDate, time) => {
@@ -173,8 +193,8 @@ export default function BookAppointment({ doctorId }) {
     };
 
     const handleBooking = async (isFree) => {
-        const { session, token } = await checkSession();
-        if (!session || !token) {
+        const sessionData = await checkSession();
+        if (!sessionData || !sessionData.session) {
             return;
         }
 
@@ -190,6 +210,7 @@ export default function BookAppointment({ doctorId }) {
 
             const formattedDateTime = formatDateTime(selectedDateTime);
 
+            const { token } = sessionData;
             const response = await api.post("/Consultation", {
                 doctorId: doctorId,
                 dateTime: formattedDateTime,
@@ -212,6 +233,8 @@ export default function BookAppointment({ doctorId }) {
                         window.open(paymentLink, '_blank');
                     }
                 }
+
+                setBookingTrigger(prev => prev + 1);
             }
         } catch (error) {
             console.error('Error booking appointment:', error);
@@ -225,76 +248,88 @@ export default function BookAppointment({ doctorId }) {
                     setOpen(true);
                     setStep(1);
                     setBookingSuccess(false);
+                    setSelectedTimeSlot(null); // Reset selected time slot when opening the dialog
                 }}
                 className='tajawal-bold bg-accent py-3 px-10 text-white rounded-md hover:bg-accent/90'
             >
                 احجز معاد
             </button>
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
-                <DialogTitle>Book Appointment</DialogTitle>
+                <DialogTitle>احجز ميعاد</DialogTitle>
                 <DialogContent style={{ minHeight: '400px' }}>
                     {step === 1 && (
                         <>
-                            {availableDays.length > 0 && timeSlot.length > 0 ? (
-                                <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-5">
-                                    <div className="flex flex-col gap-3 items-baseline">
-                                        <h2 className="flex gap-2 items-center">
-                                            <CalendarDays /> Select Day
-                                        </h2>
-                                        <FormControl fullWidth>
-                                            <InputLabel id="day-select-label">اختر اليوم</InputLabel>
-                                            <Select
-                                                labelId="day-select-label"
-                                                value={selectedDay || ""}
-                                                onChange={(event) => setSelectedDay(event.target.value)}
-                                            >
-                                                {nextWeekDays
-                                                    .filter(day => availableDays.some(ad => ad.value === day.value))
-                                                    .filter(day => {
-                                                        const date = nextWeekDays.find(d => d.value === day.value)?.date;
-                                                        return date && timeSlot.some(time => !isPastTime(date, time.time) && !isTimeUnavailable(date, time.time));
-                                                    })
-                                                    .map(day => (
-                                                        <MenuItem key={day.value} value={day.value}>
-                                                            {day.label} - {day.date.toLocaleDateString()}
-                                                        </MenuItem>
-                                                    ))}
-                                            </Select>
-                                        </FormControl>
-                                    </div>
-                                    <div>
-                                        <h2 className="flex gap-2 items-center mb-3">
-                                            <Clock /> Select Time Slot
-                                        </h2>
-                                        <div className="grid grid-cols-3 gap-2">
-                                            {timeSlot.map((item, index) => (
-                                                <Button
-                                                    key={index}
-                                                    variant={item.time === selectedTimeSlot ? "contained" : "outlined"}
-                                                    onClick={() => setSelectedTimeSlot(item.time)}
-                                                    className={`${
-                                                        item.time === selectedTimeSlot
-                                                            ? 'bg-accent text-white'
-                                                            : 'bg-white text-black'
-                                                    }`}
-                                                    disabled={
-                                                        !nextWeekDays.find(day => day.value === selectedDay) ||
-                                                        isPastTime(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time) ||
-                                                        isTimeUnavailable(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time)
-                                                    }
+                            {session ? (
+                                availableDays.length > 0 && timeSlot.length > 0 ? (
+                                    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-5">
+                                        <div className="flex flex-col gap-3 items-baseline">
+                                            <h2 className="flex gap-2 items-center">
+                                                <CalendarDays /> اختر اليوم
+                                            </h2>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="day-select-label">اختر اليوم</InputLabel>
+                                                <Select
+                                                    labelId="day-select-label"
+                                                    value={selectedDay !== null ? selectedDay : ''}
+                                                    onChange={(event) => setSelectedDay(event.target.value)}
                                                 >
-                                                    {formatTime(item.time)}
-                                                </Button>
-                                            ))}
+                                                    {nextWeekDays
+                                                        .filter(day => availableDays.some(ad => ad.value === day.value))
+                                                        .filter(day => {
+                                                            const date = nextWeekDays.find(d => d.value === day.value)?.date;
+                                                            return date && timeSlot.some(time => !isPastTime(date, time.time) && !isTimeUnavailable(date, time.time));
+                                                        })
+                                                        .map(day => (
+                                                            <MenuItem key={day.value} value={day.value}>
+                                                                {day.label} - {day.date.toLocaleDateString()}
+                                                            </MenuItem>
+                                                        ))}
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                        <div>
+                                            <h2 className="flex gap-2 items-center mb-3">
+                                                <Clock /> اختر الوقت
+                                            </h2>
+                                            <div className="grid grid-cols-3 gap-2">
+                                                {timeSlot.map((item, index) => (
+                                                    <Button
+                                                        key={index}
+                                                        variant={item.time === selectedTimeSlot ? "contained" : "outlined"}
+                                                        onClick={() => setSelectedTimeSlot(item.time)}
+                                                        className={`${
+                                                            item.time === selectedTimeSlot
+                                                                ? 'bg-accent text-white'
+                                                                : 'bg-white text-black'
+                                                        }`}
+                                                        disabled={
+                                                            !nextWeekDays.find(day => day.value === selectedDay) ||
+                                                            isPastTime(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time) ||
+                                                            isTimeUnavailable(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time)
+                                                        }
+                                                    >
+                                                        {formatTime(item.time)}
+                                                    </Button>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                ) : (
+                                    <div className="mt-32 text-2xl tajawal-bold text-center">
+                                        <h1>كل المواعيد محجوزة ، تحب تشوف دكتور تاني؟</h1>
+                                        <Link className='flex items-center justify-center' href="/booking-Doctor">
+                                            <button className='bg-primary hover:bg-primary/80 px-4 py-3 ml-5 text-xl rounded-md mt-5 text-white'>
+                                                اكتشف الدكاترة
+                                            </button>
+                                        </Link>
+                                    </div>
+                                )
                             ) : (
                                 <div className="mt-32 text-2xl tajawal-bold text-center">
-                                    <h1>كل المواعيد محجوزة ، تحب تشوف دكتور تاني؟</h1>
-                                    <Link className='flex items-center justify-center' href="/booking-Doctor">
+                                    <h1>يجب عليك تسجيل الدخول للمتابعة</h1>
+                                    <Link className='flex items-center justify-center' href="/login">
                                         <button className='bg-primary hover:bg-primary/80 px-4 py-3 ml-5 text-xl rounded-md mt-5 text-white'>
-                                            اكتشف الدكاترة
+                                            تسجيل الدخول
                                         </button>
                                     </Link>
                                 </div>
@@ -305,9 +340,9 @@ export default function BookAppointment({ doctorId }) {
                     {step === 2 && (
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                             <h2 className="mb-4 tajawal-medium text-accent">خطوة واحدة ونكمل الحجز</h2>
-                            <p><strong>Selected Day:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.label}</p>
-                            <p><strong>Selected Date:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.date.toLocaleDateString()}</p>
-                            <p className='mb-10'><strong >Selected Time:</strong> {formatTime(selectedTimeSlot)}</p>
+                            <p><strong>اليوم المختار:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.label}</p>
+                            <p><strong>التاريخ المختار:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.date.toLocaleDateString()}</p>
+                            <p className='mb-10'><strong >الوقت المختار:</strong> {formatTime(selectedTimeSlot)}</p>
                             <div className='flex gap-4 flex-col items-center'>
                                 <Button
                                     variant="contained"
@@ -355,17 +390,17 @@ export default function BookAppointment({ doctorId }) {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    {step === 1 && (
+                    {step === 1 && session && (
                         <>
                             <Button onClick={() => setOpen(false)} color="primary">
-                                Close
+                                اغلاق
                             </Button>
                             <Button
                                 onClick={() => setStep(2)}
                                 color="primary"
                                 disabled={!(selectedDay !== null && selectedTimeSlot)}
                             >
-                                Next
+                                التالي
                             </Button>
                         </>
                     )}
@@ -375,13 +410,13 @@ export default function BookAppointment({ doctorId }) {
                                 onClick={() => setStep(1)}
                                 color="primary"
                             >
-                                Back
+                                رجوع
                             </Button>
                         </>
                     )}
                     {step === 3 && (
                         <Button onClick={() => setOpen(false)} color="primary">
-                            Close
+                            اغلاق
                         </Button>
                     )}
                 </DialogActions>

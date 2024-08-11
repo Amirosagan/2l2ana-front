@@ -23,7 +23,6 @@ const FileUpload = ({ onFetchMedicalFiles }) => {
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
-    console.log("FileUpload.js: useEffect");
     const verifySession = async () => {
       const { session, token } = await checkSession();
       setIsLoggedIn(!!session);
@@ -40,19 +39,17 @@ const FileUpload = ({ onFetchMedicalFiles }) => {
 
   const fetchMedicalFiles = async (userId, token) => {
     try {
-      const response = await fetch(
-        `https://api.2l2ana.com/api/MedicalFile/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          cache: "no-cache",
+      const response = await api.get(`/MedicalFile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "*/*",
         },
-      );
+        params: {
+          userId: userId,
+        },
+      });
 
-      const data = await response.json();
-
-      if (response.data && Array.isArray(data.medicalFiles)) {
+      if (response.data && Array.isArray(response.data.medicalFiles)) {
         setMedicalFiles(response.data.medicalFiles);
         onFetchMedicalFiles(response.data.medicalFiles.length === 0); // Notify the parent if the list is empty
       } else {
@@ -302,19 +299,19 @@ const FileUpload = ({ onFetchMedicalFiles }) => {
           : medicalFiles.map((file, index) => (
               <div
                 key={index}
-                className="relative w-48 h-64 border rounded-md p-2 flex flex-col items-center justify-between"
+                className="relative w-48 h-64 border rounded-md p-2 flex flex-col items-center justify-between overflow-hidden"
               >
                 {file.contentType.startsWith("image/") ? (
                   <Image
-                    width={600}
-                    height={600}
+                    width={192}
+                    height={256}
                     src={file.url}
                     alt={file.fileName}
-                    className="object-cover w-full h-full cursor-pointer"
+                    className="object-cover w-full h-40"
                     onClick={() => handleImageClick(file.url)}
                   />
                 ) : (
-                  <div className="h-full w-full flex items-center justify-center bg-gray-200 rounded">
+                  <div className="h-40 w-full flex items-center justify-center bg-gray-200 rounded">
                     <span className="text-gray-600">PDF: {file.fileName}</span>
                   </div>
                 )}

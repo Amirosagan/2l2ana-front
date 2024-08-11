@@ -9,13 +9,29 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { TextField, Button as MuiButton, Box, CircularProgress } from '@mui/material';
-import api from "@/src/utils/api";
+
+const Spinner = () => (
+  <div className="spinner">
+    <style jsx>{`
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border-left-color: #09f;
+        animation: spin 1s ease infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    `}</style>
+  </div>
+);
 
 const formSchema = z.object({
   email: z.string().email("يجب أن يكون بريد إلكتروني صالح"),
@@ -25,10 +41,6 @@ const formSchema = z.object({
 const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [forgotPasswordDialogOpen, setForgotPasswordDialogOpen] = useState(false);
-  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
-  const [dialogMessage, setDialogMessage] = useState("");
-  const [isSuccessMessage, setIsSuccessMessage] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -53,39 +65,6 @@ const LoginForm = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleForgotPassword = async () => {
-    setIsSubmitting(true);
-    try {
-      const response = await api.post("/Auth/ForgotPassword", {
-        email: forgotPasswordEmail,
-      });
-
-      if (response.status === 200) {
-        setIsSuccessMessage(true);
-        setDialogMessage("تحقق من بريدك الإلكتروني للحصول على رابط إعادة التعيين.");
-      } else {
-        setIsSuccessMessage(false);
-        setDialogMessage("فشل في إرسال رابط إعادة التعيين. حاول مرة أخرى.");
-      }
-    } catch (error) {
-      console.error("Error sending forgot password request:", error);
-      setIsSuccessMessage(false);
-      setDialogMessage("حدث خطأ. حاول مرة أخرى.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const openForgotPasswordDialog = () => {
-    setForgotPasswordDialogOpen(true);
-  };
-
-  const closeForgotPasswordDialog = () => {
-    setForgotPasswordDialogOpen(false);
-    setDialogMessage("");
-    setIsSuccessMessage(false);
   };
 
   return (
@@ -120,58 +99,17 @@ const LoginForm = () => {
               )}
             />
             <div className="flex items-center justify-end -mt-3">
-              <Link href="#" onClick={openForgotPasswordDialog} className="text-accent text-sm tajawal-bold cursor-pointer">نسيت كلمة السر؟</Link>
+              <Link href="/forgot-password" className="text-accent text-sm tajawal-bold cursor-pointer">نسيت كلمة السر؟</Link>
             </div>
             {errorMessage && <div className="text-red-500">{errorMessage}</div>}
             <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white tajawal-bold" disabled={isSubmitting}>
-              {isSubmitting ? <CircularProgress size={24} /> : "تسجيل الدخول"}
+              {isSubmitting ? <Spinner /> : "تسجيل الدخول"}
             </Button>
             <div>
               <h1 className="text-sm tajawal-regular">ليس لديك حساب؟ <Link className="text-accent" href="/register">سجل الأن</Link></h1>
             </div>
           </form>
         </Form>
-        <Dialog open={forgotPasswordDialogOpen} onClose={closeForgotPasswordDialog}>
-          <DialogTitle className="tajawal-bold">إعادة تعيين كلمة المرور</DialogTitle>
-          <DialogContent>
-            {isSuccessMessage ? (
-              <div className="text-center p-4 tajawal-bold text-green-900">
-                تحقق من بريدك الإلكتروني للحصول على رابط إعادة التعيين.
-              </div>
-            ) : (
-              <>
-                <DialogContentText className="tajawal-medium">
-                  يرجى إدخال عنوان بريدك الإلكتروني لتلقي رابط لإعادة تعيين كلمة المرور الخاصة بك.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="forgot-password-email"
-                  label="البريد الإلكتروني"
-                  type="email"
-                  fullWidth
-                  variant="outlined"
-                  className="p-2"
-                  value={forgotPasswordEmail}
-                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                />
-                <DialogActions>
-                  <Box display="flex" className="mx-4 pb-3" justifyContent="flex-start" gap={2} width="100%">
-                    <MuiButton variant="outlined" className="tajawal-bold" onClick={closeForgotPasswordDialog}>إلغاء</MuiButton>
-                    <MuiButton variant="outlined" className="tajawal-bold" onClick={handleForgotPassword} disabled={isSubmitting}>
-                      {isSubmitting ? <CircularProgress size={24} /> : "إرسال"}
-                    </MuiButton>
-                  </Box>
-                </DialogActions>
-              </>
-            )}
-          </DialogContent>
-          {dialogMessage && !isSuccessMessage && (
-            <div className={`text-center p-4 tajawal-bold ${isSuccessMessage ? "text-green-900" : "text-red-500"}`}>
-              {dialogMessage}
-            </div>
-          )}
-        </Dialog>
       </div>
     </div>
   );

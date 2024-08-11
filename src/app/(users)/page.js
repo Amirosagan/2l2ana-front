@@ -32,6 +32,7 @@ export default function Home() {
     <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
       <HeroDoctor />
       <div className="lg:-mt-60">
+        <div className="mt-10"> </div>
         <RecentPosts Home={true} />
         <ArticleCard />
         <RecentPost Home={true} />

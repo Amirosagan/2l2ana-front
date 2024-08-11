@@ -43,7 +43,7 @@ const VideosPage = async () => {
       <div className="flex flex-col items-center justify-center lg:w-[83%] m-auto ">
         <CoverSection />
         <FeaturedPosts  />
-        <div className=' w-[85%] mb-10 -mt-20 lg:mb-0 m-auto'>
+        <div className=' w-[85%] mb-10 lg:-mt-20 lg:mb-0 m-auto'>
           <DoctoorBoster />
         </div>
         <RecentPosts  />

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Link from "next/link";
-import api from "@/src/utils/api";
 
 const Questions = ({ filteredQuestions }) => {
     const [page, setPage] = useState(1);
@@ -36,8 +35,8 @@ const Questions = ({ filteredQuestions }) => {
                                 <span className="text-sm text-primary tajawal-regular"> {question.tags[0].name}</span>
                             )}
                         </div>
-                        <Link className="w-40" href={`/medical-questions/${question.id}`}>
-                            <button className="bg-accent hover:bg-accent/90 text-white px-4 py-3 rounded">شوف الاجابة</button>
+                        <Link className="w-full lg:w-40" href={`/medical-questions/${question.id}`}>
+                            <button className="bg-accent w-full hover:bg-accent/90 text-white px-4 py-2 lg:py-3 text-sm md:text-base mt-3 lg:mt-0 rounded">شوف الاجابة</button>
                         </Link>
                     </div>
                 ))

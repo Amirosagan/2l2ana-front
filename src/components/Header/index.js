@@ -114,13 +114,13 @@ const Header = () => {
             </ul>
           </nav>
         </div>
-        <div className="md:mt-14 mx-5 -mt-3 md:mx-0">
+        <div className="md:mt-14 mx-5 md:mx-0">
           <Logo />
-          <Link href={"/"} style={{ backgroundColor: "" }} className='flex md:hidden justify-center items-center'>
+          {/* <Link href={"/"} style={{ backgroundColor: "" }} className='flex md:hidden justify-center items-center'>
             <div className=''>
               <h1 className='text-5xl text-primary aref-ruqaa-bold'> قلقانة </h1>
             </div>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </header>

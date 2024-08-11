@@ -3,7 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['www.dropbox.com','previews.dropbox.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.dropbox.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'previews.dropbox.com',
+      },
+    ],
   },
   experimental: {
     serverActions: true,

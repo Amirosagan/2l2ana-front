@@ -35,18 +35,18 @@ const Search = ({ onSearch }) => {
         api.get('/QuestionTag')
             .then(response => {
                 const options = response.data.questionTags
-                    .filter(tag => tag.id !== 2) // Exclude tag with id=2
+                    .filter(tag => tag.id !== 2) 
                     .map(tag => ({
                         value: tag.id,
                         label: tag.name,
                     }));
-                // Add "جميع التخصصات" option
+                
                 options.unshift({ value: null, label: "جميع التخصصات" });
                 setTags(options);
             })
             .catch(error => console.error('Error fetching tags:', error));
 
-        // Fetch all questions initially
+       
         api.get('/Question')
             .then(response => {
                 setAllQuestions(response.data.items);
@@ -62,11 +62,11 @@ const Search = ({ onSearch }) => {
 
     const handleCategoryChange = (selectedOption) => {
         setCategory(selectedOption);
-        handleSearch(selectedOption, searchQuery); // Call handleSearch when category changes
+        handleSearch(selectedOption, searchQuery); 
     };
 
     const handleSearch = (selectedCategory, query) => {
-        const regex = new RegExp(query, 'i'); // Create a case-insensitive regex
+        const regex = new RegExp(query, 'i'); 
         const filtered = allQuestions.filter(q => {
             const matchesQuery = regex.test(q.title) ||
                 regex.test(q.content) ||
@@ -92,7 +92,7 @@ const Search = ({ onSearch }) => {
                     ابحث
                 </button>
             </div>
-            <h1 className="text-primary mx-5 mb-4 sm:mb-0 ml-7"> أو </h1>
+            <h1 className="text-primary mx-5 mb-4 sm:mb-0 ml-7 mt-5 lg:mt-0"> أو </h1>
             <div className="sm:w-[20%] w-full">
                 <Select
                     options={tags}
