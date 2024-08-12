@@ -21,6 +21,8 @@ const BlogLayoutOne = ({ blog }) => {
               layout="fill"
               className="absolute top-0 left-0 w-full h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              unoptimized={true}
+
             />
           ) : (
             <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-gray-200">

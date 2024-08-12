@@ -14,6 +14,8 @@ const Details = ({ doctor }) => {
             width={200}
             height={200}
             className="rounded-lg h-[240px] lg:min-h-[280px]  w-full object-cover"
+            unoptimized={true}
+
           />
         </div>
 

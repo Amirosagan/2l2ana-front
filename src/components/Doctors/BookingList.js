@@ -14,6 +14,7 @@ const BookingList = ({ consultations, doctorDetails }) => {
                             className="rounded-full border hidden md:block border-black mb-1 object-cover h-[70px] w-[70px]"
                             width={70}
                             height={70}
+                            unoptimized={true}
                         />
                         <div className="flex flex-col gap-2 w-full">
                             <h2 className="tajawal-bold flex items-center justify-between text-[18px]"> {doctor?.name || "Unknown Doctor"} </h2>

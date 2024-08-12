@@ -1,6 +1,4 @@
-import { Metadata } from "next";
 import AskDoctor from "./client";
-
 
 export const metadata = {
     title: "اطرح سؤالك الآن ليصل إلى آلاف الأطباء | قلقانة",

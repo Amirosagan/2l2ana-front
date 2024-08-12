@@ -14,6 +14,7 @@ const HeroDoctor = ({ onExploreClick }) => {
               height={800}
               src={Doctors}
               className="absolute inset-0 h-full w-full object-cover rounded-3xl"
+
             />
           </div>
           <div className="lg:py-24">

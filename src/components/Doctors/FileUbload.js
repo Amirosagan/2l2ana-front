@@ -346,6 +346,8 @@ const FileUpload = ({ onFetchMedicalFiles }) => {
             src={modalImage}
             alt="Full Size"
             className="max-w-full max-h-full"
+            unoptimized={true}
+
           />
         </div>
       )}

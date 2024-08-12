@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
@@ -30,12 +29,13 @@ const BlogLayoutThree = ({ blog }) => {
         {blog.imageUrl ? (
           <Image
             src={blog.imageUrl}
-            unoptimized={true}
             alt={blog.title}
             width={700}
             height={540}
             className="aspect-[4/3] w-full h-full object-contain object-top group-hover:scale-105 transition-all ease duration-300"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            unoptimized={true}
+
           />
         ) : (
           <div className="w-full h-full flex justify-center items-center bg-gray-200">

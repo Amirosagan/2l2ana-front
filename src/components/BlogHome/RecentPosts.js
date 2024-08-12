@@ -21,7 +21,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
         const response = await api.get('/Post?pageSize=1');
         return response.data.totalCount;
       } catch (error) {
-        return 10; // Default value in case of error
+        return 10; 
       }
     };
 
@@ -34,9 +34,9 @@ const RecentPosts = ({ hideHeader, Home }) => {
           publishedAt: item.createdAt,
           image: {
             filePath: item.imageUrl,
-            blurhashDataUrl: '', // Add blurhash if available
-            width: 800, // Replace with actual width
-            height: 600 // Replace with actual height
+            blurhashDataUrl: '', 
+            width: 800, 
+            height: 600 
           },
           tags: item.tags.map(tag => tag.name),
           url: `/blogs/${slug(item.id)}`
@@ -57,9 +57,9 @@ const RecentPosts = ({ hideHeader, Home }) => {
         const sortedBlogs = data.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
         setBlogs(sortedBlogs);
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false); 
       } catch (error) {
-        setLoading(false); // Set loading to false in case of error
+        setLoading(false); 
       }
     };
 
@@ -90,7 +90,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
           {[...Array(skeletonCount)].map((_, index) => (
             <article key={index} className="col-span-1 row-span-1 relative border-[2px] rounded-lg p-3 h-full flex flex-col">
               <div className="relative h-56 w-full rounded-xl overflow-hidden bg-gray-200 animate-pulse">
-                {/* Placeholder for image */}
+              
               </div>
               <div className="flex flex-col w-full mt-2 flex-grow">
                 <div className="bg-gray-300 h-6 rounded-md animate-pulse w-3/4 mb-2" />

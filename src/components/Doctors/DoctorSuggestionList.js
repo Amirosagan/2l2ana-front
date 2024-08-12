@@ -61,6 +61,7 @@ const SuggestionList = ({ blog }) => {
               width={70}
               height={70}
               className="w-[70px] h-[70px] rounded-full mr-5"
+              unoptimized={true}
             />
             <div className="mt-3 p-1 px-2 flex flex-col gap-2 w-full">
               <h2 className="tajawal-bold text-primary bg-teal-100 px-2 p-1 rounded-full text-[10px] w-fit">

@@ -88,6 +88,8 @@ const CoverSection = () => {
             alt={blog.title}
             src={blog.imageUrl}
             layout="fill"
+            unoptimized={true}
+
           />
         ) : (
           <div className="w-full h-full bg-gray-200 rounded-3xl -z-10 border-4 flex items-center justify-center">

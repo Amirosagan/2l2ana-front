@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import avatar from "@/public/noavatar.png";
 
 const DoctorList = ({ doctorList }) => {
   const router = useRouter();
@@ -26,6 +25,8 @@ const DoctorList = ({ doctorList }) => {
               className="h-[200px] w-full object-cover rounded-lg"
               src={doctor.profilePicture}
               alt={`${doctor.firstName} ${doctor.lastName}`}
+              unoptimized={true}
+
             />
             <div className="mt-3 flex flex-col items-start gap-2">
               <h2 className="text-[10px] p-1 rounded-full px-5 py-2 text-primary bg-teal-400">
