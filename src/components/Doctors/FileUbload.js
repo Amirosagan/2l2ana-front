@@ -308,6 +308,7 @@ const FileUpload = ({ onFetchMedicalFiles }) => {
                     src={file.url}
                     alt={file.fileName}
                     className="object-cover w-full h-40"
+                    unoptimized={true}
                     onClick={() => handleImageClick(file.url)}
                   />
                 ) : (
