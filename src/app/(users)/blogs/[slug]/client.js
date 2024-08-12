@@ -30,6 +30,7 @@ const BlogLayoutThree = ({ blog }) => {
         {blog.imageUrl ? (
           <Image
             src={blog.imageUrl}
+            unoptimized={true}
             alt={blog.title}
             width={700}
             height={540}
@@ -184,6 +185,7 @@ const BlogPageClient = ({ initialBlog }) => {
             className="w-full h-full object-cover object-center"
             priority
             sizes="100vw"
+            unoptimized={true}
           />
         </div>
         <div className="flex flex-col lg:flex-row md:mx-12 m-auto pt-10 sxl:gap-16 px-5 md:px-10">

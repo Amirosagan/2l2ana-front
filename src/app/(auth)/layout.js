@@ -1,16 +1,12 @@
 import '../globals.css';
-import { Inter, Manrope, Tajawal } from 'next/font/google';
+import { Tajawal } from 'next/font/google';
 import { cx } from '@/src/utils';
-import profileImg from '@/public/profile-imgr.png';
-import Image from 'next/image';
 import Header from '@/src/components/Header';
 
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-in' });
-const manrope = Manrope({ subsets: ['latin'], display: 'swap', variable: '--font-mr' });
 const tajawal = Tajawal({ subsets: ['latin'], weight: '700', display: 'swap', variable: '--font-ta' });
 
 export const metadata = {
-  title: 'Login',
+  title: 'تسجيل الدخول | قلقانة ' ,
   description: 'اهلا بيكي في اكبر مجتمع يخص صحة النساء في الوطن العربي',
 };
 

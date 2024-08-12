@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import api from "@/src/utils/api";  
+import { login } from "@/src/utils/auth";
 
 const formSchema = z.object({
   email: z.string().email("Must be a valid email"),
@@ -29,6 +30,7 @@ const formSchema = z.object({
 
 const RegisterForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const form = useForm({
@@ -42,6 +44,7 @@ const RegisterForm = () => {
   });
 
   const handleSubmit = async (data) => {
+    setIsSubmitting(true);
     const [firstName, ...lastNameParts] = data.name.split(" ");
     const lastName = lastNameParts.join(" ");
     const requestData = {
@@ -50,18 +53,19 @@ const RegisterForm = () => {
       firstName,
       lastName,
       phoneNumber: data.phoneNumber,
+      profilePicture: "",
     };
 
-    console.log("Form data before submission:", requestData);
-
     try {
-      const response = await api.post("/Auth/register/user", requestData);
-      console.log("Registration successful", response.data);
+      await api.post("/Auth/register/user", requestData);
+      const response = await login(data.email, data.password);
+      localStorage.setItem('token', response.token);
       setErrorMessage("");
-      router.push("/"); // Redirect to the homepage
+      router.push("/");
     } catch (error) {
-      console.error("Error registering:", error);
       setErrorMessage("There was an error with your registration. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -123,8 +127,8 @@ const RegisterForm = () => {
               )}
             />
             {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-            <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white font-bold">
-              تسجيل
+            <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white font-bold" disabled={isSubmitting}>
+              {isSubmitting ? "جاري انشاء الحساب..." : "تسجيل"}
             </Button>
             <div className="">
                <h1 className="text-sm">لديك حساب؟ <Link className="text-accent" href="/login">سجل الدخول</Link></h1>
