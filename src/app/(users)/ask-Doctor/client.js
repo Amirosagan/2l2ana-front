@@ -88,7 +88,7 @@ const AskDoctor = () => {
 
     if (submitted) {
         return (
-            <div className="m-auto lg:mx-[20%] mx-10">
+            <div className="m-auto  lg:mx-[20%] mx-10">
                 <div className="flex items-center mt-20 bg-neutral-200 p-10 rounded-xl shadow-xl gap-5 flex-col justify-center w-full m-auto">
                     <h1 className="lg:text-3xl text-xl mt-6 text-gray-500">
                         تم ارسال سؤالك بنجاح ، نعدك بالرد قريبا وشكرا لاستخدامك قلقانة !
@@ -109,10 +109,10 @@ const AskDoctor = () => {
     }
 
     return (
-        <div className="m-auto mx-10 lg:mx-[20%]">
-            <div className="flex items-center mt-10 bg-neutral-200 p-10 rounded-xl shadow-xl gap-5 flex-col justify-center w-full m-auto">
-                <h1 className="lg:text-3xl text-2xl"> اطرح سؤالك الآن ليصل إلى آلاف الأطباء </h1>
-                <p className="text-gray-500 mb-12 text-center">
+        <div className="m-auto mx-3 md:mx-10 -mt-5 md:mt-0 lg:mx-[20%]">
+            <div className="flex items-center mt-10 bg-neutral-200 md:p-10 py-10 px-3 rounded-xl shadow-xl gap-5 flex-col justify-center w-full m-auto">
+                <h1 className="lg:text-3xl text-2xl px-5 md:px-0"> اطرح سؤالك الآن ليصل إلى آلاف الأطباء </h1>
+                <p className="text-gray-500 md:mb-12 px-5 md:px-0 text-center">
                     احصل على إجابة لسؤالك في غضون 48 ساعة، أو اشترك مع قلقانة لتحصل على استشارة فورية وسرية مع طبيب معتمد.
                     <Link href="/booking-Doctor" className="text-accent text-lg tajawal-bold"> تحدث مع طبيب الآن </Link>
                 </p>
@@ -120,7 +120,7 @@ const AskDoctor = () => {
                     <div className="flex-grow w-full">
                         <Input
                             placeholder="عنوان السؤال (عنوان مختصر لمشكلتك الصحية)"
-                            className={`w-full button p-7 border-gray-500 ${errors.title ? 'border-red-500' : ''}`}
+                            className={`w-full button md:p-7 py-7  border-gray-500 ${errors.title ? 'border-red-500' : ''}`}
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                         />
@@ -138,7 +138,7 @@ const AskDoctor = () => {
 >
     <MenuItem value="" disabled>Select a tag</MenuItem>
     {tags
-        .filter(tag => tag.name.toLowerCase() !== "feature") // Filter out the "feature" tag
+        .filter(tag => tag.name.toLowerCase() !== "feature") 
         .map(tag => (
             <MenuItem key={tag.id} value={tag.id}>{tag.name}</MenuItem>
         ))}
@@ -150,7 +150,7 @@ const AskDoctor = () => {
                 <div className="w-full">
                     <Input
                         placeholder="السؤال  (اشرح كافة استفساراتك)"
-                        className={`w-full p-10 button ${errors.content ? 'border-red-500' : ''}`}
+                        className={`w-full py-10 button ${errors.content ? 'border-red-500' : ''}`}
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                     />
@@ -163,7 +163,7 @@ const AskDoctor = () => {
                     type="button">
                     ارسال
                 </button>
-                <p className="text-sm text-gray-500"> إذا كانت الحالة الطبية طارئة ننصحك بالتوجه إلى أقرب مركز طوارئ في منطقتك </p>
+                <p className="text-sm text-gray-500 text-center"> إذا كانت الحالة الطبية طارئة ننصحك بالتوجه إلى أقرب مركز طوارئ في منطقتك </p>
             </div>
         </div>
     );
