@@ -16,27 +16,28 @@ const RecentPosts = ({ hideHeader, Home }) => {
   const isFeatured = searchParams.get('featured') === 'true';
 
   useEffect(() => {
-    const fetchTotalCount = async () => {
-      try {
-        const response = await api.get('/Post?pageSize=1');
-        return response.data.totalCount;
-      } catch (error) {
-        return 10; 
-      }
-    };
+    const fetchBlogs = async () => {
+      let pageSize;
 
-    const fetchBlogs = async (totalCount) => {
+      if (hideHeader) {
+        pageSize = 0;
+      } else if (Home) {
+        pageSize = 3;
+      } else {
+        pageSize = 6;
+      }
+
       try {
-        const response = await api.get(`/Post?pageSize=${totalCount}`);
+        const response = await api.get(`/Post${pageSize ? `?pageSize=${pageSize}` : ''}`);
         let data = response.data.items.map(item => ({
           id: item.id,
           title: item.title,
           publishedAt: item.createdAt,
           image: {
             filePath: item.imageUrl,
-            blurhashDataUrl: '', 
-            width: 800, 
-            height: 600 
+            blurhashDataUrl: '',
+            width: 800,
+            height: 600
           },
           tags: item.tags.map(tag => tag.name),
           url: `/blogs/${slug(item.id)}`
@@ -57,25 +58,20 @@ const RecentPosts = ({ hideHeader, Home }) => {
         const sortedBlogs = data.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
         setBlogs(sortedBlogs);
-        setLoading(false); 
+        setLoading(false);
       } catch (error) {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
-    const initialize = async () => {
-      const totalCount = await fetchTotalCount();
-      await fetchBlogs(totalCount);
-    };
-
-    initialize();
-  }, [tagId, searchText, hideHeader, isFeatured]);
+    fetchBlogs();
+  }, [tagId, searchText, hideHeader, isFeatured, Home]);
 
   if (loading) {
     const skeletonCount = Home ? 3 : 6;
 
     return (
-      <section className="w-full mb-5 mt-32   flex flex-col items-center justify-center">
+      <section className="w-full mb-5 mt-32 flex flex-col items-center justify-center">
         <div className="w-full flex items-center justify-between">
           <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold inline-block font-bold capitalize text-2xl md:text-4xl">
             {hideHeader ? 'المقالات' : 'أحدث المقالات'}
@@ -108,8 +104,6 @@ const RecentPosts = ({ hideHeader, Home }) => {
     );
   }
 
-  const displayedBlogs = Home ? blogs.slice(0, 3) : blogs;
-
   return hideHeader ? (
     <section className="w-full mb-5 px-5 sm:px-10 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
       <div className="w-full items-center flex justify-between">
@@ -118,7 +112,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
         </h2>
       </div>
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {displayedBlogs.map((blog, index) => (
+        {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
           </article>
@@ -136,7 +130,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
         </Link>
       </div>
       <div className="lg:mt-16 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
-        {displayedBlogs.map((blog, index) => (
+        {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
           </article>
