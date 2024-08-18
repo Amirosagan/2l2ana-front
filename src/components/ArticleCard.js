@@ -7,7 +7,7 @@ const ArticleCard = () => {
     <div className="overflow-hidden rounded-lg w-[86%] md:mt-20 md:mb-20 mt-10 mb-10 m-auto bg-neutral-100 flex justify-between items-center flex-col lg:flex-row">
       <div className="flex flex-col gap-4 px-4 py-8"> 
         <h1 className="text-3xl text-gray-800 tajawal-bold sm:text-3xl text-center mb-5 md:mb-10">
-          محتار في سؤال ؟ ابعت استشاراتك الطبية مجانا دلوقتي
+           محتارة في سؤال ؟ ابعتي استشاراتك الطبية مجانا دلوقتي
         </h1>
 
         <div className="w-[80%] m-auto flex flex-col items-center text-center tajawal-regular gap-4">

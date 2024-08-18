@@ -8,8 +8,8 @@ const Footer = () => {
 
     return (
         <div className="px-5 pt-16 lg:pt-0">
-            <div className="flex justify-between gap-16 items-center flex-col md:flex-row w-full md:w-[90%] lg:w-[75%] m-auto">
-                <div className="flex flex-col md:flex-row gap-16 md:gap-24 justify-around">
+            <div className="flex justify-between lg:gap-16 items-center flex-col md:flex-row w-full md:w-[90%] lg:w-[75%] m-auto">
+                <div className="flex flex-col md:flex-row gap-12 lg:gap-24 justify-around">
                     <div>
                         <h1 className="tajawal-bold text-xl md:text-lg">احجزي اشطر دكتور</h1>
                         <div>
@@ -64,12 +64,15 @@ const Footer = () => {
                             <div className="flex tajawal-medium gap-2 pt-4 flex-col text-sm md:text-base">
                                 <Link href="/aboutUs" className="hover:text-accent"> من نحن </Link>
                                 <Link href="/termsofuse" className="hover:text-accent"> سياسة الاستخدام </Link>
+                                <Image className=" md:w-[130px] hidden lg:hidden md:block mt-2  " alt="Doctor" src={profileImg} />
+
+                                
                             </div>
                         </div>
                     </div>
                 
                 </div>
-                <Image className="md:w-[200px] w-[130px] pb-5" alt="Doctor" src={profileImg} />
+                <Image className="lg:w-[200px] md:hidden mt-10 lg:mt-0 lg:block w-[130px] pb-5" alt="Doctor" src={profileImg} />
             </div>
             <div className="w-full mt-8 relative font-medium pb-8 px-8 flex flex-col md:flex-row items-center justify-center">
                 <span className="text-center text-sm md:text-base">

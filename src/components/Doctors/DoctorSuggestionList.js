@@ -24,13 +24,13 @@ const SuggestionList = ({ blog }) => {
     <div className="pt-4 px-4 border-[1px] lg:mx-5 rounded-lg">
       {blog ? (
         <Link href="/booking-Doctor">
-          <h1 className="mb-3 text-2xl tajawal-medium text-primary">دكتور اونلاين ؟</h1>
-          <p className="text-gray-500 tajawal-regular">اطمن علي صحتك دلوقتي من بيتك مع افضل الدكاترة في مصر والوطن العربي <span className="text-accent">من هنا</span></p>
+          <h1 className="mb-3 md:text-2xl text-lg tajawal-medium text-primary">دكتور اونلاين ؟</h1>
+          <p className="text-gray-500 text-sm md:text-base tajawal-regular">اطمن علي صحتك دلوقتي من بيتك مع افضل الدكاترة في مصر والوطن العربي <span className="text-accent">من هنا</span></p>
         </Link>
       ) : (
         <div className="flex items-center mx-3 m-auto justify-between">
-          <h1 className="mb-3 text-xl tajawal-medium text-primary">اقتراحات</h1>
-          <Link href="/booking-Doctor" className="mb-3 text tajawal-medium text-accent hover:underline">المزيد</Link>
+          <h1 className="mb-3  text-lg md:text-xl tajawal-medium text-primary">اقتراحات</h1>
+          <Link href="/booking-Doctor" className="mb-3 text-sm md:text-base tajawal-medium text-accent hover:underline">المزيد</Link>
         </div>
       )}
 
@@ -53,25 +53,23 @@ const SuggestionList = ({ blog }) => {
           <Link
             key={doctor.doctorId}
             href={`/booking-Doctor/${doctor.doctorId}`}
-            className="cursor-pointer p-4 hover:bg-slate-100 rounded-lg flex items-center gap-3"
+            className="cursor-pointer p-1 px-2 md:p-4  hover:bg-slate-100 rounded-lg flex items-center gap-3"
           >
             <Image
               src={doctor.imageUrl ? doctor.imageUrl : avatar}
               alt="Doctor Image"
-              width={70}
-              height={70}
-              className="w-[70px] h-[70px] rounded-full mr-5"
+              className="w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-full mr-5"
               unoptimized={true}
             />
             <div className="mt-3 p-1 px-2 flex flex-col gap-2 w-full">
               <h2 className="tajawal-bold text-primary bg-teal-100 px-2 p-1 rounded-full text-[10px] w-fit">
                 {doctor.category}
               </h2>
-              <h2 className="tajawal-extrabold text-lg">
+              <h2 className="tajawal-extrabold md:text-lg">
                 {doctor.firstName} {doctor.lastName}
               </h2>
               <div className="flex items-center w-full justify-between">
-                <h2 className="tajawal-regular text-gray-500 flex gap-2 text-md">
+                <h2 className="tajawal-regular text-gray-500 flex gap-2 md:text-base text-sm">
                   {doctor.rating} نجوم
                 </h2>
                 <h2 className="tajawal-regular text-gray-500 flex gap-2 text-sm">

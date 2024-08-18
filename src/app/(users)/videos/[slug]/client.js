@@ -8,92 +8,61 @@ import api from "@/src/utils/api";
 
 const VideoPageClient = ({ initialVideoDetails }) => {
   const [videoDetails, setVideoDetails] = useState(initialVideoDetails);
-  const [relatedVideos, setRelatedVideos] = useState([]);
   const [tags, setTags] = useState([]);
+  const [relatedVideos, setRelatedVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!videoDetails || !videoDetails.id) {
+      setIsLoading(false);
+      return;
+    }
+
+    const videoId = videoDetails.id;
+    const videoTags = videoDetails.tags || [];
+
+    // Filter out "featured" tags for the main video
+    const filteredTags = videoTags.filter(tag => tag.name !== "featured");
+    setTags(filteredTags);
+
     const fetchRelatedVideos = async () => {
       try {
-        console.log("Fetching related videos...");
-        const response = await api.get("/Youtube");
-        const allVideos = response.data.items;
-        console.log("All videos:", allVideos);
+        const allVideosResponse = await api.get("/Youtube", {
+          params: { PageSize: 10, Page: 1 }
+        });
+        const allVideos = allVideosResponse.data.items;
 
-        const otherVideos = allVideos.filter(video => video.youtubeLink.id !== videoDetails.id);
-        console.log("Other videos:", otherVideos);
-
-        const matchingTagVideos = otherVideos.filter(video =>
-          video.youtubeLink.tags.some(tag =>
-            tags.some(t => t.name !== "featured" && t.name === tag.name)
-          )
+        let related = allVideos.filter(
+          video =>
+            video.youtubeLink.id !== videoId &&
+            video.youtubeLink.tags.some(tag =>
+              filteredTags.map(t => t.id).includes(tag.id)
+            )
         );
-        console.log("Matching tag videos:", matchingTagVideos);
 
-        const featuredAndMatchingTagVideos = matchingTagVideos.filter(video =>
-          video.youtubeLink.tags.some(tag => tag.name === "featured")
-        );
-        console.log("Featured and matching tag videos:", featuredAndMatchingTagVideos);
+        if (related.length < 3) {
+          const additionalVideos = allVideos.filter(
+            video => video.youtubeLink.id !== videoId && !related.some(rv => rv.youtubeLink.id === video.youtubeLink.id)
+          ).slice(0, 3 - related.length);
 
-        const nonFeaturedMatchingTagVideos = matchingTagVideos.filter(video =>
-          !video.youtubeLink.tags.some(tag => tag.name === "featured")
-        );
-        console.log("Non-featured matching tag videos:", nonFeaturedMatchingTagVideos);
+          related = [...related, ...additionalVideos];
+        }
 
-        const recentMatchingTagVideos = nonFeaturedMatchingTagVideos.sort((a, b) => new Date(b.youtubeLink.lastUpdate) - new Date(a.youtubeLink.lastUpdate));
-        console.log("Recent matching tag videos:", recentMatchingTagVideos);
-
-        const combinedVideos = [...featuredAndMatchingTagVideos, ...recentMatchingTagVideos].slice(0, 3);
-        console.log("Combined related videos:", combinedVideos);
-
-        setRelatedVideos(combinedVideos);
+        setRelatedVideos(related.slice(0, 3));
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching related videos:', error);
         setIsLoading(false);
       }
     };
 
-    if (videoDetails && tags.length > 0) {
-      fetchRelatedVideos();
-    } else {
-      setIsLoading(false); // Set loading to false if no video details or tags
-    }
-  }, [videoDetails, tags]);
-
-  useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const response = await api.get(`/Youtube/${videoDetails.id}`);
-        const fetchedTags = response.data.youtubeLink.tags.filter(tag => tag.name !== "featured");
-        setTags(fetchedTags);
-        console.log("Fetched tags:", fetchedTags);
-      } catch (error) {
-        console.error('Error fetching tags:', error);
-      }
-    };
-
-    if (videoDetails) {
-      fetchTags();
-    }
+    fetchRelatedVideos();
   }, [videoDetails]);
-
-  if (!videoDetails) {
-    return (
-      <div className="flex justify-center bg-slate-300 items-center tajawal-bold text-5xl">
-        <div className="w-[70%] h-[400px] bg-neutral-300-300 flex justify-center items-center">
-          Invalid video details
-        </div>
-      </div>
-    );
-  }
 
   const extractVideoId = (url) => {
     try {
       const urlParams = new URLSearchParams(new URL(url).search);
       return urlParams.get("v");
     } catch (error) {
-      console.error('Error extracting video ID:', error);
       return null;
     }
   };
@@ -106,15 +75,48 @@ const VideoPageClient = ({ initialVideoDetails }) => {
     },
   };
 
-  const smallVideoOptions = {
-    height: '240',
-    width: '380',
-    playerVars: {
-      autoplay: 0,
-    },
-  };
+  if (isLoading) {
+    return (
+      <div className="lg:w-[70%] px-4 w-full m-auto bg-white mt-5">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-5 md:gap-10 mt-5 text-slate-500 items-center">
+            <div className="w-[70%] h-10 bg-gray-300 animate-pulse"></div>
+            <div className="youtube-video-container w-full h-[240px] md:h-[520px] xl:h-[calc(100vh-250px)] bg-gray-300 animate-pulse"></div>
+          </div>
+          <div className="flex gap-2">
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="w-20 h-8 bg-gray-300 animate-pulse"></div>
+            ))}
+          </div>
+          <div className="text-accent mt-16 m-auto w-full flex flex-col">
+            <h1 className="md:pb-4 md:mx-10 mx-7 mb-5 text-sm md:text-base">فيديوهات مشابهة:</h1>
+            <div className="flex justify-center items-center flex-col md:flex-row flex-wrap gap-5 md:gap-10 w-full relative">
+              {[...Array(3)].map((_, index) => (
+                <div key={index} className="group flex flex-col border-[2px] w-[300px]  rounded-lg p-3 h-full bg-gray-300 animate-pulse">
+                  <div className="relative h-56 w-full rounded-xl bg-gray-300"></div>
+                  <div className="flex flex-col w-full mt-2 flex-grow">
+                    <div className="w-[80%] h-6 bg-gray-300 animate-pulse"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  const { title, url } = videoDetails;
+  if (!videoDetails) {
+    return (
+      <div className="flex justify-center bg-slate-300 items-center tajawal-bold text-5xl">
+        <div className="w-[70%] h-[400px] bg-neutral-300 flex justify-center items-center">
+          Invalid video details
+        </div>
+      </div>
+    );
+  }
+
+  const { title, description, url } = videoDetails;
   const videoId = extractVideoId(url);
   const firstNonFeaturedTagName = tags.find(tag => tag.name !== "featured")?.name || '';
 
@@ -122,9 +124,9 @@ const VideoPageClient = ({ initialVideoDetails }) => {
     <div className="lg:w-[70%] px-4 w-full m-auto bg-white mt-5">
       <Head>
         <title>{title}</title>
-        <meta name="description" content={title} />
+        <meta name="description" content={description} />
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={title} />
+        <meta property="og:description" content={description} />
         <meta property="og:type" content="video.movie" />
         <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : ''} />
         <meta property="og:video" content={`https://www.youtube.com/watch?v=${videoId}`} />
@@ -133,11 +135,11 @@ const VideoPageClient = ({ initialVideoDetails }) => {
         <meta property="og:video:height" content="520" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={title} />
+        <meta name="twitter:description" content={description} />
         <meta name="twitter:video" content={`https://www.youtube.com/watch?v=${videoId}`} />
       </Head>
 
-      <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center p-2">
+      <div className="flex flex-col md:flex-row -my-3 md:my-0 gap-4 justify-between md:items-center p-2">
         <h1 style={{ color: "rgb(52 146 150)" }} className="tajawal-extrabold text-2xl lg:text-3xl">{title}</h1>
         {tags.length > 0 && (
           <div className="flex gap-2">
@@ -151,35 +153,39 @@ const VideoPageClient = ({ initialVideoDetails }) => {
       </div>
 
       <div className="flex flex-col gap-10">
-        <div className="flex flex-col gap-10 mt-5 text-slate-500 items-center">
-          <p>{title}</p>
-          <div className="youtube-video-container w-full h-[520px] xl:h-[calc(100vh-250px)]">
-            {isLoading ? (
-              <div className="w-full h-full bg-slate-100 flex justify-center items-center">
-                <div className="loader">Loading...</div>
-              </div>
-            ) : (
-              <YouTube className="youtube-video w-full h-full" videoId={videoId} opts={videoOptions} />
-            )}
+        <div className="flex flex-col gap-5 md:gap-10 mt-5 text-slate-500 items-center">
+          <p>{description}</p>
+          <div className="youtube-video-container w-full h-[240px] md:h-[520px] xl:h-[calc(100vh-250px)]">
+            <YouTube className="youtube-video w-full h-full" videoId={videoId} opts={videoOptions} />
           </div>
         </div>
-        <Link href="/reservation" className="text-accent tajawal-bold px-2 hover:underline">
+        <Link href="/reservation" className="text-accent tajawal-bold px-2 text-sm md:text-base hover:underline">
           احجزي كشف اونلاين مع افضل الدكاترة في مجال {firstNonFeaturedTagName}
         </Link>
       </div>
 
-      <div className="text-accent mt-16 w-full flex flex-col">
-        <h1 className="pb-4">فيديوهات مشابهة:</h1>
-        <div className="flex justify-around items-center flex-col md:flex-row flex-wrap gap-5 md:gap-2 w-full relative">
-          {relatedVideos.map((relatedVideo, index) => (
-            <div key={index} className="flex flex-col md:w-[30%] relative">
-              <div className="youtube-video-container flex flex-col items-center h-auto">
-                <YouTube className="small-youtube-video bg-slate-100" videoId={extractVideoId(relatedVideo.youtubeLink.url)} opts={smallVideoOptions} />
+      {/* Related Videos Section */}
+      <div className="text-accent mt-16 m-auto w-full flex flex-col">
+        <h1 className="md:pb-4 md:mx-10 mx-7 mb-5 text-sm md:text-base">فيديوهات مشابهة:</h1>
+        <div className="flex justify-center items-center flex-col md:flex-row flex-wrap gap-5 md:gap-10 w-full relative">
+          {relatedVideos.length > 0 ? (
+            relatedVideos.map((relatedVideo, index) => (
+              <div key={index} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg p-3 h-full w-[320px]">
+                <div className="relative w-full h-56">
+                  <YouTube className="youtube-video w-full h-full object-contain object-top group-hover:scale-105 transition-all ease duration-300" videoId={extractVideoId(relatedVideo.youtubeLink.url)} opts={{ width: '100%', height: '100%', playerVars: { autoplay: 0 } }} />
+                </div>
+                <div className="flex flex-col w-full mt-2 flex-grow">
+                  <h2 className="font-semibold capitalize text-base sm:text-lg line-clamp-2 h-14 overflow-hidden">
+                    <span className="bg-gradient-to-r from-primary/50 to-primary/50 text-black bg-[length:0px_6px] group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500">
+                      {relatedVideo.youtubeLink.title}
+                    </span>
+                  </h2>
+                </div>
               </div>
-              <p className="mt-2 bg-transparent tajawal-bold">{relatedVideo.youtubeLink.title}</p>
-              <Link href={`/videos/${relatedVideo.youtubeLink.id}`} className="absolute inset-0 z-10"></Link>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>لا توجد فيديوهات مشابهة لعرضها.</p>
+          )}
         </div>
         <div className="flex items-center justify-center">
           <Link href="/categories">

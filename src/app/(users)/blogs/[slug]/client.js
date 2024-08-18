@@ -35,7 +35,6 @@ const BlogLayoutThree = ({ blog }) => {
             className="aspect-[4/3] w-full h-full object-contain object-top group-hover:scale-105 transition-all ease duration-300"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             unoptimized={true}
-
           />
         ) : (
           <div className="w-full h-full flex justify-center items-center bg-gray-200">
@@ -92,13 +91,17 @@ const BlogPageClient = ({ initialBlog }) => {
         const response = await api.get("/Post");
         const allBlogs = response.data.items;
 
-        const otherBlogs = allBlogs.filter(
+        let otherBlogs = allBlogs.filter(
           (item) =>
             item.id !== blog.id &&
             item.tags.some((tag) =>
               blog.tags.map((t) => t.id).includes(tag.id),
             ),
         );
+
+        if (otherBlogs.length === 0) {
+          otherBlogs = allBlogs.filter(item => item.id !== blog.id);
+        }
 
         const related = otherBlogs.slice(0, 3);
         setRelatedBlogs(related);
@@ -207,14 +210,14 @@ const BlogPageClient = ({ initialBlog }) => {
               )}
             </div>
           </div>
-          <div className="sticky lg:max-w-[30%] top-40 lg:h-[calc(100vh-40px)] md:min-w-[370px]">
+          <div className="sticky mt-20 lg:mt-0 lg:max-w-[30%] top-40 lg:h-[calc(100vh-40px)] md:min-w-[370px]">
             <SuggestionList blog={true} />
           </div>
         </div>
         <div className="md:mx-40">
           <div className="text-accent mt-16 m-auto w-full flex flex-col">
-            <h1 className="pb-4 mx-10 mb-5">مقالات مشابهة:</h1>
-            <div className="flex justify-center items-center flex-col md:flex-row flex-wrap gap-10 md:gap-10 w-full relative">
+            <h1 className="md:pb-4 md:mx-10 mx-7 mb-5 text-sm md:text-base">مقالات مشابهة:</h1>
+            <div className="flex justify-center items-center flex-col md:flex-row flex-wrap gap-5 md:gap-10 w-full relative">
               {relatedBlogs.map((relatedBlog, index) => (
                 <BlogLayoutThree key={index} blog={relatedBlog} />
               ))}

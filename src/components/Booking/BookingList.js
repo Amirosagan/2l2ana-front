@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import ConsultationCard from "./ConsultationCard"; 
+import ConsultationCard from "./ConsultationCard"; // Import the new component
 import api from "@/src/utils/api";
 import { checkSession } from "@/src/utils/auth";
 import Modal from "@/src/components/Booking/modal";
@@ -114,6 +114,7 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         });
       }
 
+      // Mark the consultation as done
       const doneResponse = await api.post(
         "/Consultation/Doctor/DoneConsultation",
         {
@@ -129,7 +130,7 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 
       if (doneResponse.status === 200) {
         alert("Consultation completed successfully");
-        setShowModal(false); 
+        setShowModal(false); // Close modal on success
       } else {
         alert("Failed to complete consultation");
       }
@@ -157,23 +158,7 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
   const currentConsultations = useMemo(() => {
     const sortedConsultations = [...updatedConsultations].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    const notDoneConsultations = sortedConsultations.filter(consultation => !consultation.isDone);
-
-    if (notDoneConsultations.length === 0) {
-      return (
-        <div className="text-center py-10">
-          <p className="text-lg font-bold">لا يوجد حجوزات حالية</p>
-          <a
-            href="/booking-Doctor"
-            className="text-primary underline hover:text-primary-dark mt-2 inline-block"
-          >
-            احجز الان
-          </a>
-        </div>
-      );
-    }
-
-    return notDoneConsultations.map((consultation) => {
+    return sortedConsultations.map((consultation) => {
       const doctor = doctorDetails[consultation.doctorId];
       const user = userDetails[consultation.userId];
       const files = medicalFiles[consultation.userId] || [];
@@ -251,11 +236,11 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 
       {showNotes && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-5 w-full max-w-sm mx-2">
-            <h2 className="tajawal-bold text-lg mb-4 text-center">ملاحظات الطبيب</h2>
-            <p>{selectedConsultation?.notes}</p>
+          <div className="bg-white rounded-lg shadow-lg p-5 w-full flex flex-col items-center max-w-sm mx-2">
+            <h2 className="tajawal-bold text-lg mb-4 ">ملاحظات الطبيب</h2>
+            <p className="my-10">{selectedConsultation?.notes}</p>
             <button
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded tajawal-bold hover:bg-blue-600 transition"
+              className="mt-4 bg-primary  text-white py-2 px-4 rounded tajawal-bold hover:scale-105 transition"
               onClick={() => setShowNotes(false)}
             >
               إغلاق

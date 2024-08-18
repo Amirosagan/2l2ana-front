@@ -6,6 +6,7 @@ import api from "@/src/utils/api";
 import { checkSession } from "@/src/utils/auth";
 import { TabPanel, Tabs } from "@/components/ui/tabs";
 import RatingModal from "@/src/components/Booking/RatingModal"; 
+import Link from "next/link";
 
 const MyBookings = () => {
   const [notDoneConsultations, setNotDoneConsultations] = useState([]);
@@ -111,14 +112,22 @@ const MyBookings = () => {
       <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
       <Tabs>
         <TabPanel label="القادم">
-          {notDoneConsultations.length > 0 && (
+          {notDoneConsultations.length > 0 ? (
             <BookingList
               consultations={notDoneConsultations}
               doctorDetails={doctorDetails}
               role={role}
               isPrevious={false}
             />
-          )}
+          ):  <div className="text-center py-10">
+          <p className="text-lg font-bold">لا يوجد حجوزات حالية</p>
+          <Link
+            href="/booking-Doctor"
+            className="text-primary underline hover:text-primary-dark mt-2 inline-block"
+          >
+            احجز الان
+          </Link>
+        </div> }
         </TabPanel>
         <TabPanel label="الحجوزات السابقة">
           {doneConsultations.length > 0 && (
