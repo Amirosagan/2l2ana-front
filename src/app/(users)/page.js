@@ -3,7 +3,7 @@ import HeroDoctor from "@/src/components/Doctors/HeroDoctor";
 import RecentPost from "@/src/components/VideoHome/RecentPosts";
 import ArticleCard from "@/src/components/ArticleCard";
 import Image from "next/image";
-import Podcast from "@/public/Podcast.svg"
+import Podcast from "@/public/podcast.svg"
 import Link from "next/link";
 
 export async function generateMetadata() {
