@@ -34,12 +34,12 @@ const SearchDoctorBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="mb-10 items-center flex flex-col gap-2 -mt-10  sm:mt-0 md:mt-10">
+    <div className="mb-5 items-center flex flex-col gap-2 -mt-10  sm:mt-0 md:mt-10">
       <h2 className="tajawal-extrabold mb-5  text-center md:text-5xl tracking-wide text-4xl">
         ابحث عن <span className="text-primary"> دكتورك </span> المفضل
       </h2>
       <p className="text-gray-500 text-lg text-center mb-3">   أكثر من 100 طبيب متخصص في جميع التخصصات، متاحون لتقديم الاستشارات عبر الفيديو أو المكالمات الهاتفية. احصل على الرعاية الطبية المتميزة من راحة منزلك </p>
-      <div className="flex w-full mt-3 max-w-md items-center mx-10 space-x-2 gap-3">
+      <div className="flex w-full  max-w-md items-center mx-10 space-x-2 gap-3">
         <TextField
           fullWidth
           style={{marginRight:"15px"}}
@@ -54,10 +54,10 @@ const SearchDoctorBar = ({ onSearch }) => {
                 borderColor: 'rgba(21, 99, 101, 0.5)',
               },
               '&:hover fieldset': {
-                borderColor: 'rgb(21, 99, 101)',
+                borderColor: 'rgb(31 143 160)',
               },
               '&.Mui-focused fieldset': {
-                borderColor: 'rgb(21, 99, 101)',
+                borderColor: 'rgb(31 143 160)',
               },
             },
             '& .MuiInputBase-input': {
@@ -67,13 +67,13 @@ const SearchDoctorBar = ({ onSearch }) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <Search className="h-4 w-4 mx-2" style={{ color: 'rgb(21, 99, 101)' }} />
+                <Search className="h-4 w-4 mx-2 text-primary" />
               </InputAdornment>
             ),
           }}
         />
         <Button
-          style={{backgroundColor:"rgb(21, 99, 101)" , marginLeft:"15px"}}
+          style={{backgroundColor:"rgb(31 143 160)" , marginLeft:"15px"}}
           variant="contained"
           onClick={handleSearch}
           sx={{
@@ -93,7 +93,7 @@ const SearchDoctorBar = ({ onSearch }) => {
       </div>
       <div className="flex gap-2 mt-4 mx-4 md:mx-10 lg:mx-16 flex-wrap">
         <h1
-          className={`rounded-xl text-accent px-3 py-2 cursor-pointer ${selectedCategory === "جميع التخصصات" ? 'bg-accent text-white' : 'hover:bg-accent hover:text-white  border border-neutral-400'}`}
+          className={`rounded-xl text-primary px-3 py-2 cursor-pointer ${selectedCategory === "جميع التخصصات" ? 'bg-primary text-white' : 'hover:bg-primary hover:text-white  border border-neutral-400'}`}
           onClick={() => handleCategoryClick("جميع التخصصات")}
         >
           جميع التخصصات
@@ -101,7 +101,7 @@ const SearchDoctorBar = ({ onSearch }) => {
         {categories.map((category, index) => (
           <h1
             key={index}
-            className={`rounded-xl text-accent px-3 py-2 cursor-pointer ${selectedCategory === category ? 'bg-accent text-white' : 'hover:bg-accent hover:text-white  border border-neutral-400'}`}
+            className={`rounded-xl text-primary px-3 py-2 cursor-pointer ${selectedCategory === category ? 'bg-primary text-white' : 'hover:bg-primary hover:text-white  border border-neutral-400'}`}
             onClick={() => handleCategoryClick(category)}
           >
             {category}

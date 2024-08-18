@@ -7,7 +7,7 @@ import Pagination from "@/src/components/admin/pagination";
 import Link from "next/link";
 import TableHeader from "@/src/components/admin/getId/TableHeader";
 import TableBody from "@/src/components/admin/getId/TableBody";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
   const [items, setItems] = useState([]);
@@ -22,27 +22,28 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const token = Cookies.get('authToken');
-      const response = await api.get(`${apiUrl}?page=${currentPage}&pageSize=${pageSize}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const token = Cookies.get("authToken");
+      const response = await api.get(
+        `${apiUrl}?page=${currentPage}&pageSize=${pageSize}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       let fetchedItems;
 
-      if (type === "questions") {
-        fetchedItems = response.data.items;
+      if (type === "podcasts") {
+        fetchedItems = response.data.podcasts;
       } else if (type === "users") {
         fetchedItems = response.data.users;
       } else if (type === "videos") {
-        fetchedItems = response.data.items.map(item => item.youtubeLink);
-      } else if (type === "blogs") {
-        fetchedItems = response.data.items;
+        fetchedItems = response.data.items.map((item) => item.youtubeLink);
       } else if (type === "tags") {
         fetchedItems = response.data.tags.filter(tag => tag.name.toLowerCase() !== "featured");
       } else if (type === "questionTags") {
-        fetchedItems = response.data.questionTags.filter(tag => tag.name.toLowerCase() !== "feature");
+        fetchedItems = response.data.questionTags.filter(tag => tag.name.toLowerCase() !== "featured");
       } else {
         fetchedItems = response.data.items;
       }
@@ -64,7 +65,7 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
 
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this item?")) {
-      const token = Cookies.get('authToken');
+      const token = Cookies.get("authToken");
       try {
         let deleteUrl = apiUrl;
         if (type === "videos") {
@@ -112,16 +113,19 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
         {type !== "tags" && type !== "questionTags" && (
           <Search placeholder={`Search for a ${type.slice(0, -1)}...`} />
         )}
-        {type !== "users" && type !== "tags" && type !== "questionTags" && addNewLink && (
-          <Link href={addNewLink}>
-            <button
-              style={{ border: "none" }}
-              className="p-3 h-10 flex items-center bg-blue-500 text-white rounded-md cursor-pointer"
-            >
-              Add New
-            </button>
-          </Link>
-        )}
+        {type !== "users" &&
+          type !== "tags" &&
+          type !== "questionTags" &&
+          addNewLink && (
+            <Link href={addNewLink}>
+              <button
+                style={{ border: "none" }}
+                className="p-3 h-10 flex items-center bg-accentDark text-white rounded-md cursor-pointer"
+              >
+                Add New
+              </button>
+            </Link>
+          )}
       </div>
       <table className="w-full text-admin2">
         <TableHeader headers={headers} />

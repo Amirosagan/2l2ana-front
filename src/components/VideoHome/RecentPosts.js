@@ -63,10 +63,12 @@ const RecentPost = ({ hideHeader, Home }) => {
             <section className="w-full mb-5 px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center">
                 {!hideHeader && (
                     <div className="w-full flex items-center justify-between">
-                        <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold w-fit inline-block font-bold capitalize text-2xl md:text-4xl">
+                        <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                             أحدث الفيديوهات
                         </h2>
-                        <Link className="underline text-lg font-bold text-accent" href="/"> المزيد </Link>
+                        <Link className="underline text-lg font-bold text-accent" href={Home ? "/videos" : "/categories"}>
+                            المزيد
+                        </Link>
                     </div>
                 )}
                 <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
@@ -92,7 +94,7 @@ const RecentPost = ({ hideHeader, Home }) => {
     return hideHeader ? (
         <section className="w-full mb-5 px-5 sm:px-10 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
-                <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold w-fit inline-block font-bold capitalize text-2xl md:text-4xl">
+                <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                     الفيديوهات:
                 </h2>
             </div>
@@ -105,10 +107,12 @@ const RecentPost = ({ hideHeader, Home }) => {
     ) : (
         <section className="w-full mb-5 lg:mt-20 px-5 sm:px-10 md:px-24 flex flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
-                <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold w-fit inline-block font-bold capitalize text-2xl md:text-4xl">
+                <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                     أحدث الفيديوهات
                 </h2>
-                <Link className="underline text-lg text-bold text-accent" href="/categories"> المزيد </Link>
+                <Link className="underline text-lg text-bold text-accent" href="/videos">
+                    المزيد
+                </Link>
             </div>
             <div className="mt-6 lg:mt-8 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-10">
                 {videos.map((video, index) => (

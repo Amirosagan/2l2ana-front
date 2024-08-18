@@ -97,6 +97,7 @@ const LoginAccount = () => {
             </div>
             <MenuItem onClick={() => handleNavigation('/')} label="الرئيسية" />
             {isLoggedIn && <MenuItem onClick={() => handleNavigation('/my-profile')} label="ملفي الشخصي" />}
+            {isLoggedIn && <MenuItem onClick={() => handleNavigation('/my-bookings')} label="حجوزاتي " />}
             <div onClick={() => toggleSubmenu('content')} className="cursor-pointer flex justify-between items-center">
               <MenuItem label="المحتوي الطبي" />
               {submenuOpen === 'content' ? <ChevronUpIcon className="text-primary" /> : <ChevronDownIcon className="text-primary" />}
@@ -105,6 +106,7 @@ const LoginAccount = () => {
               <div className="ml-4 transition-all text-gray-800 duration-300 ease-in-out">
                 <MenuItem onClick={() => handleNavigation('/blogs')} label="مقالات طبية" icon={<FileTextIcon className="text-primary" />} />
                 <MenuItem onClick={() => handleNavigation('/videos')} label="فيديوهات طبية" icon={<VideoIcon className="text-primary" />} />
+                <MenuItem onClick={() => handleNavigation('/podcasts')} label=" بودكاست قلقانة" icon={<VideoIcon className="text-primary" />} />
                 <MenuItem onClick={() => handleNavigation('/medical-questions')} label="اسئلة طبية" icon={<HelpCircleIcon className="text-primary" />} />
                 <MenuItem onClick={() => handleNavigation('/ask-Doctor')} label="ابعتلنا سؤالك" icon={<SendIcon className="text-primary" />} />
               </div>
@@ -133,6 +135,7 @@ const LoginAccount = () => {
         {isLoggedIn ? (
           <>
             <MenuItem onClick={() => handleNavigation('/my-profile')} label="ملفي الشخصي" />
+            <MenuItem onClick={() => handleNavigation('/my-bookings')} label="حجوزاتي " />
             <MenuItem onClick={handleLogout} label="تسجيل الخروج" />
           </>
         ) : (

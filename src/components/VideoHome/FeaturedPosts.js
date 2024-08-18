@@ -38,7 +38,7 @@ const FeaturedPosts = () => {
 
   return (
     <section className="w-full mt-16 sm:mt-24  px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center ">
-      <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold w-full inline-block font-bold capitalize text-2xl md:text-4xl">الأكثر رواجا</h2>
+      <h2  className="tajawal-bold text-primary/90 w-full inline-block font-bold capitalize text-2xl md:text-4xl">الأكثر رواجا</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 sm:mt-10 w-full h-full">
         {loading ? (
           [...Array(2)].map((_, index) => (

@@ -7,16 +7,44 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
   return (
     <tbody>
       {items.map((item) => (
-        <tr key={item.id || item.doctorId || item.userId}>
-          {type === "questions" && (
+        <tr key={item.id || item.userId || item.doctorId}>
+          {type === "podcasts" && (
             <>
               <td>{item.title}</td>
+              <td>{item.tags.map((tag) => tag.name).join(", ")}</td>
               <td>{item.id}</td>
-              <td>{new Date(item.date).toLocaleDateString()}</td>
+              <td>{item.audioUrl}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/questions/${item.id}`}>
-                    <button className="py-1 px-2 border-none bg-blue-500 rounded-sm">
+                  <Link href={`/admin/podcasts/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
+                      View
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => onDelete(item.id)}
+                    style={{
+                      color: "rgb(235 235 235)",
+                      backgroundColor: "rgb(156 14 14)",
+                    }}
+                    className="py-1 px-2 border-none rounded-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </>
+          )}
+          {type === "videos" && (
+            <>
+              <td>{item.title}</td>
+              <td>{item.tags.map(tag => tag.name).join(", ")}</td>
+              <td>{item.id}</td>
+              <td>{new Date(item.createdAt).toLocaleDateString()}</td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <Link href={`/admin/videos/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
                   </Link>
@@ -56,33 +84,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
-          {type === "videos" && (
-            <>
-              <td>{item.title}</td>
-              <td>{item.tags.map(tag => tag.name).join(", ")}</td>
-              <td>{item.id}</td>
-              <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-              <td>
-                <div className="flex items-center gap-2">
-                  <Link href={`/admin/videos/${item.id}`}>
-                    <button className="py-1 px-2 border-none bg-blue-500 rounded-sm">
-                      View
-                    </button>
-                  </Link>
-                  <button
-                    onClick={() => onDelete(item.id)}
-                    style={{
-                      color: "rgb(235 235 235)",
-                      backgroundColor: "rgb(156 14 14)",
-                    }}
-                    className="py-1 px-2 border-none rounded-sm"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </>
-          )}
           {type === "doctors" && (
             <>
               <td>{`${item.firstName} ${item.lastName}`}</td>
@@ -93,7 +94,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>
                 <div className="flex items-center gap-2">
                   <Link href={`/admin/doctors/${item.doctorId}`}>
-                    <button className="py-1 px-2 border-none bg-blue-500 rounded-sm">
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
                   </Link>
@@ -118,8 +119,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{new Date(item.lastUpdated).toLocaleDateString()}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/Blogs/${item.id}`}>
-                    <button className="py-1 px-2 border-none bg-blue-500 rounded-sm">
+                  <Link href={`/admin/blogs/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
                   </Link>
@@ -143,6 +144,11 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.id}</td>
               <td>
                 <div className="flex items-center gap-2">
+                  <Link href={`/admin/tags/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
+                      View
+                    </button>
+                  </Link>
                   <button
                     onClick={() => onDelete(item.id)}
                     style={{
@@ -163,6 +169,37 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.id}</td>
               <td>
                 <div className="flex items-center gap-2">
+                  <Link href={`/admin/questionTags/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
+                      View
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => onDelete(item.id)}
+                    style={{
+                      color: "rgb(235 235 235)",
+                      backgroundColor: "rgb(156 14 14)",
+                    }}
+                    className="py-1 px-2 border-none rounded-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </>
+          )}
+          {type === "questions" && (
+            <>
+              <td>{item.title}</td>
+              <td>{item.id}</td>
+              <td>{new Date(item.date).toLocaleDateString()}</td>
+              <td>
+                <div className="flex items-center gap-2">
+                  <Link href={`/admin/questions/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
+                      View
+                    </button>
+                  </Link>
                   <button
                     onClick={() => onDelete(item.id)}
                     style={{

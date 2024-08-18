@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const GoalPage = () => {
     return (
-        <div className="flex flex-col lg:flex-row md:w-2/3 mx-5 justify-center items-center md:m-auto m-auto p-10  border-2 border-primary rounded-lg bg-neutral-50">
+        <div className="flex flex-col lg:flex-row lg:w-2/3 mx-5 md:w-[90%] justify-center items-center md:m-auto m-auto p-10 lg:-mt-5  border-2 border-primary rounded-lg bg-neutral-50">
             <div className="flex flex-col gap-10 md:w-1/2">
                 <h1 className="tajawal-bold text-5xl text-primary">من نحن؟</h1>
                 <p className="tajawal-regular text-xl">

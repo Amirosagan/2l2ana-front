@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import {
     Dialog,
@@ -59,6 +58,7 @@ export default function BookAppointment({ doctorId }) {
     const [isFreeConsultation, setIsFreeConsultation] = useState(false);
     const [bookingTrigger, setBookingTrigger] = useState(0);
     const [session, setSession] = useState(null);
+    const [freeTickets, setFreeTickets] = useState(0); // Track free tickets
 
     const nextWeekDays = getNextWeekDays();
 
@@ -67,6 +67,7 @@ export default function BookAppointment({ doctorId }) {
             const sessionData = await checkSession();
             if (sessionData) {
                 setSession(sessionData.session);
+                fetchFreeConsultationTickets(); // Fetch free tickets on session initialization
             }
         }
 
@@ -148,6 +149,24 @@ export default function BookAppointment({ doctorId }) {
             setNotAvailableTimes(response.data.dates);
         } catch (error) {
             console.error('Error fetching not available consultations:', error);
+        }
+    };
+
+    const fetchFreeConsultationTickets = async () => {
+        try {
+            const sessionData = await checkSession();
+            if (!sessionData || !sessionData.session) {
+                return;
+            }
+
+            const { token } = sessionData;
+            const response = await api.get(`/User/GetFreeConsultationTickets`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            setFreeTickets(response.data.freeTickets);
+        } catch (error) {
+            console.error('Error fetching free consultation tickets:', error);
         }
     };
 
@@ -256,7 +275,12 @@ export default function BookAppointment({ doctorId }) {
             </button>
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
                 <DialogTitle>احجز ميعاد</DialogTitle>
-                <DialogContent style={{ minHeight: '400px' }}>
+                <DialogContent 
+                    style={{ 
+                        minHeight: '400px', 
+                        ...(step !== 1 ? { display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}) 
+                    }}
+                >
                     {step === 1 && (
                         <>
                             {session ? (
@@ -352,15 +376,19 @@ export default function BookAppointment({ doctorId }) {
                                 >
                                     30 دقيقة "اذهب الي منصة الدفع"
                                 </Button>
-                                <h1> أو </h1>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={() => handleBooking(true)}
-                                    className="mb-2 bg-accent text-white"
-                                >
-                                    10 دقائق مجاني
-                                </Button>
+                                {freeTickets > 0 && ( // Conditionally render the free consultation button
+                                    <>
+                                        <h1> أو </h1>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleBooking(true)}
+                                            className="mb-2 bg-accent text-white"
+                                        >
+                                            10 دقائق مجاني
+                                        </Button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     )}

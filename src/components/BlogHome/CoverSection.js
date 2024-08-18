@@ -44,8 +44,8 @@ const CoverSection = () => {
     return (
       <div className="w-full md:inline-block">
         <h1
-          className="text-3xl mx-4 mb-5 md:hidden"
-          style={{ color: "rgb(92, 194, 198)" }}
+          className="text-3xl mx-4 mb-5 md:hidden text-primary/90"
+     
         >
           {" "}
           المقالات{" "}

@@ -1,14 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
-import { login } from "@/src/utils/auth";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { login, checkSession } from "@/src/utils/auth";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react"; // Import the icons
+import FormFieldComponent from "../ELements/FormField";
+import ErrorMessageComponent from "../ELements/ErrorMessage";
 
 const Spinner = () => (
   <div className="spinner">
@@ -42,6 +44,7 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
   const router = useRouter();
 
   const form = useForm({
@@ -52,19 +55,38 @@ const LoginForm = () => {
     },
   });
 
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const session = await checkSession();
+      if (session?.session) {
+        router.push("/");
+      }
+    };
+    checkUserSession();
+  }, [router]);
+
   const handleSubmit = async (data) => {
     setIsSubmitting(true);
     try {
       const response = await login(data.email, data.password, rememberMe);
       localStorage.setItem('token', response.token);
       setErrorMessage("");
-      router.push("/"); 
+
+      const session = await checkSession();
+      if (session?.session?.role === 'Admin') {
+        router.push('/asdkjklasdlkja21321jlkasd/users');
+      } else {
+        router.push('/');
+      }
     } catch (error) {
-      console.error("Error logging in:", error);
       setErrorMessage("بريد إلكتروني أو كلمة مرور غير صالحة. حاول مرة اخرى.");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -72,36 +94,30 @@ const LoginForm = () => {
       <div className="w-full max-w-md">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4 w-full p-5 m-auto">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-1">
-                  <FormLabel className="tajawal-bold">البريد الالكتروني</FormLabel>
-                  <FormControl>
-                    <Input className="p-7" placeholder="" type="email" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
+            <FormFieldComponent 
+              form={form} 
+              name="email" 
+              label="البريد الالكتروني" 
+              type="email" 
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem className="flex flex-col gap-1">
-                  <FormLabel className="tajawal-bold">كلمة السر</FormLabel>
-                  <FormControl>
-                    <Input className="p-7" placeholder="" type="password" {...field} />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
+            <div className="relative">
+              <FormFieldComponent 
+                form={form} 
+                name="password" 
+                label="كلمة السر" 
+                type={showPassword ? "text" : "password"} 
+              />
+              <div
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 left-0 pl-3 flex mt-5 items-center cursor-pointer"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5 text-gray-500" /> : <Eye className="h-5 w-5 text-gray-500" />}
+              </div>
+            </div>
             <div className="flex items-center justify-end -mt-3">
               <Link href="/forgot-password" className="text-accent text-sm tajawal-bold cursor-pointer">نسيت كلمة السر؟</Link>
             </div>
-            {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+            <ErrorMessageComponent errorMessage={errorMessage} />
             <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white tajawal-bold" disabled={isSubmitting}>
               {isSubmitting ? <Spinner /> : "تسجيل الدخول"}
             </Button>

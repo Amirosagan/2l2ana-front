@@ -73,11 +73,11 @@ const RecentPosts = ({ hideHeader, Home }) => {
     return (
       <section className="w-full mb-5 mt-32 flex flex-col items-center justify-center">
         <div className="w-full flex items-center justify-between">
-          <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold inline-block font-bold capitalize text-2xl md:text-4xl">
+          <h2  className="tajawal-bold inline-block text-primary/90 font-bold capitalize text-2xl md:text-4xl">
             {hideHeader ? 'المقالات' : 'أحدث المقالات'}
           </h2>
           {!hideHeader && (
-            <Link href="/categories/all" className="underline text-lg text-bold text-accent">
+            <Link href={Home ? "/blogs" : "/categories/all"} className="underline text-lg text-bold text-accent">
               المزيد
             </Link>
           )}
@@ -105,9 +105,9 @@ const RecentPosts = ({ hideHeader, Home }) => {
   }
 
   return hideHeader ? (
-    <section className="w-full mb-5 px-5 sm:px-10 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
+    <section className="w-full mb-5 px-5 sm:px-5 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
       <div className="w-full items-center flex justify-between">
-        <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold w-fit inline-block font-bold capitalize text-2xl md:text-4xl">
+        <h2  className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
           المقالات
         </h2>
       </div>
@@ -120,16 +120,16 @@ const RecentPosts = ({ hideHeader, Home }) => {
       </div>
     </section>
   ) : (
-    <section className="w-full mb-5 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center">
+    <section className="w-full mb-5 sm:mt-20 lg:mt-32 px-5 lg:px-24  flex flex-col items-center justify-center">
       <div className="w-full flex justify-between">
-        <h2 style={{ color: "#5cc2c6" }} className="tajawal-bold w-fit inline-block font-bold capitalize text-2xl md:text-4xl">
+        <h2  className="tajawal-bold w-fit inline-block text-primary/90 font-bold capitalize text-2xl md:text-4xl">
           أحدث المقالات
         </h2>
-        <Link href="/categories?type=posts" className="underline text-lg text-bold text-accent">
+        <Link href={Home ? "/blogs" : "/categories?type=posts"} className="underline text-lg text-bold text-accent">
           المزيد
         </Link>
       </div>
-      <div className="lg:mt-16 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
+      <div className="lg:mt-8 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
         {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />

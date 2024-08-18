@@ -39,7 +39,7 @@ const BlogPage = async () => {
 
   return (
     <div className="md:mt-6">
-      <div className="flex flex-col items-center container1 justify-center">
+      <div className="flex flex-col items-center lg:w-[83%] m-auto justify-center">
         <CoverSection />
         <FeaturedPosts />
         <div className=" w-[85%] mb-10 lg:mb-0 m-auto">

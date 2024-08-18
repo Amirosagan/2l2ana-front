@@ -24,7 +24,7 @@ const HeroDoctor = ({ onExploreClick }) => {
             <p className="md:mt-8 mt-4 md:text-lg tajawal-medium text-gray-600">
               لتلبية احتياجاتك الصحية بأعلى مستويات الرعاية، نقدم لك نخبة من الأطباء المتخصصين في كافة المجالات، متاحين للاستشارات عبر الإنترنت بالصوت والصورة. احجزي موعدك الآن ودعينا نتولى الباقي.
             </p>
-            <Link href="/booking-Doctor"  className="md:mt-8 mt-4  tajawal-bold inline-block rounded bg-primary px-12 py-3 text-sm font-medium text-white transition hover:bg-teal-800 focus:outline-none">
+            <Link href="/booking-Doctor"  className="md:mt-8 mt-4  tajawal-bold inline-block rounded bg-primary px-12 py-3 text-sm font-medium text-white transition hover:bg-primary/80 focus:outline-none">
               
                 استكشف الدكاترة
               

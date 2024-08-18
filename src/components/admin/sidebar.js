@@ -1,4 +1,4 @@
-import { Users, Hospital, HelpCircle, Film, FileText, Tag, LogOut, Tags } from "lucide-react";
+import { Users, Hospital, HelpCircle, Film, FileText, Tag, LogOut, Tags, Radio } from "lucide-react";
 import { useRouter } from "next/navigation";
 import MneuLink from "./menuLink";
 import { logout } from "@/src/utils/auth";
@@ -17,13 +17,13 @@ const Sidebar = () => {
       list: [
         {
           title: "Users",
-          path: "/admin/users",
-          icon: <Users />,
+          path: "/asdkjklasdlkja21321jlkasd/users",
+          icon: <Users/>,
         },
         {
           title: "Doctors",
-          path: "/admin/doctors",
-          icon: <Hospital />,
+          path: "/asdkjklasdlkja21321jlkasd/doctors",
+          icon: <Hospital/>,
         },
       ],
     },
@@ -32,18 +32,23 @@ const Sidebar = () => {
       list: [
         {
           title: "Questions",
-          path: "/admin/questions",
-          icon: <HelpCircle />,
+          path: "/asdkjklasdlkja21321jlkasd/questions",
+          icon: <HelpCircle/>,
         },
         {
           title: "Videos",
-          path: "/admin/videos",
-          icon: <Film />,
+          path: "/asdkjklasdlkja21321jlkasd/videos",
+          icon: <Film/>,
         },
         {
           title: "Blogs",
-          path: "/admin/Blogs",
-          icon: <FileText />,
+          path: "/asdkjklasdlkja21321jlkasd/blogs",
+          icon: <FileText/>,
+        },
+        {
+          title: "Podcasts",
+          path: "/asdkjklasdlkja21321jlkasd/podcasts",
+          icon: <Radio/>,
         },
       ],
     },
@@ -52,13 +57,13 @@ const Sidebar = () => {
       list: [
         {
           title: "Tags",
-          path: "/admin/Tags",
-          icon: <Tags />,
+          path: "/asdkjklasdlkja21321jlkasd/tags",
+          icon: <Tags/>,
         },
         {
           title: "Questions Tags",
-          path: "/admin/question-tags",
-          icon: <Tag />,
+          path: "/asdkjklasdlkja21321jlkasd/question-tags",
+          icon: <Tag/>,
         },
       ],
     },
@@ -87,8 +92,7 @@ const Sidebar = () => {
       <div className="px-3 pb-1 mt-10">
         <button
           onClick={handleLogout}
-          style={{ color: "rgb(235 235 235)" }}
-          className="py-4 w-full px-4 flex gap-2 items-center lhover my-2 h-full shadow-lg rounded-lg border-solid border-white border cursor-pointer"
+          className="py-4 w-full px-4 flex gap-2 items-center text-white bg-primary lhover my-2 h-full shadow-lg rounded-lg border-solid border-white border cursor-pointer"
         >
           <LogOut /> Logout
         </button>

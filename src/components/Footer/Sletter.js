@@ -10,7 +10,7 @@ const sletter = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <footer style={{backgroundColor:"rgb(52 146 150)"}} className="w-full lg:w-[80%] lg:-mt-0 bg-dark py-4 sm:mb-10 flex flex-col items-center text-light">
+    <footer  className="w-full lg:w-[80%] lg:-mt-0 bg-primary py-4 sm:mb-10 flex flex-col items-center text-light">
       <h3 className="tajawal-medium mt-8 font-medium  text-center capitalize text-2xl sm:text-3xl lg:text-4xl px-4">
         إرشادات | فيديوهات | مقالات طبية
       </h3>

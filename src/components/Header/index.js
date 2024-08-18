@@ -4,19 +4,20 @@ import { useEffect, useState, useRef } from 'react';
 import Logo from './logo';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDownIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, InfoIcon } from 'lucide-react';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
+import { ChevronDownIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, Radio} from 'lucide-react';
 import LoginAccount from './LoginAccount';
+
+Radio 
 
 const navItems = [
   { href: '/', label: 'الرئيسية' },
   {
-    href: '#', // Use '#' instead of empty string
+    href: '#', 
     label: 'المحتوي الطبي',
     subItems: [
       { href: '/blogs', label: 'مقالات طبية', icon: FileTextIcon },
       { href: '/videos', label: 'فيديوهات طبية', icon: VideoIcon },
+      { href: '/podcasts', label: 'بودكاست قلقانة ', icon: Radio },
       { href: '/medical-questions', label: 'اسئلة طبية', icon: HelpCircleIcon },
       { href: '/ask-Doctor', label: 'ابعتلنا سؤالك', icon: SendIcon },
     ],
@@ -68,12 +69,12 @@ const Header = () => {
 
   return (
     <header id='header'>
-      <div id='headerr' style={{ backgroundColor: "#f7f7f7" }} className="w-full shadow-lg md:h-24 py-2 md:py-0 md:px-10 flex items-center justify-between fixed lg:top-0 top-0 left-0 right-0 z-50">
+      <div id='headerr' style={{ backgroundColor: "#f7f7f7" }} className="w-full  shadow-lg md:h-24 py-2 md:py-0 md:px-10 flex items-center justify-between fixed lg:top-0 top-0 left-0 right-0 z-50">
         <div className='flex items-center'>
           <div className='mx-5 md:mx-0 mb-[2px]'>
             <LoginAccount />
           </div>
-          <nav style={{ color: "rgb(52, 146, 150)" }} className="hidden lg:flex justify-center items-center gap-8">
+          <nav className="hidden lg:flex justify-center text-primary items-center gap-8">
             <ul className="flex gap-2 items-center" ref={dropdownRef}>
               {navItems.map(item => (
                 <li key={item.href} className="relative cursor-pointer">
@@ -114,7 +115,7 @@ const Header = () => {
             </ul>
           </nav>
         </div>
-        <div className="md:mt-14 mx-5 md:mx-0">
+        <div className="  mx-5 md:mx-0">
           <Logo />
           {/* <Link href={"/"} style={{ backgroundColor: "" }} className='flex md:hidden justify-center items-center'>
             <div className=''>

@@ -27,7 +27,7 @@ const CoverSection = () => {
   if (loading) {
     return (
       <div className="w-full md:inline-block">
-        <h1 className='text-3xl mx-4 mb-5' style={{ color: "rgb(92, 194, 198)" }}>الفيديوهات</h1>
+        <h1 className='text-3xl mx-4 mb-5 md:hidden text-primary/90'>الفيديوهات</h1>
         <article className="flex flex-col items-start justify-end mx-5 lg:w-[90%] lg:m-auto relative h-[40vh] md:h-[80vh]">
           <div className="absolute top-0 left-0 bottom-0 right-0 h-full w-full bg-gradient-to-b from-transparent to-dark/90 rounded-3xl z-10" />
           <div className="relative w-full h-full rounded-3xl z-0 overflow-hidden">
@@ -53,7 +53,7 @@ const CoverSection = () => {
 
   return (
     <div className="w-full md:inline-block">
-      <h1 className='text-3xl mx-4 mb-5 md:hidden' style={{ color: "rgb(92, 194, 198)" }}>الفيديوهات</h1>
+      <h1 className='text-3xl mx-4 mb-5 md:hidden text-primary/90' >الفيديوهات</h1>
       <article className="flex flex-col items-start justify-end mx-5 lg:w-[90%] lg:m-auto relative h-[40vh] md:h-[80vh]">
         <div className="absolute top-0 left-0 bottom-0 right-0 h-full w-full bg-gradient-to-b from-transparent to-dark/90 rounded-3xl z-10" />
         <div className="relative w-full h-full rounded-3xl z-20 overflow-hidden">

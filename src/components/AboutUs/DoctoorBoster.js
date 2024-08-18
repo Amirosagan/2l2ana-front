@@ -7,8 +7,8 @@ const DoctoorBoster = () => {
   return (
     <div
       id="ad"
-      style={{ backgroundColor: "rgb(52, 146, 150)" }}
-      className="md:mt-40 mt-10 flex flex-col md:flex-row"
+    
+      className="md:mt-40 mt-10 flex flex-col md:flex-row bg-primary"
     >
       <div className="w-full flex flex-col p-10  justify-center">
         <div className="flex flex-col justify-center md:gap-10">
@@ -17,7 +17,7 @@ const DoctoorBoster = () => {
               <h1 className="md:text-[36px]  xl:w-[79%] text-white  text-[23px] tajawal-bold">
                 استشارتك اونلاين مع اشطر دكتور في مصر
               </h1>
-              {/* <Image className="w-[60%] relative -top-44 right-28 md:hidden xl:w-[520px] lg:h-full overflow-hidden" alt="Doctor" src={DoctorBosterr} />   */}
+             
             </div>
           </div>
           <Link

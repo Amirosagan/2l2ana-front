@@ -5,23 +5,20 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import { checkSession } from "@/src/utils/auth";
-import MyBooking from "@/src/components/Doctors/MyBooking";
+import FileManagement from "@/src/components/Booking/FileManagement";
+import UpdatePhoneNumberForm from "@/src/components/User/UpdatePhoneNumberForm";
 import UpdateDoctorForm from "@/src/components/Doctors/UbdateDoctorForm";
-import FileUpload from "@/src/components/Doctors/FileUbload";
-import { ChevronDownIcon, ChevronUp } from "lucide-react";
 const jwt = require("jsonwebtoken");
 
 const MyProfileClient = () => {
   const [role, setRole] = useState("");
   const [doctorId, setDoctorId] = useState(null);
-  const [isSectionOpen, setIsSectionOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserRole = async () => {
       const session = await checkSession();
       if (session && session.session && session.session.role) {
         setRole(session.session.role);
-        setIsSectionOpen(session.session.role === "Doctor");
 
         const token = Cookies.get("authToken");
         if (token) {
@@ -42,41 +39,20 @@ const MyProfileClient = () => {
     }
   }, []);
 
-  const handleFetchMedicalFiles = (isEmpty) => {
-    if (isEmpty) {
-      setIsSectionOpen(true);
-    }
-  };
-
-  const toggleSection = () => {
-    setIsSectionOpen(!isSectionOpen);
-  };
-
   return (
-    <div className="mt-12 px-4 sm:px-10 lg:mx-20 mb-5">
+    <div className="px-4 sm:px-10 lg:mx-20 mb-5">
       <ToastContainer />
-      <div className="mt-10 px-4 sm:px-10">
-        <div
-          className="flex items-center cursor-pointer"
-          onClick={toggleSection}
-        >
-          <h2 className="font-bold text-2xl tajawal-bold">ملفي الشخصي</h2>
-          {isSectionOpen ? (
-            <ChevronUp className="mt-1 mx-2" />
-          ) : (
-            <ChevronDownIcon className="mt-1 mx-2 " />
-          )}
-        </div>
-        <div
-          className={`transition-all duration-300 ${isSectionOpen ? "max-h-full opacity-100" : "max-h-0 opacity-0 overflow-hidden"}`}
-        >
-          {role === "Doctor" ? (
+      <div className="mt-3 px-4 sm:px-10">
+        <h2 className="font-bold text-2xl tajawal-bold">ملفي الشخصي</h2>
+        {role === "Doctor" ? (
             <UpdateDoctorForm doctorId={doctorId} />
-          ) : (
-            <FileUpload onFetchMedicalFiles={handleFetchMedicalFiles} />
-          )}
-        </div>
-        <MyBooking />
+        ) : (
+          <>
+           <FileManagement />
+           <UpdatePhoneNumberForm />
+           
+          </>
+        )}
       </div>
     </div>
   );

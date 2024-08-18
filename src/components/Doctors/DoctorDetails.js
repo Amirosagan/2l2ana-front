@@ -1,7 +1,8 @@
 import avatar from "@/public/noavatar.png";
 import { BadgeInfo, ClipboardPlus } from "lucide-react";
 import Image from "next/image";
-import BookAppointment from "./BookAppointment";
+import BookAppointment from "../Booking/BookAppointment";
+import Rating from "@/src/components/ELements/Rating"; 
 
 const Details = ({ doctor }) => {
   return (
@@ -15,7 +16,6 @@ const Details = ({ doctor }) => {
             height={200}
             className="rounded-lg h-[240px] lg:min-h-[280px]  w-full object-cover"
             unoptimized={true}
-
           />
         </div>
 
@@ -29,11 +29,11 @@ const Details = ({ doctor }) => {
           <h2 className="tajawal-regular text-gray-500 flex gap-2 text-md">
             <ClipboardPlus /> {doctor.headLine}
           </h2>
-          <h2 className="tajawal-regular text-gray-500 flex gap-2 text-md">
-            {doctor.rating} نجوم
-          </h2>
+          <div className="tajawal-regular text-gray-500 flex gap-2 text-md">
+            <Rating rating={doctor.rating} />  
+          </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center mt-5">
             <BookAppointment doctorId={doctor.doctorId} />
           </div>
         </div>

@@ -26,7 +26,6 @@ const TagsPage = ({ token }) => {
         throw new Error("Failed to fetch existing tags");
       }
     } catch (error) {
-      // Handle fetch error
     }
   }, [token]);
 

@@ -38,7 +38,7 @@ export default function AdminLayout({ children }) {
 
   return (
     <div className="flex">
-      <div style={{ backgroundColor: "#156365" }} className="w-72 h-[100vh]">
+      <div  className="w-72 bg-primary h-[100vh]">
         <Sidebar />
       </div>
       <div className="content flex-1 p-5">

@@ -1,4 +1,4 @@
-import LoginForm from "@/src/components/LoginForm";
+import LoginForm from "@/src/components/Login/LoginForm";
 import Head from "next/head";
 
 const LoginPage = () => {
