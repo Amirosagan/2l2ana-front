@@ -60,7 +60,7 @@ const RecentPost = ({ hideHeader, Home }) => {
         const skeletonCount = Home ? 3 : 6;
 
         return (
-            <section className="w-full mb-5 px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center">
+            <section className="w-full mb-5 px-5 lg:px-24  flex flex-col items-center justify-center">
                 {!hideHeader && (
                     <div className="w-full flex items-center justify-between">
                         <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
@@ -92,7 +92,7 @@ const RecentPost = ({ hideHeader, Home }) => {
     }
 
     return hideHeader ? (
-        <section className="w-full mb-5 px-5 sm:px-10 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
+        <section className="w-full mb-5 px-5 sm:px-10 md:px-24  flex mt-16 flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
                 <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                     الفيديوهات:
@@ -105,7 +105,7 @@ const RecentPost = ({ hideHeader, Home }) => {
             </div>
         </section>
     ) : (
-        <section className="w-full mb-5 lg:mt-20 px-5 sm:px-10 md:px-24 flex flex-col items-center justify-center">
+        <section className="w-full mb-5 lg:mt-20 px-5  lg:px-24 flex flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
                 <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                     أحدث الفيديوهات
