@@ -1,4 +1,4 @@
-import WomenImage from '@/public/women.jpg';
+import WomenImage from '@/public/about-us.jpeg';
 import Image from 'next/image';
 
 const GoalPage = () => {
