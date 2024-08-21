@@ -9,7 +9,7 @@ const PodcastPage = () => {
     <AdminPage
       type="podcasts"
       apiUrl="https://api.2l2ana.com/api/Podcast"
-      addNewLink="/admin/newPodcast"
+      addNewLink="/asdkjklasdlkja21321jlkasd/newPodcast"
       headers={headers}
     />
   );

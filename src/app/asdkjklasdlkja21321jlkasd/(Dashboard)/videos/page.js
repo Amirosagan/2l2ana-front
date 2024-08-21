@@ -9,7 +9,7 @@ const VideoPage = () => {
     <AdminPage
       type="videos"
       apiUrl="https://api.2l2ana.com/api/Youtube"
-      addNewLink="/admin/newVideo"
+      addNewLink="/asdkjklasdlkja21321jlkasd/newVideo"
       headers={headers}
     />
   );
