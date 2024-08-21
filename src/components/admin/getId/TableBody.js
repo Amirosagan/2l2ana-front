@@ -17,7 +17,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.audioUrl}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/podcasts/${item.id}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/podcasts/${item.id}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
@@ -46,7 +46,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{new Date(item.createdAt).toLocaleDateString()}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/videos/${item.id}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/videos/${item.id}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
@@ -100,7 +100,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.rating}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/doctors/${item.doctorId}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/doctors/${item.doctorId}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
@@ -128,7 +128,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{new Date(item.lastUpdated).toLocaleDateString()}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/blogs/${item.id}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/blogs/${item.id}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
@@ -155,7 +155,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.id}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/tags/${item.id}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/tags/${item.id}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
@@ -182,7 +182,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.id}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/questionTags/${item.id}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/questionTags/${item.id}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
@@ -210,7 +210,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{new Date(item.date).toLocaleDateString()}</td>
               <td>
                 <div className="flex items-center gap-2">
-                  <Link href={`/admin/questions/${item.id}`}>
+                  <Link href={`/asdkjklasdlkja21321jlkasd/questions/${item.id}`}>
                     <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
                       View
                     </button>
