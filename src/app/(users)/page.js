@@ -39,9 +39,11 @@ export default function Home() {
     <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
       <HeroDoctor />
      <WhyCard/>
-     <ArticleCard />
       <OfflineSection/>
+      <ArticleCard />
       <AdsSection/>
+
+
 
       <div className="  lg:pb-16 lg:px-28">
        
@@ -61,6 +63,8 @@ export default function Home() {
         <RecentPost Home={true} />
       
       </div>
+
+
     </main>
   );
 }
