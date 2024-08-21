@@ -8,6 +8,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
     <tbody>
       {items.map((item) => (
         <tr key={item.id || item.userId || item.doctorId}>
+          {/* Podcasts */}
           {type === "podcasts" && (
             <>
               <td>{item.title}</td>
@@ -35,10 +36,12 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Videos */}
           {type === "videos" && (
             <>
               <td>{item.title}</td>
-              <td>{item.tags.map(tag => tag.name).join(", ")}</td>
+              <td>{item.tags.map((tag) => tag.name).join(", ")}</td>
               <td>{item.id}</td>
               <td>{new Date(item.createdAt).toLocaleDateString()}</td>
               <td>
@@ -62,6 +65,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Users */}
           {type === "users" && (
             <>
               <td>{`${item.firstName} ${item.lastName}`}</td>
@@ -84,6 +89,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Doctors */}
           {type === "doctors" && (
             <>
               <td>{`${item.firstName} ${item.lastName}`}</td>
@@ -112,6 +119,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Blogs */}
           {type === "blogs" && (
             <>
               <td>{item.title}</td>
@@ -138,6 +147,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Tags */}
           {type === "tags" && (
             <>
               <td>{item.name}</td>
@@ -163,6 +174,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Question Tags */}
           {type === "questionTags" && (
             <>
               <td>{item.name}</td>
@@ -188,6 +201,8 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               </td>
             </>
           )}
+
+          {/* Questions */}
           {type === "questions" && (
             <>
               <td>{item.title}</td>
@@ -211,6 +226,23 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
                     Delete
                   </button>
                 </div>
+              </td>
+            </>
+          )}
+
+          {/* Consultations */}
+          {type === "consultations" && (
+            <>
+              <td>{item.userId}</td>
+              <td>{item.doctorId}</td>
+              <td>{new Date(item.date).toLocaleDateString()}</td>
+              <td>{item.price}</td>
+              <td>{item.isDone}</td>
+             
+              <td>
+                 <Link href={item.meetingUrl} target="_blank">
+                 <button className="p-2 text-sm bg-accentDark rounded-lg">
+                  Meeting Link </button> </Link>
               </td>
             </>
           )}

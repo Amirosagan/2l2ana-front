@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaYoutube, FaTiktok, FaSnapchatGhost, FaTwitter } from 'react-icons/fa';
 import Link from "next/link";
-import profileImg from '@/public/profile-imgr.png';
+import profileImg from '@/public/profile-imgr.svg';
 import Image from "next/image";
 
 const Footer = () => {

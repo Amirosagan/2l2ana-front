@@ -1,6 +1,5 @@
 import React from "react";
 import Tooltip from "@mui/material/Tooltip";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const ConsultationActions = ({
   consultation,

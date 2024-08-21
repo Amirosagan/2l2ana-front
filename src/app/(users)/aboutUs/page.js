@@ -3,7 +3,6 @@ import MixFooter from "@/src/components/Footer/mixfooter";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
-import ServicesPage from "@/src/components/AboutUs/Services";
 import GoalPage from "@/src/components/AboutUs/GoalPage";
 import { BookOpenText, BookPlus } from "lucide-react";
 

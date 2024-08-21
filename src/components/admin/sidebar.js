@@ -1,4 +1,4 @@
-import { Users, Hospital, HelpCircle, Film, FileText, Tag, LogOut, Tags, Radio } from "lucide-react";
+import { Users, Hospital, HelpCircle, Film, FileText, Tag, LogOut, Tags, Radio, Folders } from "lucide-react";
 import { useRouter } from "next/navigation";
 import MneuLink from "./menuLink";
 import { logout } from "@/src/utils/auth";
@@ -24,6 +24,11 @@ const Sidebar = () => {
           title: "Doctors",
           path: "/asdkjklasdlkja21321jlkasd/doctors",
           icon: <Hospital/>,
+        },
+        {
+          title: "Consultations",
+          path: "/asdkjklasdlkja21321jlkasd/consultations",
+          icon: <Folders />,
         },
       ],
     },
@@ -89,7 +94,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <div className="px-3 pb-1 mt-10">
+      <div className="px-3 pb-1 ">
         <button
           onClick={handleLogout}
           className="py-4 w-full px-4 flex gap-2 items-center text-white bg-primary lhover my-2 h-full shadow-lg rounded-lg border-solid border-white border cursor-pointer"

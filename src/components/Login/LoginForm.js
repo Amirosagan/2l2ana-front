@@ -44,7 +44,7 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false); 
   const router = useRouter();
 
   const form = useForm({
@@ -111,7 +111,7 @@ const LoginForm = () => {
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 left-0 pl-3 flex mt-5 items-center cursor-pointer"
               >
-                {showPassword ? <EyeOff className="h-5 w-5 text-gray-500" /> : <Eye className="h-5 w-5 text-gray-500" />}
+                {showPassword ? <Eye className="h-5 w-5 text-gray-500" /> : <EyeOff className="h-5 w-5 text-gray-500" />}
               </div>
             </div>
             <div className="flex items-center justify-end -mt-3">

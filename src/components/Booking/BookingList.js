@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import ConsultationCard from "./ConsultationCard"; // Import the new component
+import ConsultationCard from "./ConsultationCard";
 import api from "@/src/utils/api";
 import { checkSession } from "@/src/utils/auth";
 import Modal from "@/src/components/Booking/modal";
 import RatingModal from "@/src/components/Booking/RatingModal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious, onRate }) => {
+const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious, onRefetchNotDoneConsultations }) => {
   const [userDetails, setUserDetails] = useState({});
   const [medicalFiles, setMedicalFiles] = useState({});
   const [uploading, setUploading] = useState(false);
@@ -91,8 +93,10 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         },
       });
       setShowCancelModal(false);
+      toast.success("Consultation cancelled successfully");
     } catch (error) {
       console.error("Failed to cancel consultation:", error);
+      toast.error("Failed to cancel consultation");
     }
   };
 
@@ -100,21 +104,40 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
     setUploading(true);
 
     try {
-      // Upload the file if present
+      let fileUrl = "";
+
       if (file) {
+        // Step 1: Upload the file to get the URL
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("consultationId", selectedConsultation.id);
 
-        await api.post("/MedicalFile/Upload", formData, {
+        const uploadResponse = await api.post("/Upload", formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         });
+
+        fileUrl = uploadResponse.data.fileUrl;
+
+        // Step 2: Submit the medical file information
+        await api.post(
+          "/MedicalFile",
+          {
+            userId: selectedConsultation.userId, 
+            fileName: file.name,
+            contentType: file.type,
+            url: fileUrl,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       }
 
-      // Mark the consultation as done
+      // Step 3: Submit the consultation notes
       const doneResponse = await api.post(
         "/Consultation/Doctor/DoneConsultation",
         {
@@ -129,14 +152,15 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
       );
 
       if (doneResponse.status === 200) {
-        alert("Consultation completed successfully");
-        setShowModal(false); // Close modal on success
+        toast.success("Consultation completed successfully");
+        setShowModal(false);
+        onRefetchNotDoneConsultations();
       } else {
-        alert("Failed to complete consultation");
+        toast.error("Failed to complete consultation");
       }
     } catch (error) {
       console.error("Error submitting consultation:", error);
-      alert("An error occurred while submitting the consultation.");
+      toast.error("An error occurred while submitting the consultation.");
     } finally {
       setUploading(false);
     }
@@ -207,7 +231,7 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
           onClose={() => setShowRatingModal(false)}
           consultationId={selectedConsultation?.id}
           onSubmitRating={(rating) => {
-            handleRatingSubmit(selectedConsultation.id, rating); // Update the consultation with the new rating
+            handleRatingSubmit(selectedConsultation.id, rating); 
             setShowRatingModal(false);
           }}
         />
@@ -238,13 +262,22 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-5 w-full flex flex-col items-center max-w-sm mx-2">
             <h2 className="tajawal-bold text-lg mb-4 ">ملاحظات الطبيب</h2>
-            <p className="my-10">{selectedConsultation?.notes}</p>
-            <button
-              className="mt-4 bg-primary  text-white py-2 px-4 rounded tajawal-bold hover:scale-105 transition"
-              onClick={() => setShowNotes(false)}
-            >
-              إغلاق
-            </button>
+            <div className="w-full mb-2">
+              <textarea
+                className="w-full p-2 border border-gray-300 rounded"
+                rows="6"
+                value={selectedConsultation?.notes || ""}
+                readOnly
+              />
+            </div>
+            <div className="flex justify-between w-full mt-2">
+              <button
+                className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition w-full"
+                onClick={() => setShowNotes(false)}
+              >
+                العودة
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -253,5 +286,5 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 });
 
 BookingList.displayName = "BookingList";
-
 export default BookingList;
+

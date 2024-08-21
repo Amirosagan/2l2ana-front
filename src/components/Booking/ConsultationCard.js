@@ -26,7 +26,7 @@ const ConsultationCard = ({
   const timeDifference = currentTime - consultationTime;
 
   const isWithinWindow =
-    timeDifference >= -1800000 && // 30 minutes before the consultation
+    timeDifference >= -600000 && // 10 minutes before the consultation
     timeDifference <= 3600000; // 1 hour after the consultation
 
   const isPastConsultation = timeDifference > 1800000; // 30 minutes after the consultation

@@ -1,4 +1,3 @@
-"use client";
 import MyBooking from "@/src/components/Booking/MyBooking";
 
 

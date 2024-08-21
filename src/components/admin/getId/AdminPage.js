@@ -34,18 +34,25 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
 
       let fetchedItems;
 
-      if (type === "podcasts") {
-        fetchedItems = response.data.podcasts;
-      } else if (type === "users") {
-        fetchedItems = response.data.users;
-      } else if (type === "videos") {
-        fetchedItems = response.data.items.map((item) => item.youtubeLink);
-      } else if (type === "tags") {
-        fetchedItems = response.data.tags.filter(tag => tag.name.toLowerCase() !== "featured");
-      } else if (type === "questionTags") {
-        fetchedItems = response.data.questionTags.filter(tag => tag.name.toLowerCase() !== "featured");
-      } else {
-        fetchedItems = response.data.items;
+      switch (type) {
+        case "podcasts":
+          fetchedItems = response.data.podcasts;
+          break;
+        case "users":
+          fetchedItems = response.data.users;
+          break;
+        case "videos":
+          fetchedItems = response.data.items.map((item) => item.youtubeLink);
+          break;
+        case "tags":
+        case "questionTags":
+          fetchedItems = response.data[type].filter(
+            (tag) => tag.name.toLowerCase() !== "featured"
+          );
+          break;
+        default:
+          fetchedItems = response.data.items;
+          break;
       }
 
       setItems(fetchedItems || []);
@@ -68,16 +75,20 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
       const token = Cookies.get("authToken");
       try {
         let deleteUrl = apiUrl;
-        if (type === "videos") {
-          deleteUrl = `/Youtube/delete/${id}`;
-        } else if (type === "blogs") {
-          deleteUrl = `/Post/delete/${id}`;
-        } else if (type === "tags") {
-          deleteUrl = `/Tags/delete/${id}`;
-        } else if (type === "questionTags") {
-          deleteUrl = `/QuestionTag/delete/${id}`;
-        } else {
-          deleteUrl = `${apiUrl}/${id}`;
+        switch (type) {
+          case "videos":
+            deleteUrl = `/Youtube/delete/${id}`;
+            break;
+          case "blogs":
+            deleteUrl = `/Post/delete/${id}`;
+            break;
+          case "tags":
+          case "questionTags":
+            deleteUrl = `/${type}/delete/${id}`;
+            break;
+          default:
+            deleteUrl = `${apiUrl}/${id}`;
+            break;
         }
         await api.delete(deleteUrl, {
           headers: {
@@ -86,7 +97,6 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
         });
         setItems(items.filter((item) => item.id !== id));
       } catch (error) {
-        // Handle delete error
       }
     }
   };

@@ -110,7 +110,7 @@ const AskDoctor = () => {
 
     return (
         <div className="m-auto mx-3 md:mx-10 -mt-5 md:mt-0 lg:mx-[20%]">
-            <div className="flex items-center mt-10 bg-neutral-200 md:p-10 py-10 px-3 rounded-xl shadow-xl gap-5 flex-col justify-center w-full m-auto">
+            <div className="flex items-center mt-10 bg-neutral-100 md:p-10 py-10 px-3 rounded-xl shadow-xl gap-5 flex-col justify-center w-full m-auto">
                 <h1 className="lg:text-3xl text-2xl px-5 md:px-0"> اطرح سؤالك الآن ليصل إلى آلاف الأطباء </h1>
                 <p className="text-gray-500 md:mb-12 px-5 md:px-0 text-center">
                     احصل على إجابة لسؤالك في غضون 48 ساعة، أو اشترك مع قلقانة لتحصل على استشارة فورية وسرية مع طبيب معتمد.

@@ -3,8 +3,13 @@ import HeroDoctor from "@/src/components/Doctors/HeroDoctor";
 import RecentPost from "@/src/components/VideoHome/RecentPosts";
 import ArticleCard from "@/src/components/ArticleCard";
 import Image from "next/image";
-import Podcast from "@/public/podcast.svg"
+import Podcast from "@/public/podcast.svg";
+import blob from "@/public/blob.svg";
 import Link from "next/link";
+import CardHome from "@/src/components/AboutUs/CardHome";
+import WhyCard from "@/src/components/AboutUs/WhyCard";
+import OfflineSection from "@/src/components/AboutUs/OfflineSection";
+import AdsSection from "@/src/components/AboutUs/AdsSection";
 
 export async function generateMetadata() {
   return {
@@ -33,14 +38,28 @@ export default function Home() {
   return (
     <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
       <HeroDoctor />
-      <div className="lg:-mt-60 lg:mx-28">
-        <div className="mt-10"> </div>
-        <RecentPosts Home={true} />
-        <div className="mx-5 lg:mx-24 rounded-lg mt-10  mb-10"> <Link href="/podcasts"> <Image alt="Podcast" className="rounded-lg md:hidden" src={Podcast}/> <Image alt="Podcast" className="rounded-lg  hidden" src={Podcast}/> </Link> </div>
-        <RecentPost Home={true} />
-        <ArticleCard />
+     <WhyCard/>
+     <ArticleCard />
 
+     <AdsSection/>
+      <OfflineSection/>
+      <div className="  lg:pb-16 lg:px-28">
        
+        <div className="relative  mt-16 md:mt-24 -mb-10  lg:mx-24 flex flex-col items-center justify-center">
+          <h1 className="text-2xl md:text-3xl lg:text-5xl text-center relative">
+            قسم التعلم والتوعية
+          </h1>
+          <p className="text-gray-500 md:text-lg md:mt-5 mt-3 mx-4 mb-24 md:mb-0 text-center "> تعلمي واستكشفي أكتر عن صحتك الجسدية والنفسية من خلال محتوى قلقانة الطبي </p>
+        </div>
+        <RecentPosts Home={true} />
+        <div className="mx-5 lg:mx-24 rounded-lg mt-10 mb-10">
+          <Link href="/podcasts">
+            <Image alt="Podcast" className="rounded-lg md:hidden" src={Podcast} />
+            <Image alt="Podcast" className="rounded-lg hidden" src={Podcast} />
+          </Link>
+        </div>
+        <RecentPost Home={true} />
+      
       </div>
     </main>
   );

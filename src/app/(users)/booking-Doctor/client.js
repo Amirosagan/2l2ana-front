@@ -4,7 +4,6 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import api from "@/src/utils/api";
 import DoctorList from "@/src/components/Doctors/DoctorList";
 import SearchDoctorBar from "@/src/components/Doctors/DoctorSearchbar";
-import { Button } from "@mui/material";
 
 const MainDoctorPageClient = () => {
   const [doctorList, setDoctorList] = useState([]);
