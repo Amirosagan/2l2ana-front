@@ -56,7 +56,7 @@ function OfflineSection() {
   ];
 
   return (
-    <div className='flex justify-center items-center   w-full p-10 pb-20 flex-col '>
+    <div className='flex justify-center items-center bg-neutral-100 md:bg-transparent  w-full p-10 pb-20 flex-col '>
       <h1 className='text-2xl md:text-3xl mt-10'>
         بعض الحالات التي يمكن التعامل معها عبر خدمات الرعاية الصحية عن بُعد
       </h1>

@@ -30,8 +30,8 @@ function AdsSection() {
 
   return (
     <div className='lg:py-20 w-full bg-neutral-100'> 
-            <h1 className=" md:text-4xl   text-center "> خصومات قلقانة </h1>
-            <p className="text-center mt-2   mb-10 text-gray-500" > لأن رعايتك الصحية أهم حاجة عندنا وفرنالك افضل العروض سواء اونلاين او اوفلاين لعملاء قلقانة فقط </p>
+            <h1 className=" md:text-4xl  hidden md:block text-center "> خصومات قلقانة </h1>
+            <p className="text-center mt-2 hidden md:block  mb-10 text-gray-500" > لأن رعايتك الصحية أهم حاجة عندنا وفرنالك افضل العروض سواء اونلاين او اوفلاين لعملاء قلقانة فقط </p>
 
       <div className='flex justify-center   relative '>
         

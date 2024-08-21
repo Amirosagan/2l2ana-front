@@ -4,9 +4,7 @@ import RecentPost from "@/src/components/VideoHome/RecentPosts";
 import ArticleCard from "@/src/components/ArticleCard";
 import Image from "next/image";
 import Podcast from "@/public/podcast.svg";
-import blob from "@/public/blob.svg";
 import Link from "next/link";
-import CardHome from "@/src/components/AboutUs/CardHome";
 import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
@@ -39,8 +37,12 @@ export default function Home() {
     <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
       <HeroDoctor />
      <WhyCard/>
+     <div className="md:hidden">       <ArticleCard />
+     </div>
       <OfflineSection/>
+      <div className="hidden md:block w-full"> 
       <ArticleCard />
+      </div>
       <AdsSection/>
 
 
