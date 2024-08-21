@@ -17,7 +17,7 @@ const ArticleCard = () => {
             </div>
           </Link>
           <Link href="/ask-Doctor" className="w-full">
-            <div className="block rounded bg-white px-8 py-3 text-sm font-medium text-primary shadow focus:outline-none focus:ring active:bg-white">
+            <div className="block rounded bg-white px-8 py-3 text-sm font-medium text-black shadow focus:outline-none focus:ring active:bg-white">
               ابعت سؤالك
             </div>
           </Link>

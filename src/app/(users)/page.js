@@ -40,9 +40,9 @@ export default function Home() {
       <HeroDoctor />
      <WhyCard/>
      <ArticleCard />
-
-     <AdsSection/>
       <OfflineSection/>
+      <AdsSection/>
+
       <div className="  lg:pb-16 lg:px-28">
        
         <div className="relative  mt-16 md:mt-24 -mb-10  lg:mx-24 flex flex-col items-center justify-center">

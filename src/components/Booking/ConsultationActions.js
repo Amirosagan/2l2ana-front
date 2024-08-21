@@ -11,6 +11,7 @@ const ConsultationActions = ({
   onShowNotes,
   onShowRatingModal,
   onCompleteConsultation,
+  onCancelConsultation,
 }) => {
   return (
     <div className="flex flex-col gap-4 mt-4 md:mt-0">
@@ -23,7 +24,7 @@ const ConsultationActions = ({
         </button>
       )}
 
-      {isPrevious ? (
+      {isPrevious && role !== "Doctor" && (
         consultation.rating === 0 ? (
           <button
             className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
@@ -48,41 +49,33 @@ const ConsultationActions = ({
             ))}
           </div>
         )
-      ) : null}
+      )}
 
       {role === "Doctor" && (
-        isPastConsultation ? (
+        isPastConsultation && !consultation.isDone ? (
           <button
             className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
             onClick={onCompleteConsultation}
           >
             اتمام الكشف
           </button>
-        ) : isWithinWindow ? (
-          <Tooltip title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره بنصف ساعة</span>}>
-            <a
-              className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px] text-center"
-              href={consultation.meetingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Join Meeting
-            </a>
-          </Tooltip>
         ) : (
-          <Tooltip title={<span style={{ fontSize: '16px' }}>الرابط غير متاح الآن</span>}>
-            <a
-              className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px] text-center opacity-50 cursor-not-allowed"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-            >
-              Join Meeting
-            </a>
-          </Tooltip>
+          isWithinWindow && !consultation.isDone && (
+            <Tooltip title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره بنصف ساعة</span>}>
+              <a
+                className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px] text-center"
+                href={consultation.meetingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Join Meeting
+              </a>
+            </Tooltip>
+          )
         )
       )}
 
-      {!role === "Doctor" && isWithinCancelWindow && (
+      {role !== "Doctor" && isWithinCancelWindow && (
         <button
           className="bg-red-500 text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
           onClick={() => onCancelConsultation(consultation)}

@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import ConsultationCard from "./ConsultationCard";
 import api from "@/src/utils/api";
@@ -257,6 +258,7 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
           </div>
         </div>
       )}
+
 
       {showNotes && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
