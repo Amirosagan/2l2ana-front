@@ -4,7 +4,7 @@ import question from '@/public/question.jpg'
 
 const ArticleCard = () => {
   return (
-    <div className="overflow-hidden rounded-lg w-[88%] lg:w-[75%]  mb-20  md:w-[97%] md:mt-20 mt-10  m-auto bg-neutral-100 flex justify-between items-center flex-col lg:flex-row">
+    <div className="overflow-hidden rounded-lg w-[88%] lg:w-[75%]  md:w-[97%] md:my-20 my-10  m-auto bg-neutral-100 flex justify-between items-center flex-col lg:flex-row">
       <div className="flex flex-col gap-4 px-4 py-8"> 
         <h1 className="text-3xl text-gray-800 tajawal-bold sm:text-3xl text-center mb-5 md:mb-10">
            محتارة في سؤال ؟ ابعتي استشاراتك الطبية مجانا دلوقتي
