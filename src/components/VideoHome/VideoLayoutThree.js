@@ -28,8 +28,8 @@ const VideoLayoutThree = ({ video }) => {
   const nonFeaturedTags = video.tags.filter(tag => tag.name !== "featured");
 
   return (
-    <Link href={`/videos/${video.id}`} className="group bg-white flex flex-col items-center border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg p-3 lg:min-h-[300px]">
-      <div className="relative h-40 md:h-56 w-full rounded-xl overflow-hidden">
+    <Link href={`/videos/${video.id}`} className="group bg-white flex flex-col lg:min-w-[300px] items-center border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg p-3 lg:min-h-[300px]">
+      <div className="relative h-40 md:h-56 w-full rounded-xl overflow-hidden ">
         {video.url && videoId ? (
           <>
             <YouTube videoId={videoId} opts={opts} className="absolute top-0 left-0 h-full w-full" />

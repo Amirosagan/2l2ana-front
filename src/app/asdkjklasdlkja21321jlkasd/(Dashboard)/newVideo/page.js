@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,16 +22,13 @@ import withAuth from "@/src/utils/withAuth";
 const formSchema = z.object({
   title: z.string().min(10, "Title must be at least 10 characters"),
   description: z.string().min(20, "Description must be at least 20 characters"),
-  Tags: z.number(),
+  Tags: z.number().optional(),
   newTag: z.string().optional(),
-  featured: z.boolean().optional(),
 });
 
 const NewVideo = ({ token }) => {
   const [availableTags, setAvailableTags] = useState([]);
-  const [videoFile, setVideoFile] = useState(null);
   const [videoUrl, setVideoUrl] = useState("");
-  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -41,9 +37,7 @@ const NewVideo = ({ token }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && Array.isArray(response.data.tags)) {
-          const filteredTags = response.data.tags.filter(
-            (tag) => tag.name !== "featured"
-          );
+          const filteredTags = response.data.tags;
           setAvailableTags(filteredTags);
         } else {
           setAvailableTags([]);
@@ -64,7 +58,6 @@ const NewVideo = ({ token }) => {
       description: "",
       Tags: undefined,
       newTag: "",
-      featured: false,
     },
   });
 
@@ -75,21 +68,19 @@ const NewVideo = ({ token }) => {
     }
 
     const requestData = {
+      url: videoUrl,
       title: data.title,
       description: data.description,
-      videoUrl: videoUrl,
       tagIds: data.Tags ? [data.Tags] : [],
-      featured: data.featured,
     };
 
     try {
-      await api.post("/Video/add", requestData, {
+      await api.post("/Youtube/add", requestData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success("Video uploaded successfully");
+      toast.success("Video data submitted successfully");
       form.reset();
       setVideoUrl("");
-      setVideoFile(null);
     } catch (error) {
       if (error.response) {
         toast.error("Error submitting video data");
@@ -113,30 +104,6 @@ const NewVideo = ({ token }) => {
         toast.success("Tag added successfully");
       } catch (error) {
         toast.error("Error adding new tag");
-      }
-    }
-  };
-
-  const handleVideoUpload = async () => {
-    if (videoFile) {
-      setUploading(true);
-      const formData = new FormData();
-      formData.append("file", videoFile);
-
-      try {
-        const uploadResponse = await api.post("/Upload/video", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const videoUrl = uploadResponse.data.fileUrl;
-        setVideoUrl(videoUrl);
-        toast.success("Video uploaded successfully");
-      } catch (error) {
-        toast.error("Error uploading video");
-      } finally {
-        setUploading(false);
       }
     }
   };
@@ -169,40 +136,21 @@ const NewVideo = ({ token }) => {
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Description"
-                    type="text"
-                    {...field}
-                  />
+                  <Input placeholder="Description" type="text" {...field} />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
           <FormItem>
-            <div className="flex justify-around items-center py-3">
-              <div>
-                <FormControl>
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        setVideoFile(e.target.files[0]);
-                      }
-                    }}
-                  />
-                </FormControl>
-              </div>
-              <Button
-                type="button"
-                onClick={handleVideoUpload}
-                disabled={uploading || !videoFile}
-                className="mt-2 text-white font-bold"
-              >
-                {uploading ? "Uploading..." : "Upload Video"}
-              </Button>
-            </div>
+            <FormControl>
+              <Input
+                placeholder="Paste video URL here"
+                type="text"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+              />
+            </FormControl>
             <FormMessage className="text-red-500" />
           </FormItem>
           <FormField
@@ -245,7 +193,7 @@ const NewVideo = ({ token }) => {
                   className="bg-transparent text-blue-800"
                   onClick={() => {
                     handleAddTag(field.value);
-                    field.onChange(""); // Clear the input after adding the tag
+                    field.onChange(""); 
                   }}
                 >
                   Add Tag
@@ -254,29 +202,6 @@ const NewVideo = ({ token }) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="featured"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <label className="flex items-center space-x-2">
-                    <input type="checkbox" {...field} checked={field.value} />
-                    <span>Featured</span>
-                  </label>
-                </FormControl>
-                <FormMessage className="text-red-500" />
-              </FormItem>
-            )}
-          />
-          {videoUrl && (
-            <div className="w-full">
-              <video width="300" height="200" controls>
-                <source src={videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
           <Button
             type="submit"
             className="w-full bg-black text-white font-bold"

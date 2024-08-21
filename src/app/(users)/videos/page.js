@@ -46,7 +46,7 @@ const VideosPage = async () => {
         <div className=' w-[85%] mb-10 lg:-mt-20 lg:mb-0 m-auto'>
           <DoctoorBoster />
         </div>
-        <RecentPosts  />
+        <RecentPosts />
       </div>
     </div>
   );

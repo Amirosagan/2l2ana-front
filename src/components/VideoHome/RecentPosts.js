@@ -39,12 +39,13 @@ const RecentPost = ({ hideHeader, Home }) => {
 
                 let sortedVideos = filteredVideos.filter(video => video.youtubeLink.url && video.youtubeLink.lastUpdate).reverse();
 
+                // Apply different video set logic based on hideHeader and Home
                 if (hideHeader) {
-                    setVideos(sortedVideos);
+                    setVideos(sortedVideos); // Fetch all videos
                 } else if (Home) {
-                    setVideos(sortedVideos.slice(0, 3));
+                    setVideos(sortedVideos.slice(0, 3)); // Fetch the first 3 videos for home
                 } else {
-                    setVideos(sortedVideos.slice(0, 6));
+                    setVideos(sortedVideos.slice(-6).reverse()); // Fetch the last 6 videos in reverse order
                 }
 
                 setLoading(false);
@@ -60,13 +61,13 @@ const RecentPost = ({ hideHeader, Home }) => {
         const skeletonCount = Home ? 3 : 6;
 
         return (
-            <section className="w-full mb-5 px-5 lg:px-24  flex flex-col items-center justify-center">
+            <section className="w-full mb-5 px-5 lg:px-24 flex flex-col items-center justify-center">
                 {!hideHeader && (
                     <div className="w-full flex items-center justify-between">
                         <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                             أحدث الفيديوهات
                         </h2>
-                        <Link className="underline text-lg font-bold text-accent" href={Home ? "/videos" : "/categories"}>
+                        <Link className="underline text-lg text-accent" href={Home ? "/videos" : "/categories"}>
                             المزيد
                         </Link>
                     </div>
@@ -92,7 +93,7 @@ const RecentPost = ({ hideHeader, Home }) => {
     }
 
     return hideHeader ? (
-        <section className="w-full mb-5 px-5 sm:px-10 md:px-24  flex mt-16 flex-col items-center justify-center">
+        <section className="w-full mb-5 px-5 sm:px-10 md:px-24 flex mt-16 flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
                 <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                     الفيديوهات:
@@ -105,12 +106,12 @@ const RecentPost = ({ hideHeader, Home }) => {
             </div>
         </section>
     ) : (
-        <section className="w-full mb-5 lg:mt-20 px-5  lg:px-24 flex flex-col items-center justify-center">
+        <section className="w-full mb-5 lg:mt-20 px-5 lg:px-24 flex flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
                 <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
                     أحدث الفيديوهات
                 </h2>
-                <Link className="underline text-lg text-bold text-accent" href="/videos">
+                <Link className="underline text-lg text-accent" href={Home ? "/videos" : "/categories"}>
                     المزيد
                 </Link>
             </div>

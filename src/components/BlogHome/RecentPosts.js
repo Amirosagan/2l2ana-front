@@ -20,7 +20,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
       let pageSize;
 
       if (hideHeader) {
-        pageSize = 0;
+        pageSize = 20;
       } else if (Home) {
         pageSize = 3;
       } else {

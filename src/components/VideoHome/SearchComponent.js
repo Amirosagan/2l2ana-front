@@ -36,7 +36,7 @@ const SearchComponent = ({
   ];
 
   return (
-    <div className="flex flex-col mt-20 items-start border-admin1 border p-4 bg-teal-500 gap-4 rounded w-full md:w-[80%] m-auto lg:min-w-[280px] lg:max-w-[280px] lg:h-fit lg:sticky lg:top-40">
+    <div className="flex flex-col mt-20 items-start border-admin1 border p-4 bg-primary gap-4 rounded w-full md:w-[80%] m-auto lg:min-w-[280px] lg:max-w-[280px] lg:h-fit lg:sticky lg:top-40">
       <div className="flex flex-col w-full">
         <label htmlFor="search" className="tajawal-bold mb-2 text-white">
           بحث :
@@ -95,7 +95,7 @@ const SearchComponent = ({
 
       <button
         onClick={handleSearch}
-        className="w-full px-4 py-2 tajawal-extrabold text-teal-500 bg-white rounded"
+        className="w-full px-4 py-2 tajawal-extrabold text-primary bg-white rounded"
       >
         بحث
       </button>
