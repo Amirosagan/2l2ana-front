@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '@/src/utils/api';
+import { Button } from '@/components/ui/button';
 
 const UpdateDoctorForm = ({ doctorId }) => {
   const [profileData, setProfileData] = useState({
@@ -15,11 +16,14 @@ const UpdateDoctorForm = ({ doctorId }) => {
     weekDaysAvailableIds: [],
     dayTimesAvailableIds: [],
     isActive: true,
+    imageUrl: '',
   });
 
   const [balance, setBalance] = useState(0);
   const [dayTimesOptions, setDayTimesOptions] = useState([]);
   const [weekDaysOptions, setWeekDaysOptions] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const categories = [
     { value: 'نساء وتوليد', label: 'نساء وتوليد' },
@@ -87,6 +91,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
           weekDaysAvailableIds: doctor.weekDays.map((day) => day.id),
           dayTimesAvailableIds: doctor.dayTimes.map((time) => time.id),
           isActive: doctor.isActive,
+          imageUrl: doctor.imageUrl,
         });
       } catch (error) {
         console.error('Error fetching doctor data:', error);
@@ -121,12 +126,36 @@ const UpdateDoctorForm = ({ doctorId }) => {
     });
   };
 
+  const handleImageUpload = async () => {
+    if (imageFile) {
+      setUploading(true);
+      const formData = new FormData();
+      formData.append('file', imageFile);
+
+      try {
+        const uploadResponse = await api.post('/Upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        const imageUrl = uploadResponse.data.fileUrl;
+        toast.success('Image uploaded successfully');
+        setProfileData({ ...profileData, imageUrl });
+      } catch (error) {
+        toast.error('Error uploading image');
+      } finally {
+        setUploading(false);
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = Cookies.get('authToken');
 
     try {
-      const response = await api.post('/Doctor/UpdateProfile', profileData, {
+      await api.post('/Doctor/UpdateProfile', profileData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -238,25 +267,47 @@ const UpdateDoctorForm = ({ doctorId }) => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="isActive">
-            Active
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
+            Profile Image
           </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImageFile(e.target.files[0])}
+            className="w-full border border-gray-300 rounded p-2"
+          />
+          {imageFile && (
+            <div className="mt-2">
+              <img
+                src={URL.createObjectURL(imageFile)}
+                alt="Selected"
+                className="w-32 h-32 object-cover"
+              />
+            </div>
+          )}
+          {uploading ? (
+            <p>Uploading...</p>
+          ) : (
+            <button onClick={handleImageUpload} className="mt-2 text-primary mx-2" >
+              Upload Image
+            </button>
+          )}
+        </div>
+        <div className="flex items-center">
           <input
             type="checkbox"
             name="isActive"
             checked={profileData.isActive}
             onChange={handleChange}
-            className="shadow appearance-none border rounded text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="mr-2"
           />
+          <label className="block text-gray-700 text-sm font-bold mb-2 mx-2" htmlFor="isActive">
+            Active
+          </label>
         </div>
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-primary text-white px-4 py-2 rounded tajawal-bold hover:bg-primary-dark transition"
-          >
-            Update Profile
-          </button>
-        </div>
+        <Button type="submit" className="w-full bg-primary text-white py-2 px-4 rounded mt-4">
+          Update Profile
+        </Button>
       </form>
     </>
   );

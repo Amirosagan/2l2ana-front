@@ -18,6 +18,7 @@ const MainDoctorPageClient = () => {
     try {
       const response = await api.get('/Doctor/GetDoctors');
       const filteredDoctors = response.data.items.filter(doctor => 
+        doctor.isAvailable &&  
         (category ? doctor.category === category : true) &&
         (searchTerm ? (
           doctor.firstName.includes(searchTerm) ||
@@ -77,9 +78,7 @@ const MainDoctorPageClient = () => {
         )}
         {doctorList.length < totalDoctors && !loading && (
           <div className="flex justify-center mt-5">
-             <button onClick={handleLoadMore} className="p-3 bg-primary shadow-md text-white rounded-sm hover:scale-110 transition-all duration-300"> اعرض المزيد </button>
-             
-            
+            <button onClick={handleLoadMore} className="p-3 bg-primary shadow-md text-white rounded-sm hover:scale-110 transition-all duration-300"> اعرض المزيد </button>
           </div>
         )}
       </div>
