@@ -28,15 +28,15 @@ const DoctorList = ({ doctorList }) => {
   };
 
   return (
-    <div className="mb-10  xl:mx-20 m-auto md:px-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-7">
+    <div className="mb-10  xl:mx-[1%] m-auto md:px-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-7">
         {doctorList.map((doctor) => {
           const originalPrice = calculateOriginalPrice(doctor.consultationPrice);
 
           return (
             <div
               key={doctor.doctorId}
-              className="border-[1px] cursor-pointer hover:border-primary bg-neutral-50 transition-all ease-in-out hover:shadow-sm rounded-lg p-3 flex flex-col justify-between"
+              className="border-[1px] lg:max-w[300px] md:max-w-[294px] xl:max-w-[310px] cursor-pointer hover:border-primary bg-neutral-50 transition-all ease-in-out hover:shadow-sm rounded-lg p-3 flex flex-col justify-between"
               onClick={() => handleDoctorClick(doctor.doctorId)}
             >
               <Image
@@ -56,8 +56,8 @@ const DoctorList = ({ doctorList }) => {
                 </h2>
                 <h3 className="text-sm text-gray-600">{doctor.headLine}</h3>
               </div>
-              <div className="flex flex-col mt-3">
-                <div className="flex items-center justify-between">
+              <div className="flex flex-col  mt-1">
+                <div className="flex flex-col items-start gap-2  justify-between">
                   <Rating rating={roundRating(doctor.rating)} />
                   <div className="text-gray tajawal-regular text-sm md:text-base flex">
                     

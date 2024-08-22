@@ -35,7 +35,7 @@ const SearchDoctorBar = ({ onSearch }) => {
 
   return (
     <div className="mb-5 items-center flex flex-col gap-2 -mt-10  sm:mt-0 md:mt-10">
-      <h2 className="tajawal-extrabold mb-5  text-center md:text-5xl tracking-wide text-4xl">
+      <h2 className="tajawal-extrabold mb-2  text-center md:text-5xl tracking-wide text-4xl">
         ابحث عن <span className="text-primary"> دكتورك </span> المفضل
       </h2>
       <p className="text-gray-500 text-lg text-center mb-3">   أكثر من 100 طبيب متخصص في جميع التخصصات، متاحون لتقديم الاستشارات عبر الفيديو أو المكالمات الهاتفية. احصل على الرعاية الطبية المتميزة من راحة منزلك </p>
