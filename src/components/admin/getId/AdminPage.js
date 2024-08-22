@@ -72,38 +72,59 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
 
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this item?")) {
-        const token = Cookies.get("authToken");
-        try {
-            let deleteUrl = apiUrl;
-            switch (type) {
-                case "videos":
-                    deleteUrl = `/Youtube/delete/${id}`;
-                    break;
-                case "blogs":
-                    deleteUrl = `/Post/delete/${id}`;
-                    break;
-                case "tags":
-                    deleteUrl = `/${type}/delete/${id}`;
-                    break;
-                case "questionTags":
-                  deleteUrl = `/${type}/${id}`;
-                default:
-                    deleteUrl = `${apiUrl}/${id}`;
-                    break;
-            }
-
-            await api.delete(deleteUrl, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setItems(items.filter((item) => item.id !== id));
-        } catch (error) {
-            console.error("Delete request failed:", error);
+      const token = Cookies.get("authToken");
+      try {
+        let deleteUrl = apiUrl;
+        switch (type) {
+          case "videos":
+            deleteUrl = `/Youtube/delete/${id}`;
+            break;
+          case "blogs":
+            deleteUrl = `/Post/delete/${id}`;
+            break;
+          case "tags":
+            deleteUrl = `/${type}/delete/${id}`;
+            break;
+          case "questionTags":
+            deleteUrl = `/${type}/${id}`;
+            break;
+          default:
+            deleteUrl = `${apiUrl}/${id}`;
+            break;
         }
-    }
-};
 
+        await api.delete(deleteUrl, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setItems(items.filter((item) => item.id !== id));
+      } catch (error) {
+        console.error("Delete request failed:", error);
+      }
+    }
+  };
+
+  const handleBlock = async (id) => {
+    if (confirm("Are you sure you want to block this user?")) {
+      const token = Cookies.get("authToken");
+      try {
+        await api.patch(
+          `/User/block/${id}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        alert("User blocked successfully");
+        fetchData();
+      } catch (error) {
+        console.error("Block request failed:", error);
+      }
+    }
+  };
 
   const handlePageChange = (direction) => {
     if (direction === "next" && hasNextPage) {
@@ -143,7 +164,12 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
       </div>
       <table className="w-full text-admin2">
         <TableHeader headers={headers} />
-        <TableBody items={items} onDelete={handleDelete} type={type} />
+        <TableBody
+          items={items}
+          onDelete={handleDelete}
+          onBlock={type === "users" ? handleBlock : undefined}
+          type={type}
+        />
       </table>
       <Pagination
         currentPage={currentPage}

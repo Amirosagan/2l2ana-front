@@ -112,7 +112,7 @@ const SinglePodcastPage = ({ params, token }) => {
     };
 
     try {
-      await api.post(`/Podcast/update`, requestData, {
+      await api.put(`/Podcast`, requestData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Podcast data updated successfully");
