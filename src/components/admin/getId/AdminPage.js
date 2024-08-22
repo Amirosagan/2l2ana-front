@@ -72,34 +72,38 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
 
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this item?")) {
-      const token = Cookies.get("authToken");
-      try {
-        let deleteUrl = apiUrl;
-        switch (type) {
-          case "videos":
-            deleteUrl = `/Youtube/delete/${id}`;
-            break;
-          case "blogs":
-            deleteUrl = `/Post/delete/${id}`;
-            break;
-          case "tags":
-          case "questionTags":
-            deleteUrl = `/${type}/delete/${id}`;
-            break;
-          default:
-            deleteUrl = `${apiUrl}/${id}`;
-            break;
+        const token = Cookies.get("authToken");
+        try {
+            let deleteUrl = apiUrl;
+            switch (type) {
+                case "videos":
+                    deleteUrl = `/Youtube/delete/${id}`;
+                    break;
+                case "blogs":
+                    deleteUrl = `/Post/delete/${id}`;
+                    break;
+                case "tags":
+                    deleteUrl = `/${type}/delete/${id}`;
+                    break;
+                case "questionTags":
+                  deleteUrl = `/${type}/${id}`;
+                default:
+                    deleteUrl = `${apiUrl}/${id}`;
+                    break;
+            }
+
+            await api.delete(deleteUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setItems(items.filter((item) => item.id !== id));
+        } catch (error) {
+            console.error("Delete request failed:", error);
         }
-        await api.delete(deleteUrl, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setItems(items.filter((item) => item.id !== id));
-      } catch (error) {
-      }
     }
-  };
+};
+
 
   const handlePageChange = (direction) => {
     if (direction === "next" && hasNextPage) {
