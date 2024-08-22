@@ -4,10 +4,11 @@ import React from 'react';
 
 function OfflineCard({ img, title, lists }) {
   return (
-    <div className='flex flex-col items-center '>
-      <Image src={img} alt="الحالات الطبية" className='w-[300px] rounded-xl h-[200px]' />
-      <Link href="booking-Doctor">
-        <h1 className='text-xl md:text-2xl hover:text-primary  transition-all duration-300 mt-4 md:my-4'>
+    <div className='flex flex-col md:items-baseline w-full '>
+      <Image src={img} alt="الحالات الطبية" className='w-[300px] md:self-center rounded-xl h-[200px]' />
+       <div className='flex md:self-center flex-col md:items-start md:w-[70%]'> 
+      <Link href="booking-Doctor" >
+        <h1 className='text-xl md:text-2xl  hover:text-primary  transition-all duration-300 mt-4 md:my-4'>
           {title}
         </h1>
       </Link>
@@ -23,6 +24,7 @@ function OfflineCard({ img, title, lists }) {
           </Link>
         ))}
       </ul>
+    </div>
     </div>
   );
 }

@@ -22,7 +22,7 @@ const DoctorDetailsPageClient = ({ doctor }) => {
   if (!currentDoctor) {
     return (
       <div className="p-5 md:px-32">
-        <h2 className="tajawal-bold text-[22px] text-primary">تفاصيل</h2>
+        <h2 className="tajawal-bold text-[22px] hidden md:block text-primary">تفاصيل</h2>
         <div className="grid grid-cols-1 lg:grid-cols-9 gap-5">
           <div className="col-span-6 mb-10">
             <div className="bg-gray-300 h-64 rounded-lg mb-5"></div>
@@ -47,7 +47,7 @@ const DoctorDetailsPageClient = ({ doctor }) => {
 
   return (
     <div className="p-5 -mt-5 md:mt-0 md:px-32">
-      <h2 className="tajawal-bold text-[22px] text-primary">تفاصيل</h2>
+      <h2 className="tajawal-bold text-[22px] hidden md:block text-primary">تفاصيل</h2>
       <div className="grid grid-cols-1 lg:grid-cols-9 gap-5">
         <div className="lg:col-span-6 mb-10">
           <Details doctor={currentDoctor} />

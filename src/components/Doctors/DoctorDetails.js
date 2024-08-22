@@ -28,7 +28,7 @@ const Details = ({ doctor }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 border-[1px] p-5 mt-5 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-3 border-[1px] p-5  md:mt-5 rounded-lg">
         <div className="">
           <Image
             src={doctor.imageUrl ? doctor.imageUrl : avatar}
@@ -57,7 +57,7 @@ const Details = ({ doctor }) => {
             </div>
           </div>
 
-          <div className="flex items-center mt-5">
+          <div className="flex items-center mt-2 md:mt-5">
             <BookAppointment doctorId={doctor.doctorId} />
           </div>
         </div>
