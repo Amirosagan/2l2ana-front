@@ -52,12 +52,12 @@ function AdsSection() {
         </div>
        
 
-        <div className='absolute hidden md:block left-[320px] top-1/2 transform -translate-y-1/2'>
+        <div className='absolute hidden lg:block left-[150px]  xl:left-[300px] top-1/2 transform -translate-y-1/2'>
           <button onClick={handlePrevClick} className='text-primary text-4xl'>
             <FaChevronLeft />
           </button>
         </div>
-        <div className='absolute right-[320px]  hidden md:block top-1/2 transform -translate-y-1/2'>
+        <div className='absolute  right-[150px] xl:right-[300px] hidden lg:block top-1/2 transform -translate-y-1/2'>
           <button onClick={handleNextClick} className='text-primary text-4xl'>
             <FaChevronRight />
           </button>
