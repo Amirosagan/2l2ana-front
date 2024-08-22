@@ -16,7 +16,7 @@ function OfflineCard({ img, title, lists }) {
         {lists.map((item, index) => (
           <Link href="booking-Doctor" key={index}>
             <li className='my-1 md:text-lg'>
-              <span className='text-primary'>•</span>
+              <span className='text-primary mx-2'>•</span>
               <span className='text-black tajawal-regular hover:text-primary duration-300 transition-all'>
                 {item}
               </span>

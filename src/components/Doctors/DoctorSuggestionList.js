@@ -36,7 +36,7 @@ const SuggestionList = ({ blog }) => {
   };
 
   return (
-    <div className="pt-4 px-4 border-[1px] lg:mx-5 rounded-lg">
+    <div className="pt-4 sm:px-4 border-[1px] lg:mx-5 rounded-lg">
       {blog ? (
         <Link href="/booking-Doctor">
           <h1 className="mb-3 md:text-2xl text-lg tajawal-medium text-primary">دكتور اونلاين ؟</h1>

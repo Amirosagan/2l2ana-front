@@ -91,7 +91,7 @@ const SearchDoctorBar = ({ onSearch }) => {
           بحث
         </Button>
       </div>
-      <div className="flex gap-2 mt-4 mx-4 md:mx-10 lg:mx-16 flex-wrap">
+      <div className="flex gap-2 mt-4 sm:mx-4 items-center justify-center md:mx-10 lg:mx-16 flex-wrap">
         <h1
           className={`rounded-xl text-primary px-3 py-2 cursor-pointer ${selectedCategory === "جميع التخصصات" ? 'bg-primary text-white' : 'hover:bg-primary hover:text-white  border border-neutral-400'}`}
           onClick={() => handleCategoryClick("جميع التخصصات")}
