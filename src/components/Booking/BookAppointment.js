@@ -398,7 +398,7 @@ export default function BookAppointment({ doctorId }) {
                             {isFreeConsultation ? (
                                 <>
                                     <h2 className="mb-4 tajawal-medium text-green-600">مبروك ، تم الحجز بنجاح !</h2>
-                                    <Link href="/my-profile">
+                                    <Link href="/my-bookings">
                                         <Button variant="contained" color="primary" className="bg-accent text-white">
                                             حجوزاتي
                                         </Button>
@@ -407,7 +407,7 @@ export default function BookAppointment({ doctorId }) {
                             ) : (
                                 <>
                                     <h2 className="mb-4 tajawal-medium text-green-600">بعد اتمام الدفع ستجد الحجز والتفاصيل في حجوزاتي</h2>
-                                    <Link href="/my-profile">
+                                    <Link href="/my-bookings">
                                         <Button variant="contained" color="primary" className="bg-accent text-white">
                                             حجوزاتي
                                         </Button>
