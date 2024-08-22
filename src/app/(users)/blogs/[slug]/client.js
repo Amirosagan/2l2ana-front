@@ -214,23 +214,27 @@ const BlogPageClient = ({ initialBlog }) => {
             <SuggestionList blog={true} />
           </div>
         </div>
-        <div className="md:mx-40">
-          <div className="text-accent mt-16 m-auto w-full flex flex-col">
-            <h1 className="md:pb-4 md:mx-10 mx-7 mb-5 text-sm md:text-base">مقالات مشابهة:</h1>
-            <div className="flex justify-center items-center flex-col md:flex-row flex-wrap gap-5 md:gap-10 w-full relative">
-              {relatedBlogs.map((relatedBlog, index) => (
-                <BlogLayoutThree key={index} blog={relatedBlog} />
-              ))}
+        {relatedBlogs.length > 0 && (
+          <div className="md:mx-40">
+            <div className="text-accent mt-16 m-auto w-full flex flex-col">
+              <h1 className="md:pb-4 md:mx-10 mx-7 mb-5 text-sm md:text-base">
+                مقالات مشابهة:
+              </h1>
+              <div className="flex justify-center items-center flex-col md:flex-row flex-wrap md:gap-12 gap-5">
+                {relatedBlogs.map((item, index) => (
+                  <BlogLayoutThree blog={item} key={index} />
+                ))}
+              </div>
             </div>
-            <div className="flex items-center justify-center">
-              <Link href="/categories?type=posts">
-                <button className="bg-accent text-white p-4 px-14 tajawal-bold hover:scale-105 transition-all duration-200 rounded-md cursor-pointer font-bold mt-10">
+            <div className="w-full flex justify-center mt-8 md:mt-10">
+              <Link href="/blogs">
+                <div className="md:mb-10 border-primary text-primary tajawal-bold border-2 hover:bg-primary/10 md:py-3 py-2 w-60 text-center rounded-md md:text-lg">
                   المزيد
-                </button>
+                </div>
               </Link>
             </div>
           </div>
-        </div>
+        )}
       </article>
     </>
   );
