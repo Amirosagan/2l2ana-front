@@ -27,8 +27,8 @@ export default function LoginLayout({ children }) {
             <div className="w-[60%] md:flex hidden items-center tajawal-bold bg-primary justify-center text-white text-5xl">
               <h1 className="w-[86%] flex items-start leading-[4rem] p-10">اكبر مجتمع خاص بصحة النساء في الوطن العربي</h1>
             </div>
-            <div className="md:w-[50%] w-full  px-10 flex items-center h-full">
-              <div className="justify-center items-center w-[90%] m-auto">{children}</div>
+            <div className="md:w-[50%] w-full px-2 md:px-10 flex items-center h-full">
+              <div className="justify-center items-center sm:w-[90%] w-full m-auto">{children}</div>
             </div>
           </div>
         </main>

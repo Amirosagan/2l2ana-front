@@ -88,7 +88,7 @@ const RegisterForm = () => {
             </Button>
             <div className="flex justify-between items-center">
                <h1 className="text-sm">لديك حساب؟ <Link className="text-accent" href="/login">سجل الدخول</Link></h1>
-              <Link className="text-accent text-sm tajawal-regular hover:underline -mt-1" href="/termsofuse">سياسات الاستخدام </Link>
+              <Link className="text-accent text-sm tajawal-regular hover:underline md:-mt-1" href="/termsofuse">سياسات الاستخدام </Link>
             </div>
           </form>
         </Form>
