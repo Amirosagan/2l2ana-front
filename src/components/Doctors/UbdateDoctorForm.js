@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from '@/src/utils/api';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 const UpdateDoctorForm = ({ doctorId }) => {
   const [profileData, setProfileData] = useState({
@@ -83,7 +84,6 @@ const UpdateDoctorForm = ({ doctorId }) => {
       }
     };
 
-    fetchBalance();
     fetchAvailabilityData();
     fetchDoctorData();
   }, [doctorId]);
@@ -189,18 +189,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
               isClearable
             />
           </div>
-          <div className="lg:w-1/2">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="consultationPrice">
-              Consultation Price
-            </label>
-            <input
-              type="number"
-              name="consultationPrice"
-              value={profileData.consultationPrice}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
+        
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="headLine">
@@ -258,10 +247,12 @@ const UpdateDoctorForm = ({ doctorId }) => {
           />
           {imageFile && (
             <div className="mt-2">
-              <img
+              <Image
                 src={URL.createObjectURL(imageFile)}
                 alt="Selected"
                 className="w-32 h-32 object-cover"
+                width={200}
+                height={200}
               />
             </div>
           )}

@@ -67,7 +67,11 @@ const RegisterForm = () => {
       setErrorMessage("");
       router.push("/");
     } catch (error) {
-      setErrorMessage("There was an error with your registration. Please try again.");
+      if (error.response && error.response.data[0]?.code === "General.Conflict") {
+        setErrorMessage("البريد الإلكتروني مستخدم بالفعل. يرجى تسجيل الدخول.");
+      } else {
+        setErrorMessage("حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.");
+      }
     } finally {
       setIsSubmitting(false);
     }

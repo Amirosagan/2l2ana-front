@@ -30,8 +30,16 @@ const MyProfileClient = () => {
       if (token) {
         try {
           const decodedToken = jwt.decode(token);
-          if (decodedToken && decodedToken.DoctorId) {
-            setDoctorId(decodedToken.DoctorId);
+          if (decodedToken) {
+            if (decodedToken.DoctorId) {
+              setDoctorId(decodedToken.DoctorId);
+            }
+            if (decodedToken.firstName) {
+              setFirstName(decodedToken.firstName);
+            }
+            if (session.session.role) {
+              setRole(session.session.role); // Setting the role from session data
+            }
           }
 
           const response = await api.get(`/User/${userId}`, {
@@ -60,10 +68,7 @@ const MyProfileClient = () => {
     <div className="px-4 sm:px-10 lg:mx-20 mb-5">
       <ToastContainer />
       <div className="mt-3 px-4 sm:px-10">
-        <div className="flex items-center gap-2"> 
-        <h2 className="font-bold text-2xl tajawal-bold">مرحبا , {firstName}</h2>
-        </div>
-       
+          <h2 className="font-bold text-2xl tajawal-bold lg:-mt-2">مرحبا, {firstName}</h2>
         {role === "Doctor" ? (
           <UpdateDoctorForm doctorId={doctorId} />
         ) : (
