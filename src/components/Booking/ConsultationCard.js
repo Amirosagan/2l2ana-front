@@ -47,7 +47,7 @@ const ConsultationCard = ({
       )}
       <div className="flex flex-col gap-2 w-full">
         <h2 className="tajawal-bold flex items-center justify-between text-[18px]">
-          {role !== doctor  ? displayName  : "Anonymous" }
+          {role !== "Doctor"  ? displayName  : "Anonymous" }
         </h2>
         {role !== "Doctor" && (
           <h2 className="tajawal-regular flex gap-2">
