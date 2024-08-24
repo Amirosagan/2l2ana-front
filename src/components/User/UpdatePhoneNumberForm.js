@@ -24,10 +24,7 @@ const UpdatePhoneNumberForm = () => {
 
       const userId = sessionData.session.id;
 
-      console.log("User ID from session:", userId);
-
       try {
-        console.log(`Fetching user data for ID: ${userId}`);
         const response = await api.get(`/User/${userId}`, {
           headers: {
             Authorization: `Bearer ${sessionData.token}`,
@@ -35,7 +32,6 @@ const UpdatePhoneNumberForm = () => {
         });
 
         if (response.status === 200) {
-          console.log("Get User:", response.data);
           setProfileData({
             firstName: response.data.firstName,
             lastName: response.data.lastName,
@@ -43,11 +39,9 @@ const UpdatePhoneNumberForm = () => {
             profilePicture: response.data.profilePicture,
           });
         } else {
-          console.error("Failed to fetch user data, status code:", response.status);
           toast.error("فشل في جلب بيانات المستخدم");
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
         toast.error("حدث خطأ أثناء جلب بيانات المستخدم");
       }
     };
@@ -59,7 +53,7 @@ const UpdatePhoneNumberForm = () => {
     const token = Cookies.get("authToken");
 
     if (profileData.phoneNumber.length < 5) {
-      console.warn("Phone number must be at least 5 digits long.");
+      toast.warn("رقم الهاتف يجب أن يكون على الأقل 5 أرقام.");
       return;
     }
 
@@ -69,10 +63,9 @@ const UpdatePhoneNumberForm = () => {
     }
 
     try {
-      console.log("Updating phone number with data:", profileData);
       const response = await api.put(
         `/User`,
-        profileData, // Send the entire profile data without the ID
+        profileData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -82,14 +75,12 @@ const UpdatePhoneNumberForm = () => {
       );
 
       if (response.status === 200) {
-        console.log("Phone number updated successfully");
         toast.success("تم تحديث رقم الهاتف بنجاح");
         setIsEditable(false);
       } else {
         toast.error("فشل في تحديث رقم الهاتف");
       }
     } catch (error) {
-      console.error("Error updating phone number:", error);
       toast.error("حدث خطأ أثناء تحديث رقم الهاتف");
     }
   };
@@ -100,13 +91,10 @@ const UpdatePhoneNumberForm = () => {
       ...profileData,
       [name]: value,
     });
-
-    console.log("Updated phone number:", value);
   };
 
   const handleEditClick = () => {
     setIsEditable(true);
-    console.log("Edit button clicked, input is now editable");
   };
 
   return (
