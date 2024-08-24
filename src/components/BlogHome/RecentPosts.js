@@ -73,7 +73,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
     return (
       <section className="w-full mb-5 mt-32 flex flex-col items-center justify-center">
         <div className="w-full flex items-center justify-between">
-          <h2  className="tajawal-bold inline-block text-primary/90 font-bold capitalize text-2xl md:text-4xl">
+          <h2 className={`tajawal-bold inline-block text-primary/90 font-bold capitalize text-2xl ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}>
             {hideHeader ? 'المقالات' : 'أحدث المقالات'}
           </h2>
           {!hideHeader && (
@@ -85,9 +85,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
         <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
           {[...Array(skeletonCount)].map((_, index) => (
             <article key={index} className="col-span-1 row-span-1 relative border-[2px] rounded-lg p-3 h-full flex flex-col">
-              <div className="relative h-56 w-full rounded-xl overflow-hidden bg-gray-200 animate-pulse">
-              
-              </div>
+              <div className="relative h-56 w-full rounded-xl overflow-hidden bg-gray-200 animate-pulse"></div>
               <div className="flex flex-col w-full mt-2 flex-grow">
                 <div className="bg-gray-300 h-6 rounded-md animate-pulse w-3/4 mb-2" />
                 <div className="bg-gray-300 h-4 rounded-md animate-pulse w-1/2 mb-2" />
@@ -107,7 +105,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
   return hideHeader ? (
     <section className="w-full mb-5 px-5 sm:px-5 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
       <div className="w-full items-center flex justify-between">
-        <h2  className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
+        <h2 className={`tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}>
           المقالات
         </h2>
       </div>
@@ -120,16 +118,16 @@ const RecentPosts = ({ hideHeader, Home }) => {
       </div>
     </section>
   ) : (
-    <section className="w-full mb-5 sm:mt-20 lg:mt-32 px-5 lg:px-24  flex flex-col items-center justify-center">
+    <section className="w-full mb-5 sm:mt-20 lg:mt-32 px-5 lg:px-24 flex flex-col items-center justify-center">
       <div className="w-full flex justify-between">
-        <h2  className="tajawal-bold w-fit inline-block text-primary/90 font-bold capitalize text-2xl md:text-4xl">
+        <h2 className={`tajawal-bold w-fit inline-block text-primary/90 font-bold capitalize text-2xl ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}>
           أحدث المقالات
         </h2>
         <Link href={Home ? "/blogs" : "/categories?type=posts"} className="underline text-lg text-bold text-accent">
           المزيد
         </Link>
       </div>
-      <div className="lg:mt-8 mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
+      <div className={` mt-6 ${Home ? 'lg:mt-4' : 'lg:mt-8'} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10`}>
         {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />

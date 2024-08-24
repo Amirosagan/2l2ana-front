@@ -108,14 +108,15 @@ const RecentPost = ({ hideHeader, Home }) => {
     ) : (
         <section className="w-full mb-5 lg:mt-20 px-5 lg:px-24 flex flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
-                <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
-                    أحدث الفيديوهات
-                </h2>
+            <h2 className={`tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}>
+    أحدث الفيديوهات
+</h2>
+
                 <Link className="underline text-lg text-accent" href={Home ? "/videos" : "/categories"}>
                     المزيد
                 </Link>
             </div>
-            <div className="mt-6 lg:mt-8 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-10">
+            <div className= {`mt-6 ${Home ? 'lg:mt-4' : 'lg:mt-8'}  w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-10`}>
                 {videos.map((video, index) => (
                     <VideoLayoutThree key={index} video={video.youtubeLink} />
                 ))}

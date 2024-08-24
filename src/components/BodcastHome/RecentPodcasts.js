@@ -5,7 +5,7 @@ import api from "@/src/utils/api";
 import { useSearchParams } from "next/navigation";
 import PodcastLayout from "./PodcastLayout";
 
-const RecentPodcast = () => {
+const RecentPodcast = ({ Home }) => {
     const [podcasts, setPodcasts] = useState([]);
     const [loading, setLoading] = useState(true);
     const searchParams = useSearchParams();
@@ -36,7 +36,15 @@ const RecentPodcast = () => {
                     );
                 }
 
-                setPodcasts(filteredPodcasts.reverse());
+                let sortedPodcasts = filteredPodcasts.reverse();
+
+                // Apply home logic
+                if (Home) {
+                    setPodcasts(sortedPodcasts.slice(0, 3)); // Fetch the first 3 podcasts for home
+                } else {
+                    setPodcasts(sortedPodcasts);
+                }
+
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -44,14 +52,14 @@ const RecentPodcast = () => {
         };
 
         fetchPodcasts();
-    }, [tagId, searchText, isFeatured]);
+    }, [tagId, searchText, isFeatured, Home]);
 
     if (loading) {
         return (
             <section className="w-full mb-5 px-5 sm:px-10 md:px-24 flex flex-col items-center justify-center">
                 <div className="w-full flex items-center justify-between">
-                    <h2 className="tajawal-bold w-fit text-primary/90 inline-block mt-20 font-bold capitalize text-xl md:text-2xl">
-                    شاهد أيضاً: 
+                    <h2 className="tajawal-bold w-fit text-primary/90 inline-block mt-20 font-bold capitalize text-xl md:text-3xl">
+                    {Home ? "بودكاست قلقانة" : "شاهد أيضاً"}:
                     </h2>
                 </div>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
@@ -73,10 +81,10 @@ const RecentPodcast = () => {
     }
 
     return (
-        <section className="w-full mb-5 lg:mt-20 px-5 sm:px-10 lg:px-24 flex flex-col items-center justify-center">
+        <section className="w-full mb-5 lg:mt-20 px-5  lg:px-24 flex flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
-                <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-xl md:text-2xl">
-                شاهد أيضاً:
+                <h2 className="tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-xl md:text-3xl">
+                {Home ? "بودكاست قلقانة" : "شاهد أيضاً"}:
                 </h2>
             </div>
             <div className="mt-4 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-10">

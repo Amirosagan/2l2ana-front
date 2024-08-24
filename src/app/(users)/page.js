@@ -8,6 +8,7 @@ import Link from "next/link";
 import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
+import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
 
 export async function generateMetadata() {
   return {
@@ -63,6 +64,9 @@ export default function Home() {
           </Link>
         </div>
         <RecentPost Home={true} />
+        <div className="hidden md:block"> 
+        <RecentPodcast Home={true} />
+        </div>
       
       </div>
 
