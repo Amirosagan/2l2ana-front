@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Calendar, ClipboardPlus, Clock } from "lucide-react";
 import ConsultationActions from "./ConsultationActions";
 import ConsultationFiles from "./ConsultationFiles";
+import { Anonymous_Pro } from "next/font/google";
 
 const ConsultationCard = ({
   consultation,
@@ -46,7 +47,7 @@ const ConsultationCard = ({
       )}
       <div className="flex flex-col gap-2 w-full">
         <h2 className="tajawal-bold flex items-center justify-between text-[18px]">
-          {displayName}
+          {role === doctor  ? displayName  : "Anonymous" }
         </h2>
         {role !== "Doctor" && (
           <h2 className="tajawal-regular flex gap-2">

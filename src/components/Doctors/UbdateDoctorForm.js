@@ -18,8 +18,6 @@ const UpdateDoctorForm = ({ doctorId }) => {
     isActive: true,
     imageUrl: '',
   });
-
-  const [balance, setBalance] = useState(0);
   const [dayTimesOptions, setDayTimesOptions] = useState([]);
   const [weekDaysOptions, setWeekDaysOptions] = useState([]);
   const [imageFile, setImageFile] = useState(null);
@@ -37,20 +35,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
   ];
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const token = Cookies.get('authToken');
-        const response = await api.get('/Doctor/Balance', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setBalance(response.data.amount);
-      } catch (error) {
-        console.error('Error fetching balance:', error);
-      }
-    };
-
+  
     const fetchAvailabilityData = async () => {
       try {
         const response = await api.get('/Time');
@@ -169,12 +154,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
 
   return (
     <>
-      <div className="p-4 border-2 border-primary mt-5">
-        <h1>
-          <span className="text-primary text-lg mx-2">المحفظة :</span>
-          {balance !== null ? `يوجد لديك ${balance} جنيه مصري حاليا` : 'جاري التحميل...'}
-        </h1>
-      </div>
+     
       <form onSubmit={handleSubmit} className="border-2 border-primary p-4 mt-5">
         <ToastContainer />
         <div className="mb-4">
