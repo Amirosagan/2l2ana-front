@@ -1,3 +1,4 @@
+import UpdateConsultationPrice from "@/src/components/admin/UpdateConsultationPrice";
 import Image from "next/image";
 
 const SingleDoctorPage = async ({ params }) => {
@@ -28,15 +29,25 @@ const SingleDoctorPage = async ({ params }) => {
 
   return (
     <div className="py-5 px-7 mt-5 bg-white rounded-lg shadow-lg border-solid border w-[90%] m-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Image src={doctorData.imageUrl} alt={doctorData.name} width={200} height={200} />
+      <Image
+        src={doctorData.imageUrl}
+        alt={doctorData.name}
+        width={200}
+        height={200}
+        unoptimized={true}
+      />
       <div>
         <h1>{doctorData.name}</h1>
         <p>{doctorData.description}</p>
         <p>{doctorData.headLine}</p>
         <p>Category: {doctorData.category}</p>
-        <p>Rating: {doctorData.rating} ({doctorData.ratingCount} reviews)</p>
+        <p>
+          Rating: {doctorData.rating} ({doctorData.ratingCount} reviews)
+        </p>
         <p>Consultation Price: ${doctorData.consultationPrice}</p>
         <p>{doctorData.isActive ? "Active" : "Inactive"}</p>
+
+        <UpdateConsultationPrice doctorId={id} />
       </div>
     </div>
   );

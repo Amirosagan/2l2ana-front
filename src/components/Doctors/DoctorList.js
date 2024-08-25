@@ -62,8 +62,8 @@ const DoctorList = ({ doctorList }) => {
                   <div className="text-gray tajawal-regular text-sm md:text-base flex">
                     
                     <h2 className="flex md:text-sm xl:text-[15px] ">الكشف : <h2 className="text-red-600 mx-2 line-through">
-                        {originalPrice} 
-                    </h2> {doctor.consultationPrice} ج</h2>
+                        {doctor.consultationPriceBeforeDiscount} 
+                    </h2> {doctor.consultationPriceAfterDiscount} ج</h2>
                   </div>
                 </div>
                 <h2 className="p-2 px-3 transition-all duration-300 border-[1px] tajawal-bold text-base hover:text-white w-full hover:bg-primary cursor-pointer mt-2 text-[11px] text-center rounded-full text-primary border-primary">

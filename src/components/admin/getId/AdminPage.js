@@ -31,15 +31,15 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
           },
         }
       );
-
+  
       let fetchedItems;
-
+  
       switch (type) {
         case "podcasts":
           fetchedItems = response.data.podcasts;
           break;
         case "users":
-          fetchedItems = response.data.users;
+          fetchedItems = response.data.users.filter((user) => !user.isBlocked);
           break;
         case "videos":
           fetchedItems = response.data.items.map((item) => item.youtubeLink);
@@ -54,17 +54,21 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
           fetchedItems = response.data.items;
           break;
       }
-
+  
       setItems(fetchedItems || []);
       setTotalCount(response.data.totalItems || fetchedItems.length);
-      setHasNextPage(response.data.hasNextPage || false);
-      setHasPreviousPage(response.data.hasPreviousPage || false);
+
+      // Correct calculation for hasNextPage and hasPreviousPage
+      setHasNextPage(currentPage * pageSize < response.data.totalItems);
+      setHasPreviousPage(currentPage > 1);
+      
       setLoading(false);
     } catch (error) {
       setError("Failed to fetch data");
       setLoading(false);
     }
   }, [apiUrl, currentPage, pageSize, type]);
+  
 
   useEffect(() => {
     fetchData();
@@ -110,8 +114,8 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
       const token = Cookies.get("authToken");
       try {
         await api.patch(
-          `/User/block/${id}`,
-          {},
+          `/User/block`,
+          { userId: id }, 
           {
             headers: {
               Authorization: `Bearer ${token}`,
