@@ -139,13 +139,13 @@ const VideoPageClient = ({ initialVideoDetails }) => {
         <meta name="twitter:video" content={`https://www.youtube.com/watch?v=${videoId}`} />
       </Head>
 
-      <div className="flex flex-col md:flex-row -my-3 md:my-0 gap-4 justify-between md:items-center p-2">
+      <div className="flex flex-col md:flex-row -my-3 md:my-0 md:gap-4  justify-between md:items-center p-2">
         <h1 style={{ color: "rgb(52 146 150)" }} className="tajawal-extrabold text-2xl lg:text-3xl">{title}</h1>
         {tags.length > 0 && (
           <div className="flex gap-2">
             {tags.map(tag => (
               <Link href="/" key={tag.id}>
-                <span className="tajawal-medium md:text-lg underline text-accent">{tag.name}</span>
+                <span className="tajawal-medium md:text-lg text-sm underline text-accent hidden md:block">{tag.name}</span>
               </Link>
             ))}
           </div>
@@ -159,7 +159,7 @@ const VideoPageClient = ({ initialVideoDetails }) => {
             <YouTube className="youtube-video w-full h-full" videoId={videoId} opts={videoOptions} />
           </div>
         </div>
-        <Link href="/reservation" className="text-accent tajawal-bold px-2 text-sm md:text-base hover:underline">
+        <Link href="/booking-Doctor" className="text-accent tajawal-bold px-2 text-sm md:text-base hover:underline">
           احجزي كشف اونلاين مع افضل الدكاترة في مجال {firstNonFeaturedTagName}
         </Link>
       </div>
