@@ -105,7 +105,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
                       View
                     </button>
                   </Link>
-                  <button
+                  {/* <button
                     onClick={() => onDelete(item.doctorId)}
                     style={{
                       color: "rgb(235 235 235)",
@@ -114,7 +114,7 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
                     className="py-1 px-2 border-none rounded-sm"
                   >
                     Delete
-                  </button>
+                  </button> */}
                 </div>
               </td>
             </>

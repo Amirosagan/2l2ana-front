@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Tooltip from "@mui/material/Tooltip";
 
 const ConsultationActions = ({
@@ -13,6 +13,26 @@ const ConsultationActions = ({
   onCompleteConsultation,
   onCancelConsultation,
 }) => {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const buttonRef = useRef(null);
+
+  const handleTooltipToggle = () => {
+    setTooltipOpen(!tooltipOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      setTooltipOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col gap-4 mt-4 md:mt-0">
       {consultation.isDone && consultation.notes && (
@@ -75,10 +95,17 @@ const ConsultationActions = ({
         )
       )}
 
-      {!isWithinWindow && !consultation.isDone && (
-        <Tooltip title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق </span>}>
+      {!isWithinWindow && !consultation.isDone && !isPastConsultation && (
+        <Tooltip
+          title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق </span>}
+          open={tooltipOpen}
+          onClose={() => setTooltipOpen(false)}
+          disableHoverListener
+        >
           <div
-            className="bg-gray-300 text-gray-500 py-3 shadow-lg tajawal-regular rounded-md w-[200px] text-center cursor-not-allowed"
+            className="bg-gray-300 text-gray-500 py-3 shadow-lg tajawal-regular rounded-md w-[200px] text-center cursor-pointer"
+            onClick={handleTooltipToggle}
+            ref={buttonRef}
           >
             Join Meeting
           </div>
