@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import Logo from './logo';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDownIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, Radio} from 'lucide-react';
+import { ChevronDownIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, Radio, Globe} from 'lucide-react';
 import LoginAccount from './LoginAccount';
 
 Radio 
@@ -69,7 +69,7 @@ const Header = () => {
 
   return (
     <header id='header'>
-      <div id='headerr' style={{ backgroundColor: "#f7f7f7" }} className="w-full  shadow-lg md:h-24 py-2 md:py-0 md:px-10 flex items-center justify-between fixed lg:top-0 top-0 left-0 right-0 z-50">
+      <div id='headerr' dir='' style={{ backgroundColor: "#f7f7f7" }} className="w-full  shadow-lg md:h-24 py-2 md:py-0 md:px-10 flex items-center justify-between fixed lg:top-0 top-0 left-0 right-0 z-50">
         <div className='flex items-center'>
           <div className='mx-5 md:mx-0 mb-[2px]'>
             <LoginAccount />
@@ -115,8 +115,10 @@ const Header = () => {
             </ul>
           </nav>
         </div>
-        <div className="  mx-5 md:mx-0">
+        <div className="  mx-5 md:mx-0 flex  items-center md:gap-4 gap-2">
+        <button className='tajawal-light flex items-center gap-1 md:gap-2   md:text-gray-500'>  <span className='text-black hidden md:block'>English </span><span className='text-black  rounded-full md:hidden '>EN </span> <Globe className='hidden md:block' size={18}/>  <span className='text-xl'> | </span> </button>
           <Logo />
+       
           {/* <Link href={"/"} style={{ backgroundColor: "" }} className='flex md:hidden justify-center items-center'>
             <div className=''>
               <h1 className='text-5xl text-primary aref-ruqaa-bold'> قلقانة </h1>
