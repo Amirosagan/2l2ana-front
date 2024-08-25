@@ -116,7 +116,7 @@ const Header = () => {
           </nav>
         </div>
         <div className="  mx-5 md:mx-0 flex  items-center md:gap-4 gap-2">
-        <button className='tajawal-light flex items-center gap-1 md:gap-2   md:text-gray-500'>  <span className='text-black hidden md:block'>English </span><span className='text-black  rounded-full md:hidden '>EN </span> <Globe className='hidden md:block' size={18}/>  <span className='text-xl'> | </span> </button>
+        <button className='tajawal-light mt-1 md:mt-0 flex items-center gap-1 md:gap-2   md:text-gray-500'>  <span className='text-black hidden md:block'>English </span><span className='text-black mt-1  rounded-full md:hidden text-sm'>EN </span> <Globe className='hidden md:block' size={18}/>  <span className='md:text-xl'> | </span> </button>
           <Logo />
        
           {/* <Link href={"/"} style={{ backgroundColor: "" }} className='flex md:hidden justify-center items-center'>
