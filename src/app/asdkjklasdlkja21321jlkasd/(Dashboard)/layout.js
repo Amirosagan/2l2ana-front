@@ -38,11 +38,12 @@ export default function AdminLayout({ children }) {
 
   return (
     <div className="flex">
-      <div  className="w-72 bg-primary h-[100vh]">
+      <div  className="w-72 bg-primary fixed h-[100vh]">
         <Sidebar />
       </div>
-      <div className="content flex-1 p-5">
+      <div className="content ml-72 flex-1 p-5">
         <Navbar />
+        
         {children}
       </div>
     </div>
