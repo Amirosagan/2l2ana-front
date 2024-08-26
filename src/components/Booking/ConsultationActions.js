@@ -99,7 +99,8 @@ const ConsultationActions = ({
           </div>
         </Tooltip>
       )}
-      {isWithinWindow && !consultation.isDone && (
+      {isWithinWindow && !consultation.isDone &&(
+
             <Tooltip title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق</span>}>
               <a
                 className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px] text-center"

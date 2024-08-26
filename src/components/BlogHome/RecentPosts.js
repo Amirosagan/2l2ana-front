@@ -55,9 +55,7 @@ const RecentPosts = ({ hideHeader, Home }) => {
           );
         }
 
-        const sortedBlogs = data.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-
-        setBlogs(sortedBlogs);
+        setBlogs(data);
         setLoading(false);
       } catch (error) {
         setLoading(false);

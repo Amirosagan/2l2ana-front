@@ -31,7 +31,7 @@ const Footer = () => {
                                 <Link href="https://www.instagram.com/2l2ana?igsh=MWM3OWtpbWQybGZkaQ==" target="_blank" rel="noopener noreferrer">
                                     <FaInstagram className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
-                                <Link href="www.youtube.com/@2l2ana" target="_blank" rel="noopener noreferrer">
+                                <Link href="https://www.youtube.com/@2l2ana" target="_blank" rel="noopener noreferrer">
                                     <FaYoutube className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
                                 <Link href="https://www.tiktok.com/@2l2ana?_t=8ovfwccfiro&_r=1" target="_blank" rel="noopener noreferrer">
