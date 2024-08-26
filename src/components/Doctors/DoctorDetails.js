@@ -53,7 +53,7 @@ const Details = ({ doctor }) => {
           <div className="tajawal-regular text-gray-500 flex flex-col items-start gap-2 text-md">
             <Rating rating={roundRating(doctor.rating)} />  
             <div className="flex items-center text-gray tajawal-regular text-sm md:text-base">
-              الكشف : <span className="text-red-600 mx-2 line-through">{originalPrice} ج</span> {doctor.consultationPriceAfterDiscount} ج
+              الكشف : <span className="text-red-600 mx-2 line-through">{doctor.consultationPriceBeforeDiscount} ج</span> {doctor.consultationPriceAfterDiscount} ج
             </div>
           </div>
 

@@ -181,10 +181,10 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
   };
 
   const currentConsultations = useMemo(() => {
+    // Sort consultations by date and time (earliest first)
     const sortedConsultations = [...updatedConsultations].sort((a, b) => {
-      // Combine date and time for sorting
-      const dateA = new Date(`${a.date}T${a.time}`);
-      const dateB = new Date(`${b.date}T${b.time}`);
+      const dateA = new Date(`${a.date} ${a.time}`);
+      const dateB = new Date(`${b.date} ${b.time}`);
       return dateA - dateB;
     });
 

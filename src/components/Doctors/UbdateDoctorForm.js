@@ -14,7 +14,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
     category: '',
     headLine: '',
     consultationPrice: 0,
-    weekDaysAvailable: [], // Array of objects containing dayId and selected timeIds
+    weekDaysAvailable: [],
     isActive: true,
     imageUrl: '',
   });
@@ -34,26 +34,29 @@ const UpdateDoctorForm = ({ doctorId }) => {
     { value: 'تأهيل نفسي', label: 'تأهيل نفسي' },
   ];
 
+  const formatToEgyptTime = (time) => {
+    const [hour, minute] = time.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hour);
+    date.setMinutes(minute);
+    date.setSeconds(0);
+
+    return date.toLocaleTimeString('en-US', {
+      timeZone: 'Africa/Cairo',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
+
   useEffect(() => {
     const fetchAvailabilityData = async () => {
       try {
         const response = await api.get('/Time');
 
-        // Function to format time to Egypt's local time
-        const formatEgyptTime = (time) => {
-          const date = new Date(`1970-01-01T${time}Z`);
-          return date.toLocaleTimeString('en-US', {
-            timeZone: 'Africa/Cairo',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-          });
-        };
-
         const groupedDayTimes = response.data.timesRanges.reduce((acc, timeRange) => {
           const dayId = timeRange.dayNumber;
-          const formattedTime = formatEgyptTime(timeRange.time);
-          const timeOption = { value: timeRange.id, label: formattedTime };
+          const timeOption = { value: timeRange.id, label: formatToEgyptTime(timeRange.time) };
 
           if (!acc[dayId]) {
             acc[dayId] = [];
@@ -87,11 +90,18 @@ const UpdateDoctorForm = ({ doctorId }) => {
         const response = await api.get(`/Doctor/${doctorId}`);
         const doctor = response.data;
 
-        // Map timesRanges to the correct format for the form
-        const weekDaysAvailable = doctor.timesRanges.map((timeRange) => ({
-          dayId: timeRange.dayNumber,
-          timeIds: [timeRange.id], // Assuming each timeRange has a unique ID
-        }));
+        const weekDaysAvailable = doctor.timesRanges.reduce((acc, timeRange) => {
+          const day = acc.find((day) => day.dayId === timeRange.dayNumber);
+          if (day) {
+            day.timeIds.push(timeRange.id);
+          } else {
+            acc.push({
+              dayId: timeRange.dayNumber,
+              timeIds: [timeRange.id],
+            });
+          }
+          return acc;
+        }, []);
 
         setProfileData({
           description: doctor.description,
@@ -178,7 +188,6 @@ const UpdateDoctorForm = ({ doctorId }) => {
     e.preventDefault();
     const token = Cookies.get('authToken');
 
-    // Flatten the timesIds array from weekDaysAvailable
     const timesIds = profileData.weekDaysAvailable.reduce((acc, day) => {
       return acc.concat(day.timeIds);
     }, []);
@@ -190,7 +199,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
       headLine: profileData.headLine,
       consultationPrice: profileData.consultationPrice,
       imageUrl: profileData.imageUrl,
-      timesIds: timesIds,  // This is the flattened array of time IDs
+      timesIds: timesIds,
     };
 
     try {
@@ -267,7 +276,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
 
             return (
               <div key={day.value} className="mb-4">
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     id={`day-${day.value}`}
