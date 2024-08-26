@@ -38,7 +38,7 @@ const MyProfileClient = () => {
               setFirstName(decodedToken.firstName);
             }
             if (session.session.role) {
-              setRole(session.session.role); // Setting the role from session data
+              setRole(session.session.role); 
             }
           }
 

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import ConsultationCard from "./ConsultationCard";
 import api from "@/src/utils/api";
@@ -181,7 +181,12 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
   };
 
   const currentConsultations = useMemo(() => {
-    const sortedConsultations = [...updatedConsultations].sort((a, b) => new Date(b.date) - new Date(a.date));
+    const sortedConsultations = [...updatedConsultations].sort((a, b) => {
+      // Combine date and time for sorting
+      const dateA = new Date(`${a.date}T${a.time}`);
+      const dateB = new Date(`${b.date}T${b.time}`);
+      return dateA - dateB;
+    });
 
     return sortedConsultations.map((consultation) => {
       const doctor = doctorDetails[consultation.doctorId];
@@ -259,7 +264,6 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         </div>
       )}
 
-
       {showNotes && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-5 w-full flex flex-col items-center max-w-sm mx-2">
@@ -289,4 +293,3 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 
 BookingList.displayName = "BookingList";
 export default BookingList;
-

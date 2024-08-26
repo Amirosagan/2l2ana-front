@@ -88,7 +88,8 @@ const SuggestionList = ({ blog }) => {
               <div className="flex items-center w-full justify-between">
                 <StarRating rating={roundRating(doctor.rating)} size={20} />
                 <h2 className="tajawal-regular text-gray-500 flex gap-2 text-sm">
-                  الكشف : {doctor.consultationPrice}ج
+                  الكشف : {doctor.consultationPriceAfterDiscount} ج
+                  
                 </h2>
               </div>
             </div>

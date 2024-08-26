@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from 'react';
 import {
     Dialog,
@@ -45,6 +44,16 @@ const formatDateTime = (date) => {
     return date.toISOString().split('.')[0];
 };
 
+// New function to format time to Egypt's local time
+const formatEgyptTime = (date) => {
+    return date.toLocaleTimeString("en-US", {
+        timeZone: "Africa/Cairo",
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    });
+};
+
 export default function BookAppointment({ doctorId }) {
     const [open, setOpen] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
@@ -58,7 +67,7 @@ export default function BookAppointment({ doctorId }) {
     const [isFreeConsultation, setIsFreeConsultation] = useState(false);
     const [bookingTrigger, setBookingTrigger] = useState(0);
     const [session, setSession] = useState(null);
-    const [freeTickets, setFreeTickets] = useState(0); // Track free tickets
+    const [freeTickets, setFreeTickets] = useState(0);
 
     const nextWeekDays = getNextWeekDays();
 
@@ -67,7 +76,7 @@ export default function BookAppointment({ doctorId }) {
             const sessionData = await checkSession();
             if (sessionData) {
                 setSession(sessionData.session);
-                fetchFreeConsultationTickets(); // Fetch free tickets on session initialization
+                fetchFreeConsultationTickets(); 
             }
         }
 
@@ -98,35 +107,40 @@ export default function BookAppointment({ doctorId }) {
             });
             const doctorData = response.data;
 
-            const englishToArabic = Object.fromEntries(
-                daysOfWeek.map(day => [day.englishName, day])
+            const validDays = daysOfWeek.filter(day => 
+                doctorData.timesRanges.some(timeRange => timeRange.dayNumber === day.value)
             );
 
-            const validDays = doctorData.weekDays
-                .map(day => englishToArabic[day.name])
-                .filter(day => day !== undefined);
-
-            const timeList = doctorData.dayTimes.map(time => ({
-                time: time.startTime
+            const timeList = doctorData.timesRanges.map(time => ({
+                time: time.time,
+                dayNumber: time.dayNumber
             }));
 
             setTimeSlot(timeList);
             setAvailableDays(validDays);
 
+            // Automatically select the first available day and time slot
             const firstAvailableDay = nextWeekDays.find(day => {
                 if (!validDays.some(validDay => validDay.value === day.value)) {
                     return false;
                 }
                 const date = day.date;
                 const hasAvailableTime = timeList.some(time => 
-                    !isPastTime(date, time.time) && 
-                    !isTimeUnavailable(date, time.time)
+                    time.dayNumber === day.value && !isPastTime(date, time.time) && !isTimeUnavailable(date, time.time)
                 );
                 return hasAvailableTime;
             });
 
             if (firstAvailableDay) {
                 setSelectedDay(firstAvailableDay.value);
+
+                const firstAvailableTime = timeList.find(
+                    time => time.dayNumber === firstAvailableDay.value
+                );
+
+                if (firstAvailableTime) {
+                    setSelectedTimeSlot(firstAvailableTime.time);
+                }
             }
         } catch (error) {
             console.error('Error fetching doctor data:', error);
@@ -313,28 +327,29 @@ export default function BookAppointment({ doctorId }) {
                                         </div>
                                         <div>
                                             <h2 className="flex gap-2 items-center mb-3">
-                                                <Clock /> اختر الوقت
+                                                <Clock /> اختر الوقت بتوقيت مصر  
                                             </h2>
                                             <div className="grid grid-cols-3 gap-2">
-                                                {timeSlot.map((item, index) => (
-                                                    <Button
-                                                        key={index}
-                                                        variant={item.time === selectedTimeSlot ? "contained" : "outlined"}
-                                                        onClick={() => setSelectedTimeSlot(item.time)}
-                                                        className={`${
-                                                            item.time === selectedTimeSlot
-                                                                ? 'bg-accent text-white'
-                                                                : 'bg-white text-black'
-                                                        }`}
-                                                        disabled={
-                                                            !nextWeekDays.find(day => day.value === selectedDay) ||
-                                                            isPastTime(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time) ||
-                                                            isTimeUnavailable(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time)
-                                                        }
-                                                    >
-                                                        {formatTime(item.time)}
-                                                    </Button>
-                                                ))}
+                                                {timeSlot
+                                                    .filter(item => item.dayNumber === selectedDay)
+                                                    .map((item, index) => (
+                                                        <Button
+                                                            key={index}
+                                                            variant={item.time === selectedTimeSlot ? "contained" : "outlined"}
+                                                            onClick={() => setSelectedTimeSlot(item.time)}
+                                                            className={`${
+                                                                item.time === selectedTimeSlot
+                                                                    ? 'bg-accent text-white'
+                                                                    : 'bg-white text-black'
+                                                            }`}
+                                                            disabled={
+                                                                isPastTime(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time) ||
+                                                                isTimeUnavailable(nextWeekDays.find(day => day.value === selectedDay)?.date, item.time)
+                                                            }
+                                                        >
+                                                            {formatEgyptTime(new Date(`${nextWeekDays.find(day => day.value === selectedDay)?.date.toDateString()} ${item.time}`))}
+                                                        </Button>
+                                                    ))}
                                             </div>
                                         </div>
                                     </div>
@@ -366,7 +381,7 @@ export default function BookAppointment({ doctorId }) {
                             <h2 className="mb-4 tajawal-medium text-accent">خطوة واحدة ونكمل الحجز</h2>
                             <p><strong>اليوم المختار:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.label}</p>
                             <p><strong>التاريخ المختار:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.date.toLocaleDateString()}</p>
-                            <p className='mb-10'><strong >الوقت المختار:</strong> {formatTime(selectedTimeSlot)}</p>
+                            <p className='mb-10'><strong >الوقت المختار بتوقيت مصر:</strong> {formatEgyptTime(new Date(`${nextWeekDays.find(day => day.value === selectedDay)?.date.toDateString()} ${selectedTimeSlot}`))}</p>
                             <div className='flex gap-4 flex-col items-center'>
                                 <Button
                                     variant="contained"
@@ -376,7 +391,7 @@ export default function BookAppointment({ doctorId }) {
                                 >
                                     30 دقيقة "اذهب الي منصة الدفع"
                                 </Button>
-                                {freeTickets > 0 && ( // Conditionally render the free consultation button
+                                {freeTickets > 0 && (
                                     <>
                                         <h1> أو </h1>
                                         <Button

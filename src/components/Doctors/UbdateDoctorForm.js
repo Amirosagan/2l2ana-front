@@ -14,12 +14,11 @@ const UpdateDoctorForm = ({ doctorId }) => {
     category: '',
     headLine: '',
     consultationPrice: 0,
-    weekDaysAvailableIds: [],
-    dayTimesAvailableIds: [],
+    weekDaysAvailable: [], // Array of objects containing dayId and selected timeIds
     isActive: true,
     imageUrl: '',
   });
-  const [dayTimesOptions, setDayTimesOptions] = useState([]);
+  const [dayTimesOptions, setDayTimesOptions] = useState({});
   const [weekDaysOptions, setWeekDaysOptions] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -36,26 +35,45 @@ const UpdateDoctorForm = ({ doctorId }) => {
   ];
 
   useEffect(() => {
-  
     const fetchAvailabilityData = async () => {
       try {
         const response = await api.get('/Time');
-        const formatTime = (time) => {
-          const [hour, minute] = time.split(':');
-          const ampm = hour >= 12 ? 'PM' : 'AM';
-          const formattedHour = hour % 12 || 12;
-          return `${formattedHour}:${minute} ${ampm}`;
-        };
-        const dayTimes = response.data.dayTimes.map((time) => ({
-          value: time.id,
-          label: formatTime(time.startTime),
-        }));
-        const weekDays = response.data.weekDays.map((day) => ({
-          value: day.id,
-          label: day.name,
-        }));
 
-        setDayTimesOptions(dayTimes);
+        // Function to format time to Egypt's local time
+        const formatEgyptTime = (time) => {
+          const date = new Date(`1970-01-01T${time}Z`);
+          return date.toLocaleTimeString('en-US', {
+            timeZone: 'Africa/Cairo',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          });
+        };
+
+        const groupedDayTimes = response.data.timesRanges.reduce((acc, timeRange) => {
+          const dayId = timeRange.dayNumber;
+          const formattedTime = formatEgyptTime(timeRange.time);
+          const timeOption = { value: timeRange.id, label: formattedTime };
+
+          if (!acc[dayId]) {
+            acc[dayId] = [];
+          }
+
+          acc[dayId].push(timeOption);
+          return acc;
+        }, {});
+
+        const weekDays = [
+          { value: 0, label: 'Sunday' },
+          { value: 1, label: 'Monday' },
+          { value: 2, label: 'Tuesday' },
+          { value: 3, label: 'Wednesday' },
+          { value: 4, label: 'Thursday' },
+          { value: 5, label: 'Friday' },
+          { value: 6, label: 'Saturday' },
+        ];
+
+        setDayTimesOptions(groupedDayTimes);
         setWeekDaysOptions(weekDays);
       } catch (error) {
         console.error('Error fetching availability data:', error);
@@ -69,13 +87,18 @@ const UpdateDoctorForm = ({ doctorId }) => {
         const response = await api.get(`/Doctor/${doctorId}`);
         const doctor = response.data;
 
+        // Map timesRanges to the correct format for the form
+        const weekDaysAvailable = doctor.timesRanges.map((timeRange) => ({
+          dayId: timeRange.dayNumber,
+          timeIds: [timeRange.id], // Assuming each timeRange has a unique ID
+        }));
+
         setProfileData({
           description: doctor.description,
           category: doctor.category,
           headLine: doctor.headLine,
-          consultationPrice: doctor.consultationPrice || 100,
-          weekDaysAvailableIds: doctor.weekDays.map((day) => day.id),
-          dayTimesAvailableIds: doctor.dayTimes.map((time) => time.id),
+          consultationPrice: doctor.consultationPriceAfterDiscount || 100,
+          weekDaysAvailable,
           isActive: doctor.isActive,
           imageUrl: doctor.imageUrl,
         });
@@ -96,18 +119,34 @@ const UpdateDoctorForm = ({ doctorId }) => {
     });
   };
 
-  const handleSelectChange = (selectedOptions, action) => {
-    const { name } = action;
+  const handleDayTimeChange = (selectedOptions, dayId) => {
+    const updatedDays = profileData.weekDaysAvailable.map((day) =>
+      day.dayId === dayId ? { ...day, timeIds: selectedOptions.map((option) => option.value) } : day
+    );
+    setProfileData({ ...profileData, weekDaysAvailable: updatedDays });
+  };
+
+  const handleAddDay = (dayId) => {
     setProfileData({
       ...profileData,
-      [name]: selectedOptions ? selectedOptions.map((option) => option.value) : [],
+      weekDaysAvailable: [
+        ...profileData.weekDaysAvailable,
+        { dayId, timeIds: [] },
+      ],
     });
   };
 
-  const handleCategoryChange = (newValue) => {
+  const handleRemoveDay = (dayId) => {
     setProfileData({
       ...profileData,
-      category: newValue ? newValue.value : '',
+      weekDaysAvailable: profileData.weekDaysAvailable.filter((day) => day.dayId !== dayId),
+    });
+  };
+
+  const handleCategoryChange = (selectedOption) => {
+    setProfileData({
+      ...profileData,
+      category: selectedOption ? selectedOption.value : '',
     });
   };
 
@@ -139,8 +178,23 @@ const UpdateDoctorForm = ({ doctorId }) => {
     e.preventDefault();
     const token = Cookies.get('authToken');
 
+    // Flatten the timesIds array from weekDaysAvailable
+    const timesIds = profileData.weekDaysAvailable.reduce((acc, day) => {
+      return acc.concat(day.timeIds);
+    }, []);
+
+    const payload = {
+      isActive: profileData.isActive,
+      description: profileData.description,
+      category: profileData.category,
+      headLine: profileData.headLine,
+      consultationPrice: profileData.consultationPrice,
+      imageUrl: profileData.imageUrl,
+      timesIds: timesIds,  // This is the flattened array of time IDs
+    };
+
     try {
-      await api.post('/Doctor/UpdateProfile', profileData, {
+      await api.post('/Doctor/UpdateProfile', payload, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -154,7 +208,6 @@ const UpdateDoctorForm = ({ doctorId }) => {
 
   return (
     <>
-     
       <form onSubmit={handleSubmit} className="border-2 border-primary p-4 mt-5">
         <ToastContainer />
         <div className="mb-4">
@@ -189,7 +242,6 @@ const UpdateDoctorForm = ({ doctorId }) => {
               isClearable
             />
           </div>
-        
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="headLine">
@@ -203,38 +255,64 @@ const UpdateDoctorForm = ({ doctorId }) => {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
+
+        {/* Weekdays and Time Slots Section */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="weekDaysAvailableIds">
-            Week Days Available
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="weekDaysAvailable">
+            Select Days and Available Time Slots
           </label>
-          <Select
-            isMulti
-            name="weekDaysAvailableIds"
-            options={weekDaysOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            value={weekDaysOptions.filter((option) =>
-              profileData.weekDaysAvailableIds.includes(option.value)
-            )}
-            onChange={handleSelectChange}
-          />
+
+          {weekDaysOptions.map((day) => {
+            const isSelected = profileData.weekDaysAvailable.some((d) => d.dayId === day.value);
+
+            return (
+              <div key={day.value} className="mb-4">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`day-${day.value}`}
+                    checked={isSelected}
+                    onChange={() => {
+                      if (isSelected) {
+                        handleRemoveDay(day.value);
+                      } else {
+                        handleAddDay(day.value);
+                      }
+                    }}
+                    className="mr-2"
+                  />
+                  <label htmlFor={`day-${day.value}`} className="block text-gray-700 text-sm font-bold mb-2">
+                    {day.label}
+                  </label>
+                </div>
+
+                {isSelected && (
+                  <div className="ml-6">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                      Select Available Time Slots
+                    </label>
+                    <Select
+                      isMulti
+                      name={`dayTimesAvailable-${day.value}`}
+                      options={dayTimesOptions[day.value] || []}
+                      value={(dayTimesOptions[day.value] || []).filter((time) =>
+                        profileData.weekDaysAvailable
+                          .find((d) => d.dayId === day.value)
+                          .timeIds.includes(time.value)
+                      )}
+                      onChange={(selectedOptions) =>
+                        handleDayTimeChange(selectedOptions, day.value)
+                      }
+                      className="basic-multi-select"
+                      classNamePrefix="select"
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="dayTimesAvailableIds">
-            Day Times Available
-          </label>
-          <Select
-            isMulti
-            name="dayTimesAvailableIds"
-            options={dayTimesOptions}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            value={dayTimesOptions.filter((option) =>
-              profileData.dayTimesAvailableIds.includes(option.value)
-            )}
-            onChange={handleSelectChange}
-          />
-        </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
             Profile Image
@@ -259,7 +337,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
           {uploading ? (
             <p>Uploading...</p>
           ) : (
-            <button onClick={handleImageUpload} className="mt-2 text-primary mx-2" >
+            <button onClick={handleImageUpload} type="button" className="mt-2 text-primary mx-2">
               Upload Image
             </button>
           )}

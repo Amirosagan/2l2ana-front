@@ -2,7 +2,7 @@ import avatar from "@/public/noavatar.png";
 import { BadgeInfo, ClipboardPlus } from "lucide-react";
 import Image from "next/image";
 import BookAppointment from "../Booking/BookAppointment";
-import Rating from "@/src/components/ELements/Rating"; 
+import Rating from "../ELements/Rating";
 
 // Rating rounding function
 const roundRating = (rating) => {
@@ -24,11 +24,11 @@ const calculateOriginalPrice = (currentPrice) => {
 };
 
 const Details = ({ doctor }) => {
-  const originalPrice = calculateOriginalPrice(doctor.consultationPrice);
+  const originalPrice = calculateOriginalPrice(doctor.consultationPriceAfterDiscount);
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 border-[1px] p-5  md:mt-5 rounded-lg">
+      <div className="grid grid-cols-1 md:grid-cols-3 border-[1px] p-5 md:mt-5 rounded-lg">
         <div className="">
           <Image
             src={doctor.imageUrl ? doctor.imageUrl : avatar}
@@ -53,12 +53,12 @@ const Details = ({ doctor }) => {
           <div className="tajawal-regular text-gray-500 flex flex-col items-start gap-2 text-md">
             <Rating rating={roundRating(doctor.rating)} />  
             <div className="flex items-center text-gray tajawal-regular text-sm md:text-base">
-              الكشف : <span className="text-red-600 mx-2 line-through">{originalPrice} ج</span> {doctor.consultationPrice} ج
+              الكشف : <span className="text-red-600 mx-2 line-through">{originalPrice} ج</span> {doctor.consultationPriceAfterDiscount} ج
             </div>
           </div>
 
           <div className="flex items-center mt-2 md:mt-5">
-            <BookAppointment doctorId={doctor.doctorId} />
+            <BookAppointment doctorId={doctor.doctorId} availableTimes={doctor.timesRanges} />
           </div>
         </div>
       </div>

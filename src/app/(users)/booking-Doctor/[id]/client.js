@@ -1,6 +1,7 @@
 "use client";
 import Details from "@/src/components/Doctors/DoctorDetails";
 import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
+import api from "@/src/utils/api";
 import { useEffect, useState } from "react";
 
 const DoctorDetailsPageClient = ({ doctor }) => {
