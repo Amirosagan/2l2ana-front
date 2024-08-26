@@ -13,6 +13,7 @@ export async function generateMetadata({ params }) {
     const res = await responseSerilezed.json();
     const blog = res;
     return {
+      metadataBase: new URL('https://2l2ana.com'),
       title: `${blog.title} | قلقانة`,
       description: blog.content.slice(0, 150) + "...",
       keywords:

@@ -7,6 +7,7 @@ export async function generateMetadata({ params }) {
   const doctor = response.data;
 
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: ` قلقانة | ${doctor.name}`,
     description: doctor.description || "احصل على استشارة طبية من أفضل الأطباء المتخصصين.",
     keywords: "تفاصيل الطبيب, استشارة طبية, أطباء متخصصون, حجز استشارة, معلومات الطبيب",

@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
     const question = res.data.question;
 
     return {
+      metadataBase: new URL('https://2l2ana.com'),
       title: `${question.title} | قلقانة`,
       description: question.content.slice(0, 150) + '...',
       keywords: "مدونة طبية, نصائح طبية, استشارات طبية, صحة, صحة عامة, نصائح صحية, حجز طبيب, مدونة طبية عربية, Medical blog, Medical tips, Medical consultations, Health, General health, Health tips, Book a doctor, Arabic medical blog",

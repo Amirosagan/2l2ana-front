@@ -11,6 +11,7 @@ export async function generateMetadata() {
   const titles = data.items.map((blog) => blog.title).join(", ");
 
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `مقالات طبية | قلقانة`,
     description: `اكتشف مقالاتنا الجديدة واستفد من المعلومات الغنية. تشمل المواضيع: ${titles}.`,
     keywords:

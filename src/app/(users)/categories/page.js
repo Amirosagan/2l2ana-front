@@ -4,6 +4,7 @@ export async function generateMetadata() {
   const categoryInfo = "فيديوهات, مقالات, محتوى جديد, اكتشف محتوى, موقعنا"; // Static metadata
 
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `المحتوى الطبي | قلقانة`,
     description: `اكتشف أفضل الفيديوهات والمقالات على موقعنا. تشمل القائمة: ${categoryInfo}.`,
     keywords: "فيديوهات, مقالات, محتوى جديد, اكتشف محتوى, قلقانة",

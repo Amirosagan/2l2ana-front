@@ -37,7 +37,6 @@ const ResetPassword = () => {
     const emailParam = decodeURIComponent(searchParams.get("email") || "");
     let tokenParam = decodeURIComponent(searchParams.get("token") || "");
 
-    // Replace spaces with '+' in the token
     tokenParam = tokenParam.replace(/ /g, "+");
 
     if (emailParam && tokenParam) {

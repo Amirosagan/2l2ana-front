@@ -4,6 +4,7 @@ const MyProfileClient = dynamic(() => import("./client"), { ssr: false });
 
 export async function generateMetadata() {
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `ملفي الشخصي | قلقانة`,
     description: `إدارة حسابك الشخصي والاطلاع على الحجوزات والمعلومات الطبية.`,
     keywords:

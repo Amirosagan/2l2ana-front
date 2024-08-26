@@ -125,7 +125,26 @@ const MyBookings = () => {
 
   return (
     <div className="mt-10">
+      <div className="flex items-center flex-col md:flex-row gap-3 justify-between"> 
+        
       <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
+      {role === "Doctor" && (
+  <button
+    onClick={() => {
+      const link = document.createElement('a');
+      link.href = "/doctor.pdf";
+      link.download = 'واجبات الدكتور تجاه المريض.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }}
+    className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
+  >
+     واجبات الدكتور تجاه المريض.pdf
+  </button>
+)}
+
+      </div>
       <Tabs>
         <TabPanel label="القادم">
           {notDoneConsultations.length > 0 ? (

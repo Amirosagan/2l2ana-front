@@ -12,6 +12,7 @@ import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
 
 export async function generateMetadata() {
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: ` قلقانة المنصة العربية الاولي المختصة بصحة النساء `,
     description: `أول منصة عربية تهتم بصحة النساء في الوطن العربي. اكتشف محتوى طبي شامل، فيديوهات، مقالات، استشارات طبية، وحجز دكاترة.`,
     keywords: "منصة صحة النساء, محتوى طبي, استشارات طبية, فيديوهات طبية, مقالات طبية, حجز دكاترة, معلومات طبية, صحة النساء, استفسارات صحية",

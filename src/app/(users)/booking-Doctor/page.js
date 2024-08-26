@@ -8,6 +8,7 @@ export async function generateMetadata() {
   const doctorInfo = data.items.map(doctor => `${doctor.firstName} ${doctor.lastName} - ${doctor.category}`).join(', ');
 
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `احجز دكتور اونلاين | قلقانة`,
     description: `اكتشف أفضل الأطباء واستفد من الاستشارات الطبية المتخصصة. تشمل القائمة: ${doctorInfo}.`,
     keywords: "احجز دكتور, استشارة طبية, نصائح طبية, حجز استشارة طبية, طبيب اونلاين, طبيب عبر الإنترنت, حجز موعد مع دكتور, استشارة دكتور, نصائح صحية, طبيب متخصص",

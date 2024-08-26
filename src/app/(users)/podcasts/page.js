@@ -10,6 +10,7 @@ export async function generateMetadata() {
   const titles = data.items.map(video => video.youtubeLink.title).join(', ');
 
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `بودكاست طبي | قلقانة`,
     description: `شاهد العديد من المقاطع الطبية واحصل على معلومات مفيدة. تشمل المواضيع: ${titles}.`,
     keywords: "حجز دكتور, فيديوهات طبية, استشارة طبية, نصائح طبية, استفسارات صحية, دكتور اونلاين, دكتور عبر الإنترنت, حجز استشارة طبية, فيديو طبي, طبيب استشاري, نصيحة طبية, استفسار طبي, حجز موعد مع دكتور, استشارة دكتور,  بودكاست , بودكاسست طبي , طبي , تعليمي  , صحة الاطفال ,  نصائح صحية, طبيب متخصص, استفسارات طبية شائعة, book doctor, medical videos, doctor consultation, medical advice, health queries, online doctor, doctor appointment, medical consultation, medical videos, professional medical advice",
@@ -32,8 +33,6 @@ export async function generateMetadata() {
 }
 
 const VideosPage = async () => {
-  const res = await api.get('/Youtube');
-  const videos = res.data.items;
 
   return (
     <div className='mt-5'>

@@ -1,13 +1,8 @@
-import QuestionComponent from "@/src/components/FAQ/Question";
-import MixFooter from "@/src/components/Footer/mixfooter";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
 import GoalPage from "@/src/components/AboutUs/GoalPage";
-import { BookOpenText, BookPlus } from "lucide-react";
 
 export async function generateMetadata() {
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `من نحن | قلقانة`,
     description: `تعرف على منصة قلقانة، التي تهتم بكل ما يخص النساء في الوطن العربي، بما في ذلك التوعية الطبية، استشارات طبية، واحتياجات النساء. استكشف هدفنا وخدماتنا.`,
     keywords: "منصة نسائية, صحة النساء, استشارات طبية, توعية صحية, احتياجات النساء, خدمات طبية, معلومات طبية, قلقانة",

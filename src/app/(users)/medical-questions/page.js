@@ -8,6 +8,7 @@ export async function generateMetadata() {
   const titles = data.items.map(question => question.title).join(', ');
 
   return {
+    metadataBase: new URL('https://2l2ana.com'),
     title: `اسئلة طبية | قلقانة`,
     description: `احصل على إجابات لأسئلتك الطبية. قدم استفساراتك واحصل على نصائح مهنية عبر الإنترنت. تشمل المواضيع: ${titles}.`,
     keywords: "حجز دكتور, اسئلة طبية, استشارة طبية, نصائح طبية, استفسارات صحية, دكتور اونلاين, دكتور عبر الإنترنت, حجز استشارة طبية, سؤال طبي, طبيب استشاري, نصيحة طبية, استفسار طبي, حجز موعد مع دكتور, استشارة دكتور, نصائح صحية, طبيب متخصص, استفسارات طبية شائعة, book doctor, medical questions, doctor consultation, medical advice, health queries, online doctor, doctor appointment, medical consultation, ask doctor, professional medical advice",
