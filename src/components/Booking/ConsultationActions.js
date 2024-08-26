@@ -100,20 +100,16 @@ const ConsultationActions = ({
         </Tooltip>
       )}
       {isWithinWindow && !consultation.isDone && (
-        <Tooltip
-          title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق </span>}
-          open={tooltipOpen}
-          onClose={() => setTooltipOpen(false)}
-          disableHoverListener
-        >
-          <div
-            className="bg-gray-300 text-gray-500 py-3 shadow-lg tajawal-regular rounded-md w-[200px] text-center cursor-pointer"
-            onClick={handleTooltipToggle}
-            ref={buttonRef}
-          >
-            Join Meeting
-          </div>
-        </Tooltip>
+            <Tooltip title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق</span>}>
+              <a
+                className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px] text-center"
+                href={consultation.meetingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Join Meeting
+              </a>
+            </Tooltip>
       )}
 
       {role !== "Doctor" && isWithinCancelWindow && (
