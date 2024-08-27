@@ -357,3 +357,8 @@ select, input {
   direction: rtl;
   text-align: right;
 }
+
+.ql-editor {
+  direction: rtl;
+  text-align: right;
+}

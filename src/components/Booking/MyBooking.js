@@ -128,11 +128,12 @@ const MyBookings = () => {
       <div className="flex items-center flex-col md:flex-row gap-3 justify-between"> 
         
       <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
+      <div className="flex flex-col gap-1"> 
       {role === "Doctor" && (
   <button
     onClick={() => {
       const link = document.createElement('a');
-      link.href = "/doctor.pdf";
+      link.href = "/doc.pdf";
       link.download = 'واجبات الدكتور تجاه المريض.pdf';
       document.body.appendChild(link);
       link.click();
@@ -142,6 +143,44 @@ const MyBookings = () => {
   >
      واجبات الدكتور تجاه المريض.pdf
   </button>
+)}
+      {role === "Doctor" && (
+        <div className="w-full">
+  <button
+
+    onClick={() => {
+      const link = document.createElement('a');
+      link.href = "/Dr.consent.pdf";
+      link.download = ' الموافقات الطبية.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }}
+    className="bg-primary text-white w-full tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
+  >
+     الموافقات الطبية   .pdf
+  </button>
+  <h1 className="tajawal-regular"> بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية</h1>
+  </div>
+)}
+</div>
+      {role !== "Doctor" && (
+        <div> 
+  <button
+    onClick={() => {
+      const link = document.createElement('a');
+      link.href = "/Patientconsent.pdf";
+      link.download = 'الموافقات الطبية.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }}
+    className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
+  >
+       الموافقات الطبية .pdf
+  </button>
+   <h1 className="tajawal-regular"> بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية</h1>
+   </div>
 )}
 
       </div>

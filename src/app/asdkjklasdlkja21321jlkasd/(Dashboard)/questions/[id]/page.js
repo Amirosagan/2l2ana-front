@@ -12,7 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import withAuth from "@/src/utils/withAuth";
 import { ToastContainer, toast } from "react-toastify";
@@ -139,7 +138,19 @@ const SingleQuestionPage = ({ params, token }) => {
               <FormItem>
                 <FormLabel>Add the Answer</FormLabel>
                 <FormControl>
-                  <Input {...field} placeholder="Answer the question to show it public" />
+                  <textarea
+                    {...field}
+                    placeholder="Answer the question to show it public"
+                    style={{
+                      direction: "rtl", // Set the direction to RTL
+                      textAlign: "right", // Align text to the right
+                      width: "100%",
+                      padding: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #ccc",
+                      minHeight: "100px",
+                    }}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

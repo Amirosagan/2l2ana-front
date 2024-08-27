@@ -28,13 +28,12 @@ const formSchema = z.object({
 
 const NewQuestion = ({ token }) => {
   const [availableTags, setAvailableTags] = useState([]);
-  const [newTagId, setNewTagId] = useState(null);
 
   useEffect(() => {
     const fetchTags = async () => {
       try {
         const response = await api.get("/Tags", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         if (response.data && Array.isArray(response.data.tags)) {
           setAvailableTags(response.data.tags);
@@ -69,7 +68,7 @@ const NewQuestion = ({ token }) => {
 
     try {
       await api.post("/Question", requestData, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Question submitted successfully");
       form.reset();
@@ -81,12 +80,19 @@ const NewQuestion = ({ token }) => {
   const handleAddTag = async (newTag) => {
     if (newTag && !availableTags.find((tag) => tag.name === newTag)) {
       try {
-        const response = await api.post("/Tags/create", { name: newTag }, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.post(
+          "/Tags/create",
+          { name: newTag },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         const addedTag = { id: response.data.id, name: newTag };
         setAvailableTags([...availableTags, addedTag]);
-        form.setValue("questionTagIds", [...form.getValues("questionTagIds"), addedTag.id]);
+        form.setValue("questionTagIds", [
+          ...form.getValues("questionTagIds"),
+          addedTag.id,
+        ]);
         toast.success("Tag added successfully");
       } catch (error) {
         toast.error("Error adding new tag");
@@ -98,7 +104,10 @@ const NewQuestion = ({ token }) => {
     <div>
       <ToastContainer />
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 w-[70%] mt-20 p-5 m-auto">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4 w-[70%] mt-20 p-5 m-auto"
+        >
           <FormField
             control={form.control}
             name="title"
@@ -123,7 +132,19 @@ const NewQuestion = ({ token }) => {
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  <Input placeholder="Content" type="text" {...field} />
+                  <textarea
+                    placeholder="Content"
+                    {...field}
+                    style={{
+                      direction: "rtl",
+                      textAlign: "right",
+                      width: "100%",
+                      padding: "8px",
+                      borderRadius: "4px",
+                      border: "1px solid #ccc",
+                      minHeight: "100px",
+                    }}
+                  />
                 </FormControl>
                 {fieldState.error && (
                   <FormMessage style={{ color: "red" }}>
@@ -144,12 +165,17 @@ const NewQuestion = ({ token }) => {
                     multiple
                     {...field}
                     onChange={(e) => {
-                      const selectedIds = Array.from(e.target.selectedOptions, option => Number(option.value));
+                      const selectedIds = Array.from(
+                        e.target.selectedOptions,
+                        (option) => Number(option.value)
+                      );
                       field.onChange(selectedIds);
                     }}
                     value={field.value || []}
                   >
-                    <option value="" disabled>Select tags</option>
+                    <option value="" disabled>
+                      Select tags
+                    </option>
                     {availableTags.map((tag) => (
                       <option key={tag.id} value={tag.id}>
                         {tag.name}

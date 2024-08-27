@@ -11,42 +11,31 @@ const CoverSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLastBlog = async () => {
+    const fetchFirstBlog = async () => {
       try {
-        let page = 1;
-        let lastBlog = null;
-        let totalPages = 1;
+        const response = await api.get("/Post?page=1&pageSize=1");
+        const { items } = response.data;
 
-        while (page <= totalPages) {
-          const response = await api.get(`/Post?page=${page}&pageSize=10`);
-          const { items, totalPages: responseTotalPages } = response.data;
-          totalPages = responseTotalPages;
-
-          if (items.length > 0) {
-            lastBlog = items[items.length - 1];
-          }
-
-          page++;
+        if (items.length > 0) {
+          setBlog(items[0]); 
+        } else {
+          setBlog(null);
         }
-
-        setBlog(lastBlog);
       } catch (error) {
         console.error("Error fetching blog:", error);
+        setBlog(null);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchLastBlog();
+    fetchFirstBlog();
   }, []);
 
   if (loading) {
     return (
       <div className="w-full md:inline-block">
-        <h1
-          className="text-3xl mx-4 mb-5 md:hidden text-primary/90"
-     
-        >
+        <h1 className="text-3xl mx-4 mb-5 md:hidden text-primary/90">
           {" "}
           المقالات{" "}
         </h1>
@@ -89,7 +78,6 @@ const CoverSection = () => {
             src={blog.imageUrl}
             layout="fill"
             unoptimized={true}
-
           />
         ) : (
           <div className="w-full h-full bg-gray-200 rounded-3xl -z-10 border-4 flex items-center justify-center">

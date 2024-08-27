@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/button";
 import api from "@/src/utils/api";
 import withAuth from "@/src/utils/withAuth";
 
-// Dynamically import ReactQuill with SSR disabled
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const formSchema = z.object({
@@ -146,6 +145,18 @@ const NewBlog = ({ token }) => {
     }
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ align: [] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      [{ direction: "rtl" }], // Add this line to enforce RTL in the toolbar
+      ["clean"],
+    ],
+  };
+
   return (
     <div>
       <ToastContainer />
@@ -174,7 +185,13 @@ const NewBlog = ({ token }) => {
               <FormItem>
                 <FormLabel>Content</FormLabel>
                 <FormControl>
-                  <ReactQuill value={field.value} onChange={field.onChange} />
+                  {/* Apply RTL direction */}
+                  <ReactQuill
+                    value={field.value}
+                    onChange={field.onChange}
+                    modules={modules} // Pass the modules with RTL
+                    style={{ direction: "rtl", textAlign: "right" }} // Inline style for RTL
+                  />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>
@@ -245,7 +262,7 @@ const NewBlog = ({ token }) => {
                   className="bg-transparent text-blue-800"
                   onClick={() => {
                     handleAddTag(field.value);
-                    field.onChange(""); // Clear the input after adding the tag
+                    field.onChange("");
                   }}
                 >
                   Add Tag

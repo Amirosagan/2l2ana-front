@@ -37,15 +37,13 @@ const RecentPost = ({ hideHeader, Home }) => {
                     );
                 }
 
-                let sortedVideos = filteredVideos.filter(video => video.youtubeLink.url && video.youtubeLink.lastUpdate).reverse();
-
                 // Apply different video set logic based on hideHeader and Home
                 if (hideHeader) {
-                    setVideos(sortedVideos); // Fetch all videos
+                    setVideos(filteredVideos); // Fetch all videos
                 } else if (Home) {
-                    setVideos(sortedVideos.slice(0, 3)); // Fetch the first 3 videos for home
+                    setVideos(filteredVideos.slice(0, 3)); // Fetch the first 3 videos for home
                 } else {
-                    setVideos(sortedVideos.slice(-6).reverse()); // Fetch the last 6 videos in reverse order
+                    setVideos(filteredVideos.slice(0, 6)); // Fetch the first 6 videos
                 }
 
                 setLoading(false);
@@ -108,10 +106,9 @@ const RecentPost = ({ hideHeader, Home }) => {
     ) : (
         <section className="w-full mb-5 lg:mt-20 px-5 lg:px-24 flex flex-col items-center justify-center">
             <div className="w-full items-center flex justify-between">
-            <h2 className={`tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}>
-    أحدث الفيديوهات
-</h2>
-
+                <h2 className={`tajawal-bold w-fit text-primary/90 inline-block font-bold capitalize text-2xl ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}>
+                    أحدث الفيديوهات
+                </h2>
                 <Link className="underline text-lg text-accent" href={Home ? "/videos" : "/categories"}>
                     المزيد
                 </Link>

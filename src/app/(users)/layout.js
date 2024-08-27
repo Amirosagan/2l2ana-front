@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className={cx(tajawal.variable, 'font-ta bg-white ')}>
         <Header/>
-        <main className="md:pt-28 pt-20 md:pb-20 pb-10">
+        <main className="md:pt-28 pt-24 md:pb-20 pb-10">
           {children}
 
           
