@@ -1,14 +1,20 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import BookingList from "@/src/components/Booking/BookingList";
 import api from "@/src/utils/api";
 import { checkSession } from "@/src/utils/auth";
 import { TabPanel, Tabs } from "@/components/ui/tabs";
 import RatingModal from "@/src/components/Booking/RatingModal";
 import Link from "next/link";
+import { toast } from "react-toastify"; 
 
 const MyBookings = () => {
+  const router = useRouter();
+  const { searchParams } = router.query; 
+  const success = searchParams.get("success"); 
+
   const [notDoneConsultations, setNotDoneConsultations] = useState([]);
   const [doneConsultations, setDoneConsultations] = useState([]);
   const [doctorDetails, setDoctorDetails] = useState({});
@@ -17,6 +23,14 @@ const MyBookings = () => {
   const [token, setToken] = useState(null);
   const [selectedConsultation, setSelectedConsultation] = useState(null);
   const [showRatingModal, setShowRatingModal] = useState(false);
+
+  useEffect(() => {
+    if (success === "true") {
+      toast.success("تمت العملية بنجاح");
+    } else if (success === "false") {
+      toast.error("لم تنجح العملية يرجي اعادة المحاولة");
+    }
+  }, [success]); // Show toast based on success value
 
   useEffect(() => {
     const fetchConsultations = async () => {
@@ -33,7 +47,7 @@ const MyBookings = () => {
         const notDoneResponse = await api.get("/Consultation/User/NotDoneConsultation", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setNotDoneConsultations(notDoneResponse.data.consultations || []); 
+        setNotDoneConsultations(notDoneResponse.data.consultations || []);
 
         const doneResponse =
           session.role === "Doctor"
@@ -43,10 +57,9 @@ const MyBookings = () => {
             : await api.get("/Consultation/User/GetDoneConsultation", {
                 headers: { Authorization: `Bearer ${token}` },
               });
-        setDoneConsultations(doneResponse.data.consultations || []); // Ensure it's an array
+        setDoneConsultations(doneResponse.data.consultations || []);
       } catch (error) {
         console.error("Failed to fetch consultations:", error);
-        // In case of an error, ensure arrays are set to prevent iterability issues
         setNotDoneConsultations([]);
         setDoneConsultations([]);
       }
@@ -92,9 +105,9 @@ const MyBookings = () => {
   useEffect(() => {
     if (isDataFetched && token) {
       const allConsultations = [
-        ...(notDoneConsultations || []), 
-        ...(doneConsultations || [])
-      ]; 
+        ...(notDoneConsultations || []),
+        ...(doneConsultations || []),
+      ];
       fetchAllDoctorDetails(allConsultations);
     }
   }, [isDataFetched, token, notDoneConsultations, doneConsultations, fetchAllDoctorDetails]);
@@ -125,64 +138,65 @@ const MyBookings = () => {
 
   return (
     <div className="mt-10">
-      <div className="flex items-center flex-col md:flex-row gap-3 justify-between"> 
-        
-      <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
-      <div className="flex flex-col gap-1"> 
-      {role === "Doctor" && (
-  <button
-    onClick={() => {
-      const link = document.createElement('a');
-      link.href = "/doc.pdf";
-      link.download = 'واجبات الدكتور تجاه المريض.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }}
-    className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
-  >
-     واجبات الدكتور تجاه المريض.pdf
-  </button>
-)}
-      {role === "Doctor" && (
-        <div className="w-full">
-  <button
-
-    onClick={() => {
-      const link = document.createElement('a');
-      link.href = "/Dr.consent.pdf";
-      link.download = ' الموافقات الطبية.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }}
-    className="bg-primary text-white w-full tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
-  >
-     الموافقات الطبية   .pdf
-  </button>
-  <h1 className="tajawal-regular"> بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية</h1>
-  </div>
-)}
-</div>
-      {role !== "Doctor" && (
-        <div> 
-  <button
-    onClick={() => {
-      const link = document.createElement('a');
-      link.href = "/Patientconsent.pdf";
-      link.download = 'الموافقات الطبية.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }}
-    className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
-  >
-       الموافقات الطبية .pdf
-  </button>
-   <h1 className="tajawal-regular"> بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية</h1>
-   </div>
-)}
-
+      <div className="flex items-center flex-col md:flex-row gap-3 justify-between">
+        <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
+        <div className="flex flex-col gap-1">
+          {role === "Doctor" && (
+            <button
+              onClick={() => {
+                const link = document.createElement("a");
+                link.href = "/doc.pdf";
+                link.download = "واجبات الدكتور تجاه المريض.pdf";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
+              className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
+            >
+              واجبات الدكتور تجاه المريض.pdf
+            </button>
+          )}
+          {role === "Doctor" && (
+            <div className="w-full">
+              <button
+                onClick={() => {
+                  const link = document.createElement("a");
+                  link.href = "/Dr.consent.pdf";
+                  link.download = "الموافقات الطبية.pdf";
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="bg-primary text-white w-full tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
+              >
+                الموافقات الطبية .pdf
+              </button>
+              <h1 className="tajawal-regular">
+                بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية
+              </h1>
+            </div>
+          )}
+        </div>
+        {role !== "Doctor" && (
+          <div>
+            <button
+              onClick={() => {
+                const link = document.createElement("a");
+                link.href = "/Patientconsent.pdf";
+                link.download = "الموافقات الطبية.pdf";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
+              className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
+            >
+              الموافقات الطبية .pdf
+            </button>
+            <h1 className="tajawal-regular">
+              بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية
+            </h1>
+          </div>
+        )}
       </div>
       <Tabs>
         <TabPanel label="القادم">
