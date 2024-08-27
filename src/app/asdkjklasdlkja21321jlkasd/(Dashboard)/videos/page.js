@@ -90,11 +90,7 @@ const VideoPage = () => {
   return (
     <div className="mt-5 p-5 rounded-xl bg-admin1">
       <div className="flex justify-between px-10 pb-10 items-center">
-        <input
-          type="text"
-          placeholder="Search for a video..."
-          className="p-2 border border-gray-300 rounded"
-        />
+      
         <Link href="/asdkjklasdlkja21321jlkasd/newVideo">
           <button
             style={{ border: "none" }}
