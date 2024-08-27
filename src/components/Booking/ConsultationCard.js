@@ -16,6 +16,7 @@ const ConsultationCard = ({
   onCompleteConsultation,
   downloadLoading,
   handleDownloadFile,
+  onUpdateConsultation,
 }) => {
   const displayName = role === "Doctor"
     ? `${user?.firstName || "Unknown"} ${user?.lastName || "User"}`
@@ -87,6 +88,7 @@ const ConsultationCard = ({
         onShowNotes={() => onShowNotes(consultation)}
         onShowRatingModal={() => onShowRatingModal(consultation)}
         onCompleteConsultation={() => onCompleteConsultation(consultation)}
+        onUpdateConsultation={onUpdateConsultation} 
       />
     </div>
   );

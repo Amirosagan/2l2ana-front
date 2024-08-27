@@ -154,8 +154,17 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 
       if (doneResponse.status === 200) {
         toast.success("Consultation completed successfully");
+
+        // Update the consultation list
+        const updatedConsultationsList = updatedConsultations.map((consultation) =>
+          consultation.id === selectedConsultation.id
+            ? { ...consultation, notes, isDone: true }
+            : consultation
+        );
+        setUpdatedConsultations(updatedConsultationsList);
+
         setShowModal(false);
-        onRefetchNotDoneConsultations();
+        onRefetchNotDoneConsultations(); // Optionally refetch consultations
       } else {
         toast.error("Failed to complete consultation");
       }
@@ -208,6 +217,12 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
           onCompleteConsultation={(consultation) => {
             setSelectedConsultation(consultation);
             setShowModal(true);
+          }}
+          onUpdateConsultation={(updatedConsultation) => {
+            const updatedList = updatedConsultations.map((item) =>
+              item.id === updatedConsultation.id ? updatedConsultation : item
+            );
+            setUpdatedConsultations(updatedList);
           }}
           downloadLoading={downloadLoading}
           handleDownloadFile={handleDownloadFile}
@@ -289,4 +304,5 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 
 BookingList.displayName = "BookingList";
 export default BookingList;
+
 

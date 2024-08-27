@@ -1,14 +1,62 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import api from "@/src/utils/api"; 
 
 const TableBody = ({ items, onBlock, onDelete, type }) => {
+  const [userDetails, setUserDetails] = useState({});
+
+  // Function to fetch user details based on userId
+  const fetchUserDetails = async (userId) => {
+    try {
+      const response = await api.get(`/User/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    // Fetch user details for each consultation item
+    if (type === "consultations") {
+      items.forEach(async (item) => {
+        const details = await fetchUserDetails(item.userId);
+        if (details) {
+          setUserDetails((prevDetails) => ({
+            ...prevDetails,
+            [item.userId]: details,
+          }));
+        }
+      });
+    }
+  }, [items, type]);
+
   return (
     <tbody>
       {items.map((item) => (
         <tr key={item.id || item.userId || item.doctorId}>
-          {/* Podcasts */}
+          {/* Consultations */}
+          {type === "consultations" && (
+            <>
+              <td>{userDetails[item.userId]?.firstName} {userDetails[item.userId]?.lastName}</td>
+                 <td>{userDetails[item.userId]?.phoneNumber || item.userPhoneNumber}</td>
+              <td>{item.doctorId}</td>
+              <td>{new Date(item.date).toLocaleDateString()}</td>
+              <td>{item.price}</td>
+              <td>{item.isDone ? "Done" : "NotYet"}</td>
+              <td>
+                <Link href={item.meetingUrl} target="_blank">
+                  <button className="p-2 text-sm bg-accentDark rounded-lg">
+                    Meeting Link
+                  </button>
+                </Link>
+              </td>
+            </>
+          )}
+
+          {/* Other types */}
           {type === "podcasts" && (
             <>
               <td>{item.title}</td>
@@ -37,11 +85,10 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Videos */}
           {type === "videos" && (
             <>
               <td>{item.title}</td>
-              <td>{item.tags.map((tag) => tag.name).join(", ")}</td>
+              <td>{Array.isArray(item.tags) ? item.tags.map((tag) => tag.name).join(", ") : "No tags available"}</td>
               <td>{item.id}</td>
               <td>{new Date(item.createdAt).toLocaleDateString()}</td>
               <td>
@@ -66,7 +113,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Users */}
           {type === "users" && (
             <>
               <td>{`${item.firstName} ${item.lastName}`}</td>
@@ -90,7 +136,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Doctors */}
           {type === "doctors" && (
             <>
               <td>{`${item.firstName} ${item.lastName}`}</td>
@@ -120,7 +165,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Blogs */}
           {type === "blogs" && (
             <>
               <td>{item.title}</td>
@@ -148,7 +192,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Tags */}
           {type === "tags" && (
             <>
               <td>{item.name}</td>
@@ -175,7 +218,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Question Tags */}
           {type === "questionTags" && (
             <>
               <td>{item.name}</td>
@@ -202,7 +244,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
             </>
           )}
 
-          {/* Questions */}
           {type === "questions" && (
             <>
               <td>{item.title}</td>
@@ -226,23 +267,6 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
                     Delete
                   </button>
                 </div>
-              </td>
-            </>
-          )}
-
-          {/* Consultations */}
-          {type === "consultations" && (
-            <>
-              <td>{item.userId}</td>
-              <td>{item.doctorId}</td>
-              <td>{new Date(item.date).toLocaleDateString()}</td>
-              <td>{item.price}</td>
-              <td>{item.isDone}</td>
-             
-              <td>
-                 <Link href={item.meetingUrl} target="_blank">
-                 <button className="p-2 text-sm bg-accentDark rounded-lg">
-                  Meeting Link </button> </Link>
               </td>
             </>
           )}

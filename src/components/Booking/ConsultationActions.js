@@ -12,8 +12,10 @@ const ConsultationActions = ({
   onShowRatingModal,
   onCompleteConsultation,
   onCancelConsultation,
+  onUpdateConsultation = () => {}, // Default function if not provided
 }) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [updatedConsultation, setUpdatedConsultation] = useState(consultation);
   const buttonRef = useRef(null);
 
   const handleTooltipToggle = () => {
@@ -33,9 +35,22 @@ const ConsultationActions = ({
     };
   }, []);
 
+  const handleCompleteConsultation = () => {
+    onCompleteConsultation();
+
+    const updatedNotes = "الملاحظات الجديدة بعد التعديل"; 
+    const updatedConsultationData = {
+      ...updatedConsultation,
+      notes: updatedNotes,
+      isDone: true,
+    };
+    setUpdatedConsultation(updatedConsultationData);
+    onUpdateConsultation(updatedConsultationData);
+  };
+
   return (
     <div className="flex flex-col gap-4 mt-4 md:mt-0">
-      {consultation.isDone && consultation.notes && (
+      {updatedConsultation.isDone && updatedConsultation.notes && (
         <button
           className="bg-white border-2 border-primary text-primary py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
           onClick={onShowNotes}
@@ -45,7 +60,7 @@ const ConsultationActions = ({
       )}
 
       {isPrevious && role !== "Doctor" && (
-        consultation.rating === 0 ? (
+        updatedConsultation.rating === 0 ? (
           <button
             className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
             onClick={onShowRatingModal}
@@ -58,7 +73,7 @@ const ConsultationActions = ({
               <svg
                 key={i}
                 xmlns="http://www.w3.org/2000/svg"
-                className={`h-6 w-6 ${i < consultation.rating ? "text-yellow-400" : "text-gray-300"}`}
+                className={`h-6 w-6 ${i < updatedConsultation.rating ? "text-yellow-400" : "text-gray-300"}`}
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -72,18 +87,27 @@ const ConsultationActions = ({
       )}
 
       {role === "Doctor" && (
-        isPastConsultation && !consultation.isDone && (
+        isPastConsultation && !updatedConsultation.isDone && (
           <button
             className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
-            onClick={onCompleteConsultation}
+            onClick={handleCompleteConsultation}
           >
             اتمام الكشف
           </button>
         ) 
-        )
-      }
+      )}
+      {role === "Doctor" && (
+        updatedConsultation.isDone && updatedConsultation.notes && (
+          <button
+            className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
+            onClick={handleCompleteConsultation}
+          >
+            تعديل الكشف
+          </button>
+        ) 
+      )}
 
-      {!isWithinWindow && !consultation.isDone && !isPastConsultation && (
+      {!isWithinWindow && !updatedConsultation.isDone && !isPastConsultation && (
         <Tooltip
           title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق </span>}
           open={tooltipOpen}
@@ -99,12 +123,12 @@ const ConsultationActions = ({
           </div>
         </Tooltip>
       )}
-      {isWithinWindow && !consultation.isDone &&(
+      {isWithinWindow && !updatedConsultation.isDone &&(
 
             <Tooltip title={<span style={{ fontSize: '16px' }}>سيكون رابط الكشف متاحا قبل الموعد الذي تم اختياره ب10 دقائق</span>}>
               <a
                 className="bg-primary text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px] text-center"
-                href={consultation.meetingUrl}
+                href={updatedConsultation.meetingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -116,7 +140,7 @@ const ConsultationActions = ({
       {role !== "Doctor" && isWithinCancelWindow && (
         <button
           className="bg-red-500 text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
-          onClick={() => onCancelConsultation(consultation)}
+          onClick={() => onCancelConsultation(updatedConsultation)}
         >
           الغاء الحجز
         </button>
