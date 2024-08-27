@@ -8,13 +8,11 @@ import { checkSession } from "@/src/utils/auth";
 import { TabPanel, Tabs } from "@/components/ui/tabs";
 import RatingModal from "@/src/components/Booking/RatingModal";
 import Link from "next/link";
-import { toast } from "react-toastify"; 
+import { toast, ToastContainer } from "react-toastify"; 
+import 'react-toastify/dist/ReactToastify.css';
 
 const MyBookings = () => {
-  const router = useRouter();
-  const { searchParams } = router.query; 
-  const success = searchParams.get("success"); 
-
+  const router = useRouter(); 
   const [notDoneConsultations, setNotDoneConsultations] = useState([]);
   const [doneConsultations, setDoneConsultations] = useState([]);
   const [doctorDetails, setDoctorDetails] = useState({});
@@ -25,12 +23,15 @@ const MyBookings = () => {
   const [showRatingModal, setShowRatingModal] = useState(false);
 
   useEffect(() => {
-    if (success === "true") {
-      toast.success("تمت العملية بنجاح");
-    } else if (success === "false") {
-      toast.error("لم تنجح العملية يرجي اعادة المحاولة");
+    if (typeof window !== "undefined") {
+      const success = new URLSearchParams(window.location.search).get('success');
+      if (success === "true") {
+        toast.success("تمت العملية بنجاح");
+      } else if (success === "false") {
+        toast.error("لم تنجح العملية يرجي اعادة المحاولة");
+      }
     }
-  }, [success]); // Show toast based on success value
+  }, []); // Empty dependency array to ensure this runs only once
 
   useEffect(() => {
     const fetchConsultations = async () => {
@@ -138,6 +139,7 @@ const MyBookings = () => {
 
   return (
     <div className="mt-10">
+      <ToastContainer />
       <div className="flex items-center flex-col md:flex-row gap-3 justify-between">
         <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
         <div className="flex flex-col gap-1">
