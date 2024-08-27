@@ -15,7 +15,7 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
-    const [pageSize, setPageSize] = useState(50);
+    const [pageSize, setPageSize] = useState(20);
     const [hasNextPage, setHasNextPage] = useState(true);
     const [hasPreviousPage, setHasPreviousPage] = useState(false);
 
@@ -56,15 +56,18 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             }
 
             setItems(fetchedItems || []);
-            setTotalCount(response.data.totalItems || fetchedItems.length);
+
+            // Use totalCount from the API response
+            const totalItems = response.data.totalCount;
+            setTotalCount(totalItems);
 
             // Correct calculation for hasNextPage and hasPreviousPage
-            setHasNextPage(currentPage * pageSize < response.data.totalItems);
+            setHasNextPage(currentPage < response.data.totalPages);
             setHasPreviousPage(currentPage > 1);
+
 
             setLoading(false);
         } catch (error) {
-            setError("Failed to fetch data");
             setLoading(false);
         }
     }, [apiUrl, currentPage, pageSize, type]);
@@ -103,7 +106,6 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 });
                 setItems(items.filter((item) => item.id !== id));
             } catch (error) {
-                console.error("Delete request failed:", error);
             }
         }
     };
@@ -124,16 +126,16 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 alert("User blocked successfully");
                 fetchData();
             } catch (error) {
-                console.error("Block request failed:", error);
+
             }
         }
     };
 
     const handlePageChange = (direction) => {
         if (direction === "next" && hasNextPage) {
-            setCurrentPage(currentPage + 1);
+            setCurrentPage((prevPage) => prevPage + 1);
         } else if (direction === "previous" && hasPreviousPage) {
-            setCurrentPage(currentPage - 1);
+            setCurrentPage((prevPage) => prevPage - 1);
         }
     };
 
