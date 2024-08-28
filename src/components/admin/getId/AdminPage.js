@@ -11,20 +11,25 @@ import Cookies from "js-cookie";
 
 const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
     const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1); // Start at page 1
     const [totalCount, setTotalCount] = useState(0);
     const [pageSize, setPageSize] = useState(20);
-    const [hasNextPage, setHasNextPage] = useState(true);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPreviousPage, setHasPreviousPage] = useState(false);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const token = Cookies.get("authToken");
+
+
             const response = await api.get(
-                `${apiUrl}?page=${currentPage}&pageSize=${pageSize}`,
+                `${apiUrl}?PageNumber=${currentPage}&PageSize=${pageSize}`, 
+
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -32,23 +37,11 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 }
             );
 
-            let fetchedItems;
 
+            let fetchedItems;
             switch (type) {
-                case "podcasts":
-                    fetchedItems = response.data.podcasts;
-                    break;
                 case "users":
                     fetchedItems = response.data.users.filter((user) => !user.isBlocked);
-                    break;
-                case "videos":
-                    fetchedItems = response.data.items.map((item) => item.youtubeLink);
-                    break;
-                case "tags":
-                case "questionTags":
-                    fetchedItems = response.data[type].filter(
-                        (tag) => tag.name.toLowerCase() !== "featured"
-                    );
                     break;
                 default:
                     fetchedItems = response.data.items;
@@ -56,25 +49,39 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             }
 
             setItems(fetchedItems || []);
+            setFilteredItems(fetchedItems || []);
+            setTotalCount(response.data.totalCount);
 
-            // Use totalCount from the API response
-            const totalItems = response.data.totalCount;
-            setTotalCount(totalItems);
-
-            // Correct calculation for hasNextPage and hasPreviousPage
-            setHasNextPage(currentPage < response.data.totalPages);
-            setHasPreviousPage(currentPage > 1);
+            setHasNextPage(response.data.hasNext);
+            setHasPreviousPage(response.data.hasPrevious);
 
 
             setLoading(false);
         } catch (error) {
             setLoading(false);
+            setError("Failed to fetch data");
         }
     }, [apiUrl, currentPage, pageSize, type]);
 
     useEffect(() => {
         fetchData();
-    }, [currentPage, pageSize, fetchData, refresh]);
+    }, [fetchData, refresh]);
+
+    useEffect(() => {
+        if (searchQuery === "") {
+            setFilteredItems(items);
+        } else {
+            const lowerCaseQuery = searchQuery.toLowerCase();
+            setFilteredItems(
+                items.filter((item) =>
+                    type === "users"
+                        ? item.phoneNumber.includes(lowerCaseQuery) ||
+                          `${item.firstName} ${item.lastName}`.toLowerCase().includes(lowerCaseQuery)
+                        : item.title?.toLowerCase().includes(lowerCaseQuery)
+                )
+            );
+        }
+    }, [searchQuery, items, type]);
 
     const handleDelete = async (id) => {
         if (confirm("Are you sure you want to delete this item?")) {
@@ -105,8 +112,8 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                     },
                 });
                 setItems(items.filter((item) => item.id !== id));
+                setFilteredItems(filteredItems.filter((item) => item.id !== id));
             } catch (error) {
-
             }
         }
     };
@@ -127,18 +134,22 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 alert("User blocked successfully");
                 fetchData();
             } catch (error) {
-                console.error("Block request failed:", error);
             }
         }
     };
 
     const handlePageChange = (direction) => {
         if (direction === "next" && hasNextPage) {
-            setCurrentPage((prevPage) => prevPage + 1);
+            setCurrentPage((prevPage) => {
+                const nextPage = prevPage + 1;
+                return nextPage;
+            });
         } else if (direction === "previous" && hasPreviousPage) {
-            setCurrentPage((prevPage) => prevPage - 1);
+            setCurrentPage((prevPage) => {
+                const prevPageNumber = prevPage - 1;
+                return prevPageNumber;
+            });
         }
-        console.log("Page changed:", currentPage);
     };
 
     if (loading) {
@@ -149,11 +160,18 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
         return <div>{error}</div>;
     }
 
+    const paginatedItems = filteredItems;
+
+
     return (
         <div className="mt-5 p-5 rounded-xl bg-admin1">
             <div className="flex justify-between px-10 pb-10 items-center">
-                {type !== "tags" && type !== "questionTags" && (
-                    <Search placeholder={`Search for a ${type.slice(0, -1)}...`} />
+                {type === "users" && (
+                    <Search 
+                        placeholder={`Search for a ${type.slice(0, -1)}...`} 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                 )}
                 {type !== "users" &&
                     type !== "tags" &&
@@ -172,14 +190,14 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             <table className="w-full text-admin2">
                 <TableHeader headers={headers} />
                 <TableBody
-                    items={items}
+                    items={paginatedItems}
                     onDelete={handleDelete}
                     onBlock={type === "users" ? handleBlock : undefined}
                     type={type}
                 />
             </table>
             <Pagination
-                currentPage={currentPage}
+                currentPage={currentPage} // Display 1-based index for users
                 hasNextPage={hasNextPage}
                 hasPreviousPage={hasPreviousPage}
                 onPageChange={handlePageChange}
