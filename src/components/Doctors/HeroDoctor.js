@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Doctors from "@/public/Doctors.jpeg";
+import Doctors from "@/public/doctors.jpeg";
 
 const HeroDoctor = ({ onExploreClick }) => {
   return (
