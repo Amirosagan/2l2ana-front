@@ -18,9 +18,9 @@ const ConsultationCard = ({
   handleDownloadFile,
   onUpdateConsultation,
 }) => {
-  const displayName = role === "Doctor"
+  const displayName = role !== "Doctor"
     ? `${user?.firstName || "Unknown"} ${user?.lastName || "User"}`
-    : doctor?.name || "Unknown Doctor";
+    : consultation.userId || "Anonymous";
 
   const currentTime = new Date();
   const consultationTime = new Date(consultation.date);
@@ -55,7 +55,7 @@ const ConsultationCard = ({
       )}
       <div className="flex flex-col gap-2 w-full">
         <h2 className="tajawal-bold flex items-center justify-between text-[18px]">
-          {role !== "Doctor"  ? displayName  : "Anonymous" }
+          {displayName}
         </h2>
         {role !== "Doctor" && (
           <h2 className="tajawal-regular flex gap-2">

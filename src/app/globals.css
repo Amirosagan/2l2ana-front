@@ -328,6 +328,7 @@ width: 100%;
   font-family: "Tajawal", sans-serif;
   font-weight: 500;
   font-style: normal;
+  font-size:x-large;
 }
 
 .custom-quill .ql-editor ol li {
@@ -358,6 +359,7 @@ select, input {
   text-align: right;
 }
 
+/* Add this to your global CSS file or as inline styles */
 .ql-editor {
   direction: rtl;
   text-align: right;

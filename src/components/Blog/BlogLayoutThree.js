@@ -10,16 +10,15 @@ const BlogLayoutThree = ({ blog }) => {
   return (
     <Link href={`${blog.url}`} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out bg-white hover:shadow-sm rounded-lg p-3 h-full">
       <div className="relative h-32 md:h-56 w-full rounded-xl overflow-hidden">
-        {blog.image.filePath ? (
+        {blog.image?.filePath ? (
           <Image
             src={blog.image.filePath}
             alt={blog.title}
             width={700}
             height={540}
-            className="  h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
+            className="h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             unoptimized={true}
-
           />
         ) : (
           <div className="w-full h-full flex justify-center items-center bg-gray-200">

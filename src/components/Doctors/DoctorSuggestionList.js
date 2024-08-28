@@ -64,11 +64,11 @@ const SuggestionList = ({ blog }) => {
           </div>
         ))
       ) : (
-        doctors.slice(0, 4).map((doctor) => (
+        doctors.slice(0,4).map((doctor) => (
           <Link
             key={doctor.doctorId}
             href={`/booking-Doctor/${doctor.doctorId}`}
-            className="cursor-pointer p-1 px-2 md:p-4 hover:bg-slate-100 rounded-lg flex items-center gap-3"
+            className="cursor-pointer p-1 px-2 xl:p-4 md:p-4 lg:p-1 hover:bg-slate-100 rounded-lg flex items-center gap-3"
           >
             <Image
               src={doctor.profilePicture ? doctor.profilePicture : avatar}
