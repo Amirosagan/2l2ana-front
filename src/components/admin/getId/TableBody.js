@@ -121,6 +121,11 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
               <td>{item.phoneNumber}</td>
               <td>
                 <div className="flex items-center gap-2">
+                <Link href={`/asdkjklasdlkja21321jlkasd/users/${item.id}`}>
+                    <button className="py-1 px-2 border-none bg-accentDark rounded-sm">
+                      View
+                    </button>
+                  </Link>
                   <button
                     onClick={() => onBlock(item.id)}
                     style={{

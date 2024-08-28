@@ -12,14 +12,16 @@ import { login, checkSession } from "@/src/utils/auth";
 import ErrorMessageComponent from "../ELements/ErrorMessage";
 import FormFieldComponent from "../ELements/FormField";
 
+// Define the form schema using Zod
 const formSchema = z.object({
-  email: z.string().email("Must be a valid email"),
-  password: z.string(),
+  email: z.string().email("يجب أن يكون بريد إلكتروني صالح"),
+  password: z.string().min(6, "كلمة السر يجب أن تحتوي على 6 أحرف على الأقل"),
   name: z
     .string()
-    .min(3, "Must contain at least first name and last name")
-    .refine((value) => value.split(" ").length >= 2, "Must include both first name and last name"),
-  phoneNumber: z.string(),
+    .min(3, "يجب أن يحتوي على الاسم الأول واسم العائلة")
+    .refine((value) => value.split(" ").length >= 2, "يجب أن يحتوي على الاسم الأول ومسافة واسم العائلة 'ex: mai ahmed'"
+  ),
+  phoneNumber: z.string().min(10, "رقم الهاتف يجب أن يكون صالح"),
 });
 
 const RegisterForm = () => {
@@ -34,7 +36,7 @@ const RegisterForm = () => {
       password: "",
       name: "",
       phoneNumber: "",
-    }
+    },
   });
 
   useEffect(() => {
@@ -83,9 +85,17 @@ const RegisterForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-4 w-full p-5 m-auto">
             <FormFieldComponent form={form} name="name" label="الاسم" />
+            {form.formState.errors.name && <p className="text-red-500">{form.formState.errors.name.message}</p>}
+
             <FormFieldComponent form={form} name="email" label="البريد الالكتروني" type="email" />
+            {form.formState.errors.email && <p className="text-red-500">{form.formState.errors.email.message}</p>}
+
             <FormFieldComponent form={form} name="password" label="كلمة السر" type="password" />
+            {form.formState.errors.password && <p className="text-red-500">{form.formState.errors.password.message}</p>}
+
             <FormFieldComponent form={form} name="phoneNumber" label="رقم الهاتف" />
+            {form.formState.errors.phoneNumber && <p className="text-red-500">{form.formState.errors.phoneNumber.message}</p>}
+
             <ErrorMessageComponent errorMessage={errorMessage} />
             <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white font-bold" disabled={isSubmitting}>
               {isSubmitting ? "جاري انشاء الحساب..." : "تسجيل"}

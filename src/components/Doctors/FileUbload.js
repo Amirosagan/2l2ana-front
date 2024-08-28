@@ -12,20 +12,8 @@ const FileUpload = ({ user, fetchMedicalFiles }) => {
       "application/pdf": [".pdf"],
     },
     onDrop: (acceptedFiles) => {
-      if (acceptedFiles.length <= 3) {
-        setLoading(true);
-        uploadFiles(acceptedFiles);
-      } else {
-        toast.error("يمكنك تحميل ما يصل إلى 3 ملفات فقط", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      }
+      setLoading(true);
+      uploadFiles(acceptedFiles);
     },
   });
 
@@ -116,7 +104,7 @@ const FileUpload = ({ user, fetchMedicalFiles }) => {
       >
         {loading
           ? "جاري تحميل الملفات ..."
-          : "رفع ملفات (حتى 3 صور أو ملفات PDF)"}
+          : "رفع ملفات (صور أو ملفات PDF)"}
       </button>
     </div>
   );

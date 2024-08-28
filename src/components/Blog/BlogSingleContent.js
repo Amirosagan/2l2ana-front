@@ -4,22 +4,19 @@ import RenderMdx from "@/src/components/Blog/RenderMdx";
 import siteMetadata from "@/src/utils/siteMetaData";
 import Image from "next/image";
 import { modifyDropboxUrl } from "@/src/utils/modifyDropboxUrl";
-import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
 import BlogLayoutThree from "@/src/components/Blog/BlogLayoutThree";
 import { slug as slugify } from "github-slugger";
 import Tag from "../ELements/Tag";
+import SuggestionList from "../Doctors/DoctorSuggestionList";
 
-const BlogPageContent = ({ blog, relatedPosts, isLoggedIn }) => {
+const BlogPageContent = ({ blog, relatedPosts = [], isLoggedIn }) => {
   if (!blog) {
     return <div>Blog not found</div>;
   }
 
   const { title, content, tags = [], imageUrl, createdAt, updatedAt } = blog;
 
-  // Handle missing image URL
   const modifiedImageUrl = imageUrl ? modifyDropboxUrl(imageUrl) : null;
-
-  // Validate dates
   const publishedDate = createdAt ? new Date(createdAt) : null;
   const modifiedDate = updatedAt ? new Date(updatedAt) : null;
 
@@ -87,7 +84,7 @@ const BlogPageContent = ({ blog, relatedPosts, isLoggedIn }) => {
             <BlogDetails blog={blog} slug={slugify(blog.title || blog.id || "no-title")} />
             <div className="m-auto">
               <RenderMdx content={content || "No Content"} preview={!isLoggedIn} />
-              {!isLoggedIn && (
+              {isLoggedIn && (
                 <div className="mt-8 mb-10 p-8 rounded-lg shadow-2xl bg-white">
                   <p className="text-center tajawal-regular text-black mb-4">
                     يرجى تسجيل الدخول لعرض المحتوى الكامل. التسجيل مجاني!
@@ -102,13 +99,13 @@ const BlogPageContent = ({ blog, relatedPosts, isLoggedIn }) => {
             </div>
           </div>
           <div className="sticky mt-20 lg:mt-0 lg:max-w-[30%] top-28 lg:h-[calc(100vh-40px)] md:min-w-[370px]">
-            <SuggestionList blog={true} />
+             <SuggestionList blog={true} /> 
           </div>
         </div>
         {relatedPosts.length > 0 && (
           <div className="w-full mt-28 ">
             <h3 className="text-lg font-bold mx-5 md:mx-20 lg:mx-20 xl:mx-40 tajawal-regular text-primary">مقالات مشابهة</h3>
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 mx-5 xl:mx-60 lg:mx-40 md:mx-20  lg:grid-cols-3 gap-6 justify-center">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 mx-5 xl:mx-60 lg:mx-40 md:mx-20 lg:grid-cols-3 gap-6 justify-center">
               {relatedPosts.map((post, index) => (
                 <div key={index} className="max-w-[340px] mx-auto"> 
                   <BlogLayoutThree blog={post} />

@@ -1,27 +1,19 @@
-"use client"
 import Image from "next/image";
 import Link from "next/link";
 import avatar from "@/public/noavatar.png";
-import { useEffect, useState } from "react";
 import api from "@/src/utils/api";
-import StarRating from "../Booking/StarRating";
+import StaticStarRating from "../Booking/StaticStarRating";
 
-const SuggestionList = ({ blog }) => {
-  const [doctors, setDoctors] = useState([]);
-  const [loading, setLoading] = useState(true);
+const SuggestionList = async ({ blog }) => {
+  let doctors = [];
 
-  useEffect(() => {
-    api.get('/Doctor/GetDoctors')
-      .then(response => {
-        const availableDoctors = response.data.items.filter(doctor => doctor.isAvailable);
-        setDoctors(availableDoctors);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching doctors:', error);
-        setLoading(false);
-      });
-  }, []);
+  try {
+    const response = await api.get('/Doctor/GetDoctors');
+    const availableDoctors = response.data.items.filter(doctor => doctor.isAvailable);
+    doctors = availableDoctors;
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
+  }
 
   const roundRating = (rating) => {
     if (rating > 4.59) return 5;
@@ -41,16 +33,20 @@ const SuggestionList = ({ blog }) => {
       {blog ? (
         <Link href="/booking-Doctor">
           <h1 className="mb-3 md:text-2xl text-lg tajawal-medium text-primary">دكتور اونلاين ؟</h1>
-          <p className="text-gray-500 text-sm md:text-base tajawal-regular">اطمن علي صحتك دلوقتي من بيتك مع افضل الدكاترة في مصر والوطن العربي <span className="text-accent">من هنا</span></p>
+          <p className="text-gray-500 text-sm md:text-base tajawal-regular">
+            اطمن علي صحتك دلوقتي من بيتك مع افضل الدكاترة في مصر والوطن العربي <span className="text-accent">من هنا</span>
+          </p>
         </Link>
       ) : (
         <div className="flex items-center mx-3 m-auto justify-between">
           <h1 className="mb-3 text-lg md:text-xl tajawal-medium text-primary">اقتراحات</h1>
-          <Link href="/booking-Doctor" className="mb-3 text-sm md:text-base tajawal-medium text-accent hover:underline">المزيد</Link>
+          <Link href="/booking-Doctor" className="mb-3 text-sm md:text-base tajawal-medium text-accent hover:underline">
+            المزيد
+          </Link>
         </div>
       )}
 
-      {loading ? (
+      {doctors.length === 0 ? (
         [...Array(4)].map((_, index) => (
           <div key={index} className="cursor-pointer p-4 hover:bg-slate-100 rounded-lg flex items-center gap-3 animate-pulse">
             <div className="w-[70px] h-[70px] rounded-full bg-gray-300 mr-5" />
@@ -65,7 +61,7 @@ const SuggestionList = ({ blog }) => {
           </div>
         ))
       ) : (
-        doctors.slice(0,4).map((doctor) => (
+        doctors.slice(0, 4).map((doctor) => (
           <Link
             key={doctor.doctorId}
             href={`/booking-Doctor/${doctor.doctorId}`}
@@ -87,10 +83,9 @@ const SuggestionList = ({ blog }) => {
                 {doctor.firstName} {doctor.lastName}
               </h2>
               <div className="flex items-center w-full justify-between">
-                <StarRating rating={roundRating(doctor.rating)} size={20} />
+                <StaticStarRating rating={roundRating(doctor.rating)} size={20} />
                 <h2 className="tajawal-regular text-gray-500 flex gap-2 text-sm">
                   الكشف : {doctor.consultationPriceAfterDiscount} ج
-                  
                 </h2>
               </div>
             </div>

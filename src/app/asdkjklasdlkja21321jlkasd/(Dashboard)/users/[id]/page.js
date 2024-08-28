@@ -1,84 +1,81 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import api from '@/src/utils/api';
-import { useRouter } from 'next/router';
-import Image from "next/image";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import api from "@/src/utils/api";
+import Cookies from "js-cookie";
+import FilePreview from "@/src/components/Booking/FilePreview";
 
-const SingleDoctorPage = ({ id }) => {
-  const [doctor, setDoctor] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const router = useRouter();
-  const doctorId = router.query.id || id;
+const UserSinglePage = ({ params }) => {
+  const { id: userId } = params;
+  const [medicalFiles, setMedicalFiles] = useState([]);
+  const [isFetching, setIsFetching] = useState(true);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchDoctor = async () => {
-      try {
-        const response = await api.get(`/Doctor/${doctorId}`, {
-          headers: {
-            Authorization: `Bearer ${Cookies.get('authToken')}`,
-          },
-        });
-        setDoctor(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError("Failed to fetch doctor data");
-        setLoading(false);
+    const verifySession = async () => {
+      const token = Cookies.get("authToken");
+      if (userId && token) {
+        setUser({ userId, token });
+        fetchMedicalFiles(userId, token);
       }
     };
 
-    if (doctorId) {
-      fetchDoctor();
+    if (typeof window !== "undefined") {
+      verifySession();
     }
-  }, [doctorId]);
+  }, [userId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const fetchMedicalFiles = async (userId, token) => {
+    try {
+      const response = await api.get(`/MedicalFile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "*/*",
+        },
+        params: {
+          UserId: userId,
+        },
+      });
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+      if (response.data && Array.isArray(response.data.medicalFiles)) {
+        setMedicalFiles(response.data.medicalFiles);
+      } else {
+        throw new Error("Failed to fetch medical files");
+      }
+    } catch (error) {
+      console.error("Error fetching medical files:", error);
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
-  if (!doctor) {
-    return <div>No doctor data found</div>;
-  }
+  const handleDownloadFile = (fileId, url) => {
+    setTimeout(() => {
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 1000);
+  };
 
   return (
-    <div className="py-5 px-7 mt-5 bg-white rounded-lg shadow-lg border-solid border w-[90%] m-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-      <ToastContainer />
-      <div className="form-container bg-white p-5 rounded-lg shadow-lg border-solid border">
-        <form action="" className="flex flex-col form2">
-          <input type="hidden" name="id" value={doctor.doctorId} />
-          <label>Name</label>
-          <input type="text" name="name" placeholder={doctor.name} defaultValue={doctor.name} />
-          <label>Description</label>
-          <input type="text" name="description" placeholder={doctor.description} defaultValue={doctor.description} />
-          <label>Headline</label>
-          <input type="text" name="headline" placeholder={doctor.headLine} defaultValue={doctor.headLine} />
-          <label>Category</label>
-          <input type="text" name="category" placeholder={doctor.category} defaultValue={doctor.category} />
-          <label>Price</label>
-          <input type="text" name="price" placeholder={doctor.consultationPrice} defaultValue={doctor.consultationPrice} />
-          <label>Rating</label>
-          <input type="text" name="rating" placeholder={doctor.rating} defaultValue={doctor.rating} />
-          <label>Is Active?</label>
-          <select name="isActive" defaultValue={doctor.isActive}>
-            <option value={true}>Yes</option>
-            <option value={false}>No</option>
-          </select>
-          <button className="w-full bg-admin1 text-white font-bold h-16 rounded-lg hover:bg-admin1/70">Update</button>
-        </form>
-      </div>
-      <div className="image-container p-5">
-        <Image src={doctor.imageUrl} alt={doctor.name} width={300} height={300} className="rounded-lg" />
-      </div>
+    <div className="p-5">
+      <h1 className="text-2xl mb-5">User Medical Files</h1>
+
+      {isFetching ? (
+        <div>Loading medical files...</div>
+      ) : medicalFiles.length > 0 ? (
+        <FilePreview
+          medicalFiles={medicalFiles}
+          onDownloadFile={handleDownloadFile}
+        />
+      ) : (
+        <p>No medical files available.</p>
+      )}
     </div>
   );
 };
 
-export default SingleDoctorPage;
+export default UserSinglePage;
