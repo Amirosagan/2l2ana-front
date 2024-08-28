@@ -1,13 +1,13 @@
-import { format } from "date-fns";
-import Link from "next/link";
 import React from "react";
-import { slug } from "github-slugger";
+import { formatDate } from "@/src/utils/formatDate"; 
 
-const BlogDetails = ({ blog, slug: blogSlug }) => {
+const BlogDetails = ({ blog }) => {
+  const formattedDate = formatDate(blog.createdAt); 
+
   return (
-    <div className="px-2 md:px-10 mb-3 bg-accent text-light  py-2 flex items-center justify-around flex-wrap text-lg sm:text-xl font-medium mx-5 md:mx-10 rounded-lg">
+    <div className="px-2 md:px-10 mb-3 bg-accent text-light py-2 flex items-center justify-around flex-wrap text-lg sm:text-xl font-medium mx-5 md:mx-10 rounded-lg">
       <time className="md:m-3 text-sm md:text-base">
-        {format(new Date(blog.createdAt), "LLLL d, yyyy")}
+        {formattedDate}
       </time>
     </div>
   );

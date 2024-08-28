@@ -1,11 +1,10 @@
-import { format, isValid } from "date-fns";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { formatDate } from "@/src/utils/formatDate"; 
 
 const BlogLayoutThree = ({ blog }) => {
-  const date = new Date(blog.publishedAt);
-  const formattedDate = isValid(date) ? format(date, "MMMM dd, yyyy") : "Invalid date";
+  const formattedDate = formatDate(blog.publishedAt);
 
   return (
     <Link href={`${blog.url}`} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out bg-white hover:shadow-sm rounded-lg p-3 h-full">

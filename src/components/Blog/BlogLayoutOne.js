@@ -1,13 +1,11 @@
-import { format, isValid } from "date-fns";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import Tag from "@/src/components/ELements/Tag";
+import { formatDate } from "@/src/utils/formatDate"; 
 
 const BlogLayoutOne = ({ blog }) => {
-  const formattedDate = blog.createdAt
-    ? format(new Date(blog.createdAt), "MMMM dd, yyyy")
-    : "Unknown Date";
+  const formattedDate = formatDate(blog.createdAt);
   const blogUrl = blog.url || "/";
 
   return (
@@ -22,7 +20,6 @@ const BlogLayoutOne = ({ blog }) => {
               className="absolute top-0 left-0 w-full h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               unoptimized={true}
-
             />
           ) : (
             <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-gray-200">
@@ -50,7 +47,7 @@ const BlogLayoutOne = ({ blog }) => {
               {formattedDate}
             </span>
           </div>
-          <div className=" mt-auto">
+          <div className="mt-auto">
             <div className="bg-black bg-opacity-50 p-2 rounded">
               <h2 className="tajawal-bold capitalize text-sm xs:text-base sm:text-xl md:text-2xl">
                 <span className="bg-gradient-to-r from-primary to-primary bg-[length:0px_6px] group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500">

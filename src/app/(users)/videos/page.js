@@ -1,5 +1,3 @@
-
-
 import CoverSection from '@/src/components/VideoHome/CoverSection';
 import RecentPosts from '@/src/components/VideoHome/RecentPosts';
 import FeaturedPosts from '@/src/components/VideoHome/FeaturedPosts';
@@ -37,17 +35,32 @@ export async function generateMetadata() {
 
 const VideosPage = async () => {
   const res = await api.get('/Youtube');
-  const videos = res.data.items;
+  const allVideos = res.data.items;
+
+  const featuredVideos = allVideos.filter(item =>
+    item.youtubeLink.tags.some(tag => tag.name === "featured")
+  );
+
+  let selectedVideos = featuredVideos;
+  if (featuredVideos.length < 2) {
+    const remainingVideos = allVideos.filter(item =>
+      !item.youtubeLink.tags.some(tag => tag.name === "featured")
+    );
+    selectedVideos = [...featuredVideos, ...remainingVideos.slice(0, 2 - featuredVideos.length)];
+  }
+
+  const videos = selectedVideos.slice(0, 2);
+  const recentVideos = allVideos.slice(0, 6); 
 
   return (
     <div className='mt-5'>
-      <div className="flex flex-col items-center justify-center lg:w-[83%] m-auto ">
-        <CoverSection />
-        <FeaturedPosts  />
-        <div className=' w-[85%] mb-10 lg:-mt-20 lg:mb-0 m-auto'>
+      <div className="flex flex-col items-center justify-center lg:w-[83%] m-auto">
+        <CoverSection video={allVideos[0]} />
+        <FeaturedPosts videos={videos} />
+        <div className='w-[85%] mb-10 lg:-mt-20 lg:mb-0 m-auto'>
           <DoctoorBoster />
         </div>
-        <RecentPosts />
+        <RecentPosts videos={recentVideos} /> 
       </div>
     </div>
   );
