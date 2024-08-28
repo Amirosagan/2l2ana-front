@@ -14,9 +14,9 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
     const [filteredItems, setFilteredItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1); // Start at page 1
+    const [currentPage, setCurrentPage] = useState(1); 
     const [totalCount, setTotalCount] = useState(0);
-    const [pageSize, setPageSize] = useState(20);
+    const [pageSize, setPageSize] = useState(40);
     const [searchQuery, setSearchQuery] = useState("");
     const [hasNextPage, setHasNextPage] = useState(false);
     const [hasPreviousPage, setHasPreviousPage] = useState(false);
@@ -25,11 +25,8 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
         setLoading(true);
         try {
             const token = Cookies.get("authToken");
-
-
             const response = await api.get(
-                `${apiUrl}?PageNumber=${currentPage}&PageSize=${pageSize}`, 
-
+                `${apiUrl}?PageNumber=${currentPage}&PageSize=${pageSize}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -37,11 +34,23 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 }
             );
 
-
             let fetchedItems;
+
             switch (type) {
                 case "users":
                     fetchedItems = response.data.users.filter((user) => !user.isBlocked);
+                    break;
+                case "podcasts":
+                    fetchedItems = response.data.podcasts;
+                    break;
+                case "videos":
+                    fetchedItems = response.data.items.map((item) => item.youtubeLink);
+                    break;
+                case "tags":
+                case "questionTags":
+                    fetchedItems = response.data[type].filter(
+                        (tag) => tag.name.toLowerCase() !== "featured"
+                    );
                     break;
                 default:
                     fetchedItems = response.data.items;
@@ -52,9 +61,9 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             setFilteredItems(fetchedItems || []);
             setTotalCount(response.data.totalCount);
 
+            // Set pagination states
             setHasNextPage(response.data.hasNext);
             setHasPreviousPage(response.data.hasPrevious);
-
 
             setLoading(false);
         } catch (error) {
@@ -114,6 +123,7 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 setItems(items.filter((item) => item.id !== id));
                 setFilteredItems(filteredItems.filter((item) => item.id !== id));
             } catch (error) {
+                console.error("Failed to delete item:", error);
             }
         }
     };
@@ -134,21 +144,16 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 alert("User blocked successfully");
                 fetchData();
             } catch (error) {
+                console.error("Failed to block user:", error);
             }
         }
     };
 
     const handlePageChange = (direction) => {
         if (direction === "next" && hasNextPage) {
-            setCurrentPage((prevPage) => {
-                const nextPage = prevPage + 1;
-                return nextPage;
-            });
+            setCurrentPage((prevPage) => prevPage + 1);
         } else if (direction === "previous" && hasPreviousPage) {
-            setCurrentPage((prevPage) => {
-                const prevPageNumber = prevPage - 1;
-                return prevPageNumber;
-            });
+            setCurrentPage((prevPage) => prevPage - 1);
         }
     };
 
@@ -161,7 +166,6 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
     }
 
     const paginatedItems = filteredItems;
-
 
     return (
         <div className="mt-5 p-5 rounded-xl bg-admin1">
