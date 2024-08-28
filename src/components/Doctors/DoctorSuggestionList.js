@@ -1,10 +1,28 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import avatar from "@/public/noavatar.png";
-import StarRating from "../Booking/StarRating";
+import { useEffect, useState } from "react";
 import api from "@/src/utils/api";
+import StarRating from "../Booking/StarRating";
 
-const SuggestionList = ({ doctors = [], blog }) => {
+const SuggestionList = ({ blog }) => {
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get('/Doctor/GetDoctors')
+      .then(response => {
+        const availableDoctors = response.data.items.filter(doctor => doctor.isAvailable);
+        setDoctors(availableDoctors);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching doctors:', error);
+        setLoading(false);
+      });
+  }, []);
+
   const roundRating = (rating) => {
     if (rating > 4.59) return 5;
     if (rating >= 4.2 && rating <= 4.59) return 4.5;
@@ -15,7 +33,7 @@ const SuggestionList = ({ doctors = [], blog }) => {
     if (rating >= 1.6 && rating < 2.2) return 2;
     if (rating >= 1.2 && rating < 1.6) return 1.5;
     if (rating >= 0.6 && rating < 1.2) return 1;
-    return 5; // Default case for ratings lower than 0.6
+    return 5;
   };
 
   return (
@@ -32,57 +50,55 @@ const SuggestionList = ({ doctors = [], blog }) => {
         </div>
       )}
 
-      {doctors.length > 0 ? doctors.slice(0, 4).map((doctor) => (
-        <Link
-          key={doctor.doctorId}
-          href={`/booking-Doctor/${doctor.doctorId}`}
-          className="cursor-pointer p-1 px-2 xl:p-4 md:p-4 lg:p-1 hover:bg-slate-100 rounded-lg flex items-center gap-3"
-        >
-          <Image
-            src={doctor.profilePicture ? doctor.profilePicture : avatar}
-            alt="Doctor Image"
-            width={200}
-            height={200}
-            className="w-[60px] h-[80px] md:w-[70px] md:h-[100px] rounded-lg  mr-5"
-            unoptimized={true}
-          />
-          <div className="mt-3 p-1 px-2 flex flex-col gap-2 w-full">
-            <h2 className="tajawal-bold text-primary bg-teal-100 px-2 p-1 rounded-full text-[10px] w-fit">
-              {doctor.category}
-            </h2>
-            <h2 className="tajawal-medium md:text-lg">
-              {doctor.firstName} {doctor.lastName}
-            </h2>
-            <div className="flex items-center w-full justify-between">
-              <StarRating rating={roundRating(doctor.rating)} size={20} />
-              <h2 className="tajawal-regular text-gray-500 flex gap-2 text-sm">
-                الكشف : {doctor.consultationPriceAfterDiscount} ج
-              </h2>
+      {loading ? (
+        [...Array(4)].map((_, index) => (
+          <div key={index} className="cursor-pointer p-4 hover:bg-slate-100 rounded-lg flex items-center gap-3 animate-pulse">
+            <div className="w-[70px] h-[70px] rounded-full bg-gray-300 mr-5" />
+            <div className="mt-3 p-1 px-2 flex flex-col gap-2 w-full">
+              <div className="bg-gray-300 px-2 p-1 rounded-full text-[10px] w-1/2 h-4" />
+              <div className="bg-gray-300 h-6 rounded w-3/4" />
+              <div className="flex items-center w-full justify-between">
+                <div className="bg-gray-300 h-4 rounded w-1/4" />
+                <div className="bg-gray-300 h-4 rounded w-1/3" />
+              </div>
             </div>
           </div>
-        </Link>
-      )) : (
-        <p>No doctors available</p>
+        ))
+      ) : (
+        doctors.slice(0,4).map((doctor) => (
+          <Link
+            key={doctor.doctorId}
+            href={`/booking-Doctor/${doctor.doctorId}`}
+            className="cursor-pointer p-1 px-2 xl:p-4 md:p-4 lg:p-1 hover:bg-slate-100 rounded-lg flex items-center gap-3"
+          >
+            <Image
+              src={doctor.profilePicture ? doctor.profilePicture : avatar}
+              alt="Doctor Image"
+              width={200}
+              height={200}
+              className="w-[60px] h-[80px] md:w-[70px] md:h-[100px] rounded-lg  mr-5"
+              unoptimized={true}
+            />
+            <div className="mt-3 p-1 px-2 flex flex-col gap-2 w-full">
+              <h2 className="tajawal-bold text-primary bg-teal-100 px-2 p-1 rounded-full text-[10px] w-fit">
+                {doctor.category}
+              </h2>
+              <h2 className="tajawal-medium md:text-lg">
+                {doctor.firstName} {doctor.lastName}
+              </h2>
+              <div className="flex items-center w-full justify-between">
+                <StarRating rating={roundRating(doctor.rating)} size={20} />
+                <h2 className="tajawal-regular text-gray-500 flex gap-2 text-sm">
+                  الكشف : {doctor.consultationPriceAfterDiscount} ج
+                  
+                </h2>
+              </div>
+            </div>
+          </Link>
+        ))
       )}
     </div>
   );
 };
-
-export async function getServerSideProps() {
-  let doctors = [];
-  try {
-    const response = await api.get('/Doctor/GetDoctors');
-    console.log('API Response:', response.data);  // Debugging line
-    if (response.data && response.data.items) {
-      doctors = response.data.items.filter((doctor) => doctor.isAvailable);
-      console.log('Filtered Doctors:', doctors);  // Debugging line
-    } else {
-      console.warn('Unexpected API response structure', response.data);
-    }
-  } catch (error) {
-    console.error('Error fetching doctors:', error);
-  }
-  return { props: { doctors } };
-}
 
 export default SuggestionList;
