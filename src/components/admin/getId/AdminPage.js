@@ -11,12 +11,13 @@ import Cookies from "js-cookie";
 
 const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
     const [items, setItems] = useState([]);
-    const [filteredItems, setFilteredItems] = useState([]); // Filtered items to display
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalCount, setTotalCount] = useState(0);
     const [pageSize, setPageSize] = useState(20);
-    const [searchQuery, setSearchQuery] = useState(""); // Search query state
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const [hasPreviousPage, setHasPreviousPage] = useState(false);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
@@ -34,14 +35,14 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             let fetchedItems;
 
             switch (type) {
-                case "users":
-                    fetchedItems = response.data.users.filter((user) => !user.isBlocked);
-                    break;
                 case "podcasts":
                     fetchedItems = response.data.podcasts;
                     break;
+                case "users":
+                    fetchedItems = response.data.users.filter((user) => !user.isBlocked);
+                    break;
                 case "videos":
-                    fetchedItems = response.data.items;
+                    fetchedItems = response.data.items.map((item) => item.youtubeLink);
                     break;
                 case "tags":
                 case "questionTags":
@@ -55,35 +56,25 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             }
 
             setItems(fetchedItems || []);
-            setFilteredItems(fetchedItems || []); // Set initial filtered items
+
+            // Use totalCount from the API response
+            const totalItems = response.data.totalCount;
+            setTotalCount(totalItems);
+
+            // Correct calculation for hasNextPage and hasPreviousPage
+            setHasNextPage(currentPage < response.data.totalPages);
+            setHasPreviousPage(currentPage > 1);
+
 
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            setError("Failed to fetch data");
         }
     }, [apiUrl, currentPage, pageSize, type]);
 
     useEffect(() => {
         fetchData();
-    }, [fetchData, refresh]);
-
-    // Filter items based on search query
-    useEffect(() => {
-        if (searchQuery === "") {
-            setFilteredItems(items); // Reset to all items when search is cleared
-        } else {
-            const lowerCaseQuery = searchQuery.toLowerCase();
-            setFilteredItems(
-                items.filter((user) =>
-                    user.phoneNumber.includes(lowerCaseQuery) ||
-                    `${user.firstName} ${user.lastName}`
-                        .toLowerCase()
-                        .includes(lowerCaseQuery)
-                )
-            );
-        }
-    }, [searchQuery, items]);
+    }, [currentPage, pageSize, fetchData, refresh]);
 
     const handleDelete = async (id) => {
         if (confirm("Are you sure you want to delete this item?")) {
@@ -114,9 +105,8 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                     },
                 });
                 setItems(items.filter((item) => item.id !== id));
-                setFilteredItems(filteredItems.filter((item) => item.id !== id)); // Update filtered items as well
             } catch (error) {
-                console.error("Failed to delete item:", error);
+
             }
         }
     };
@@ -137,17 +127,18 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 alert("User blocked successfully");
                 fetchData();
             } catch (error) {
-                console.error("Failed to block user:", error);
+                console.error("Block request failed:", error);
             }
         }
     };
 
     const handlePageChange = (direction) => {
-        if (direction === "next" && currentPage < Math.ceil(filteredItems.length / pageSize)) {
+        if (direction === "next" && hasNextPage) {
             setCurrentPage((prevPage) => prevPage + 1);
-        } else if (direction === "previous" && currentPage > 1) {
+        } else if (direction === "previous" && hasPreviousPage) {
             setCurrentPage((prevPage) => prevPage - 1);
         }
+        console.log("Page changed:", currentPage);
     };
 
     if (loading) {
@@ -158,21 +149,11 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
         return <div>{error}</div>;
     }
 
-    // Calculate items for current page
-    const paginatedItems = filteredItems.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-    );
-
     return (
         <div className="mt-5 p-5 rounded-xl bg-admin1">
             <div className="flex justify-between px-10 pb-10 items-center">
-                {type === "users" && (
-                    <Search 
-                        placeholder={`Search for a ${type.slice(0, -1)}...`} 
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
+                {type !== "tags" && type !== "questionTags" && (
+                    <Search placeholder={`Search for a ${type.slice(0, -1)}...`} />
                 )}
                 {type !== "users" &&
                     type !== "tags" &&
@@ -191,7 +172,7 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             <table className="w-full text-admin2">
                 <TableHeader headers={headers} />
                 <TableBody
-                    items={paginatedItems}
+                    items={items}
                     onDelete={handleDelete}
                     onBlock={type === "users" ? handleBlock : undefined}
                     type={type}
@@ -199,8 +180,8 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             </table>
             <Pagination
                 currentPage={currentPage}
-                hasNextPage={currentPage < Math.ceil(filteredItems.length / pageSize)}
-                hasPreviousPage={currentPage > 1}
+                hasNextPage={hasNextPage}
+                hasPreviousPage={hasPreviousPage}
                 onPageChange={handlePageChange}
             />
         </div>
