@@ -3,7 +3,7 @@ import api from "@/src/utils/api";
 import { slug } from "github-slugger";
 import Link from "next/link";
 
-const RecentPosts = async ({ hideHeader, Home }) => {
+const RecentPosts = async ({ hideHeader, Home, selectedTag, searchText, isFeatured }) => {
   let blogs = [];
 
   try {
@@ -26,8 +26,20 @@ const RecentPosts = async ({ hideHeader, Home }) => {
         height: 600
       },
       tags: item.tags.map(tag => tag.name),
+      tagIds: item.tags.map(tag => tag.id),  // Store tag IDs for filtering
       url: `/blogs/${slug(item.id)}`
     }));
+
+    // Apply additional filters based on selectedTag, searchText, and isFeatured
+    if (selectedTag && selectedTag !== "0") {
+      blogs = blogs.filter(blog => blog.tagIds.includes(parseInt(selectedTag)));
+    }
+    if (isFeatured) {
+      blogs = blogs.filter(blog => blog.tags.includes("featured"));
+    }
+    if (searchText) {
+      blogs = blogs.filter(blog => blog.title.includes(searchText));
+    }
 
     if (blogs.length === 0) {
       return (

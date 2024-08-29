@@ -44,14 +44,17 @@ const TableBody = ({ items, onBlock, onDelete, type }) => {
                  <td>{userDetails[item.userId]?.phoneNumber || item.userPhoneNumber}</td>
               <td>{item.doctorId}</td>
               <td>{new Date(item.date).toLocaleDateString()}</td>
-              <td>{item.price}</td>
+              <td>{item.price} </td>
               <td>{item.isDone ? "Done" : "NotYet"}</td>
-              <td>{item.freeConsultation ? "free" : "paid"}</td>
+              <td>{item.comment}</td>
+              <td>{item.notesAboutPatientForAdmin}</td>
+
               <td>
                 <Link href={item.meetingUrl} target="_blank">
-                  <button className="p-2 text-sm bg-accentDark rounded-lg">
+                  <button className="p-2 text-sm  bg-neutral-200 text-black rounded-lg">
                     Meeting Link
                   </button>
+                 
                 </Link>
               </td>
             </>

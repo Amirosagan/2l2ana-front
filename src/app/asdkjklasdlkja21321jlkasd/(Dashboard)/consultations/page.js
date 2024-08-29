@@ -2,7 +2,7 @@ import React from "react";
 import AdminPage from "@/src/components/admin/getId/AdminPage";
 
 const ConsultationsPage = () => {
-  const headers = ["UserName",  "UserNumber", "Doctor", "Date", "Price","Done from Doctor ?" , "paid" , "Meeting" ];
+  const headers = ["UserName",  "UserNumber", "Doctor", "Date", "Price","Done from Dr ?" , "pt review" , "Dr review" , "meeting url" ];
   return (
     <AdminPage
       type="consultations"

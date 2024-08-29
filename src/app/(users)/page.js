@@ -9,11 +9,12 @@ import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
 import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
+import api from '@/src/utils/api';
 
 export async function generateMetadata() {
   return {
     metadataBase: new URL('https://2l2ana.com'),
-    title: ` قلقانة المنصة العربية الاولي المختصة بصحة النساء `,
+    title: `قلقانة المنصة العربية الاولى المختصة بصحة النساء`,
     description: `أول منصة عربية تهتم بصحة النساء في الوطن العربي. اكتشف محتوى طبي شامل، فيديوهات، مقالات، استشارات طبية، وحجز دكاترة.`,
     keywords: "منصة صحة النساء, محتوى طبي, استشارات طبية, فيديوهات طبية, مقالات طبية, حجز دكاترة, معلومات طبية, صحة النساء, استفسارات صحية",
     author: "قلقانة",
@@ -34,44 +35,67 @@ export async function generateMetadata() {
   };
 }
 
-export default function Home() {
+export default async function Home() {
+  // Fetch data for videos
+  const videoRes = await api.get('/Youtube');
+  const allVideos = videoRes.data.items;
+
+  // Filter for featured videos
+  const featuredVideos = allVideos.filter(item =>
+    item.youtubeLink.tags.some(tag => tag.name === "featured")
+  );
+
+  let selectedVideos = featuredVideos;
+  if (featuredVideos.length < 2) {
+    const remainingVideos = allVideos.filter(item =>
+      !item.youtubeLink.tags.some(tag => tag.name === "featured")
+    );
+    selectedVideos = [...featuredVideos, ...remainingVideos.slice(0, 2 - featuredVideos.length)];
+  }
+
+  const recentVideos = selectedVideos.slice(0, 2);
+
   return (
     <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
       <HeroDoctor />
-     <WhyCard/>
-     <div className="md:hidden">       <ArticleCard />
-     </div>
-      <OfflineSection/>
-      <div className="hidden md:block w-full"> 
-      <ArticleCard />
+      <WhyCard />
+      
+      <div className="md:hidden">
+        <ArticleCard />
       </div>
-      <AdsSection/>
 
+      <OfflineSection />
 
+      <div className="hidden md:block w-full">
+        <ArticleCard />
+      </div>
 
-      <div className="  lg:pb-16 lg:px-28">
-       
-        <div className="relative  mt-16 md:mt-24 -mb-10  lg:mx-24 flex flex-col items-center justify-center">
+      <AdsSection />
+
+      <div className="lg:pb-16 lg:px-28">
+        <div className="relative mt-16 md:mt-24 -mb-10 lg:mx-24 flex flex-col items-center justify-center">
           <h1 className="text-2xl md:text-3xl lg:text-5xl text-center relative">
             قسم التعلم والتوعية
           </h1>
-          <p className="text-gray-500 md:text-lg md:mt-5 mt-3 mx-4 mb-24 md:mb-0 text-center "> تعلمي واستكشفي أكتر عن صحتك الجسدية والنفسية من خلال محتوى قلقانة الطبي </p>
+          <p className="text-gray-500 md:text-lg md:mt-5 mt-3 mx-4 mb-24 md:mb-0 text-center">
+            تعلمي واستكشفي أكتر عن صحتك الجسدية والنفسية من خلال محتوى قلقانة الطبي
+          </p>
         </div>
         <RecentPosts Home={true} />
+
         <div className="mx-5 lg:mx-24 rounded-lg mt-10 mb-10">
           <Link href="/podcasts">
             <Image alt="Podcast" className="rounded-lg md:hidden" src={Podcast} />
-            <Image alt="Podcast" className="rounded-lg hidden" src={Podcast} />
           </Link>
         </div>
-        <RecentPost Home={true} />
-        <div className="hidden md:block"> 
-        <RecentPodcast Home={true} />
-        </div>
+        <RecentPost videos={recentVideos} Home={true} />
+
       
+
+        <div className="hidden md:block">
+          <RecentPodcast Home={true} />
+        </div>
       </div>
-
-
     </main>
   );
 }
