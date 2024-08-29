@@ -82,12 +82,7 @@ const CategoriesClient = () => {
           <RecentPost videos={videos} hideHeader={hideHeader} />
         )}
         {selectedOption === "مقالات" && (
-          <RecentPosts 
-            hideHeader={hideHeader} 
-            selectedTag={selectedTag}
-            searchText={searchText}
-            isFeatured={isFeatured}
-          />
+          <RecentPosts hideHeader={hideHeader} />
         )}
       </div>
     </div>

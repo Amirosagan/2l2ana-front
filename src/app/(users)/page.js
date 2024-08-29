@@ -9,7 +9,8 @@ import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
 import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
-import api from '@/src/utils/api';
+import api from "@/src/utils/api";
+import { slug } from "github-slugger";  // Import the slug function
 
 export async function generateMetadata() {
   return {
@@ -35,12 +36,10 @@ export async function generateMetadata() {
   };
 }
 
-export default async function Home() {
-  // Fetch data for videos
+export async function fetchVideos() {
   const videoRes = await api.get('/Youtube');
   const allVideos = videoRes.data.items;
 
-  // Filter for featured videos
   const featuredVideos = allVideos.filter(item =>
     item.youtubeLink.tags.some(tag => tag.name === "featured")
   );
@@ -50,16 +49,43 @@ export default async function Home() {
     const remainingVideos = allVideos.filter(item =>
       !item.youtubeLink.tags.some(tag => tag.name === "featured")
     );
-    selectedVideos = [...featuredVideos, ...remainingVideos.slice(0, 2 - featuredVideos.length)];
+    selectedVideos = [
+      ...featuredVideos,
+      ...remainingVideos.slice(0, 2 - featuredVideos.length)
+    ];
   }
 
-  const recentVideos = selectedVideos.slice(0, 2);
+  return selectedVideos.slice(0, 2);
+}
+
+export async function fetchPosts() {
+  const postRes = await api.get("/Post?pageSize=3");
+  const blogs = postRes.data.items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    publishedAt: item.createdAt,
+    image: {
+      filePath: item.imageUrl,
+      blurhashDataUrl: '',
+      width: 800,
+      height: 600,
+    },
+    tags: item.tags.map((tag) => tag.name),
+    url: `/blogs/${slug(item.id)}`, 
+  }));
+
+  return blogs;
+}
+
+export default async function Home() {
+  const recentVideos = await fetchVideos();
+  const recentPosts = await fetchPosts();
 
   return (
     <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
       <HeroDoctor />
       <WhyCard />
-      
+
       <div className="md:hidden">
         <ArticleCard />
       </div>
@@ -81,16 +107,16 @@ export default async function Home() {
             تعلمي واستكشفي أكتر عن صحتك الجسدية والنفسية من خلال محتوى قلقانة الطبي
           </p>
         </div>
-        <RecentPosts Home={true} />
+
+        <RecentPosts Home={true} blogs={recentPosts} />
 
         <div className="mx-5 lg:mx-24 rounded-lg mt-10 mb-10">
           <Link href="/podcasts">
             <Image alt="Podcast" className="rounded-lg md:hidden" src={Podcast} />
           </Link>
         </div>
-        <RecentPost videos={recentVideos} Home={true} />
 
-      
+        <RecentPost videos={recentVideos} Home={true} />
 
         <div className="hidden md:block">
           <RecentPodcast Home={true} />

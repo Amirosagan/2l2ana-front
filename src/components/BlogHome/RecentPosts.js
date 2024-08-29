@@ -1,55 +1,13 @@
-import BlogLayoutThree from "../Blog/BlogLayoutThree";
-import api from "@/src/utils/api";
-import { slug } from "github-slugger";
 import Link from "next/link";
+import BlogLayoutThree from "../Blog/BlogLayoutThree";
 
-const RecentPosts = async ({ hideHeader, Home, selectedTag, searchText, isFeatured }) => {
-  let blogs = [];
-
-  try {
-    let pageSize = 6;
-    if (hideHeader) {
-      pageSize = 20;
-    } else if (Home) {
-      pageSize = 3;
-    }
-
-    const response = await api.get(`/Post?pageSize=${pageSize}`);
-    blogs = response.data.items.map(item => ({
-      id: item.id,
-      title: item.title,
-      publishedAt: item.createdAt,
-      image: {
-        filePath: item.imageUrl,
-        blurhashDataUrl: '',
-        width: 800,
-        height: 600
-      },
-      tags: item.tags.map(tag => tag.name),
-      tagIds: item.tags.map(tag => tag.id),  // Store tag IDs for filtering
-      url: `/blogs/${slug(item.id)}`
-    }));
-
-    // Apply additional filters based on selectedTag, searchText, and isFeatured
-    if (selectedTag && selectedTag !== "0") {
-      blogs = blogs.filter(blog => blog.tagIds.includes(parseInt(selectedTag)));
-    }
-    if (isFeatured) {
-      blogs = blogs.filter(blog => blog.tags.includes("featured"));
-    }
-    if (searchText) {
-      blogs = blogs.filter(blog => blog.title.includes(searchText));
-    }
-
-    if (blogs.length === 0) {
-      return (
-        <section className="w-full mb-5 mt-32 flex flex-col items-center justify-center">
-          <p>No recent posts available.</p>
-        </section>
-      );
-    }
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
+const RecentPosts = ({ hideHeader, Home, blogs }) => {
+  if (!blogs || blogs.length === 0) {
+    return (
+      <section className="w-full mb-5 mt-32 flex flex-col items-center justify-center">
+        <p>No recent posts available.</p>
+      </section>
+    );
   }
 
   return hideHeader ? (
@@ -63,6 +21,12 @@ const RecentPosts = async ({ hideHeader, Home, selectedTag, searchText, isFeatur
         {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
+            {/* Rendering tags correctly */}
+            <div>
+              {blog.tags.map((tag, i) => (
+                <span key={i} className="tag-class">{tag.name}</span>
+              ))}
+            </div>
           </article>
         ))}
       </div>
@@ -81,6 +45,12 @@ const RecentPosts = async ({ hideHeader, Home, selectedTag, searchText, isFeatur
         {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
+            {/* Rendering tags correctly */}
+            <div>
+              {blog.tags.map((tag, i) => (
+                <span key={i} className="tag-class">{tag.name}</span>
+              ))}
+            </div>
           </article>
         ))}
       </div>

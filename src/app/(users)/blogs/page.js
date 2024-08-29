@@ -3,12 +3,11 @@ import RecentPosts from "@/src/components/BlogHome/RecentPosts";
 import FeaturedPosts from "@/src/components/BlogHome/FeaturedPosts";
 import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
 import api from "@/src/utils/api";
+import { slug } from "github-slugger";
 
 export async function generateMetadata() {
-  const res = await api.get("/Post");
-  const data = res.data;
-
-  const titles = data.items.map((blog) => blog.title).join(", ");
+  const blogs = await fetchBlogs();
+  const titles = blogs.map((blog) => blog.title).join(", ");
 
   return {
     metadataBase: new URL('https://2l2ana.com'),
@@ -34,19 +33,38 @@ export async function generateMetadata() {
   };
 }
 
+export async function fetchBlogs() {
+  const res = await api.get("/Post?pageSize=9");
+  const blogs = res.data.items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    publishedAt: item.createdAt,
+    image: {
+      filePath: item.imageUrl,
+      blurhashDataUrl: '',
+      width: 800,
+      height: 600,
+    },
+    tags: item.tags.map((tag) => tag.name),
+    url: `/blogs/${slug(item.id)}`,  
+  }));
+
+  return blogs;
+}
+
 const BlogPage = async () => {
-  const res = await api.get("/Post");
-  const blogs = res.data.items;
+  const blogs = await fetchBlogs();
 
   return (
     <div className="md:mt-6">
       <div className="flex flex-col items-center lg:w-[83%] m-auto justify-center">
+
         <CoverSection blog={blogs[0]} />
         <FeaturedPosts />
         <div className=" w-[85%] mb-10 lg:mb-0 m-auto">
           <DoctoorBoster />
         </div>
-        <RecentPosts />
+        <RecentPosts blogs={blogs} />
       </div>
     </div>
   );
