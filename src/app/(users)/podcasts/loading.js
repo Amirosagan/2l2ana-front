@@ -1,6 +1,5 @@
 import CoverSectionSkeleton from '@/src/components/loaders/CoverPodcastSkeleton'
 import RecentPodcastSkeleton from '@/src/components/loaders/RecentPodcastSkeleton'
-import React from 'react'
 
 function loading() {
   return (

@@ -1,5 +1,3 @@
-import React from "react";
-
 const PodcastLayoutSkeleton = () => {
   return (
     <div className="group flex flex-col items-center border-[2px] cursor-pointer rounded-lg p-3 animate-pulse">

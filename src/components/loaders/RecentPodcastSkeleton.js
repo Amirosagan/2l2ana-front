@@ -1,4 +1,3 @@
-import React from "react";
 import PodcastLayoutSkeleton from "./PodcastLayoutSkeleton";
 
 const RecentPodcastSkeleton = ({ Home }) => {
