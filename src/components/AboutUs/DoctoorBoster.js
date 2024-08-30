@@ -25,7 +25,7 @@ const DoctoorBoster = () => {
             className="flex justify-end mt-5  xl:mt-10 md:justify-center lg:justify-end"
           >
             <Button className="bg-accent w-full md:w-fit py-7  text-xl tajawal-bold px-3 flex text-white">
-              شوف الدكاترة
+              شوفي الدكاترة
             </Button>
           </Link>
         </div>

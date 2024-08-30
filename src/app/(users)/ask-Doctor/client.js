@@ -95,11 +95,11 @@ const AskDoctor = () => {
                     </h1>
                     <div className="flex gap-4 flex-col md:flex-row mt-10 w-full">
                         <Button onClick={handleNewQuestion} className="bg-primary hover:bg-primary/80 w-full flex px-7 py-4 button text-white">
-                            اسال سؤال تاني ؟
+                            اسالي سؤال تاني ؟
                         </Button>
                         <Link href="/booking-Doctor" className="w-full md:w-auto">
                             <Button className="bg-white hover:bg-white/50 w-full flex px-7 py-4 button text-primary">
-                                احجز مع دكتور اونلاين الان
+                                احجزي مع دكتور اونلاين الان
                             </Button>
                         </Link>
                     </div>
@@ -111,10 +111,10 @@ const AskDoctor = () => {
     return (
         <div className="m-auto mx-3 md:mx-10 -mt-16 md:mt-0 lg:mx-[20%]">
             <div className="flex items-center mt-10 bg-neutral-100 md:p-10 py-10 px-3 rounded-xl shadow-xl gap-5 flex-col justify-center w-full m-auto">
-                <h1 className="lg:text-3xl text-2xl px-5 md:px-0"> اطرح سؤالك الآن ليصل إلى آلاف الأطباء </h1>
+                <h1 className="lg:text-3xl text-2xl px-5 md:px-0"> اطرحي سؤالك الآن ليصل إلى آلاف الأطباء </h1>
                 <p className="text-gray-500 md:mb-12 px-5 md:px-0 text-center">
-                    احصل على إجابة لسؤالك في غضون 48 ساعة، أو اشترك مع قلقانة لتحصل على استشارة فورية وسرية مع طبيب معتمد.
-                    <Link href="/booking-Doctor" className="text-accent text-lg tajawal-bold"> تحدث مع طبيب الآن </Link>
+                    احصلي على إجابة لسؤالك في غضون 48 ساعة، أو اشتركي مع قلقانة لتحصلي على استشارة فورية وسرية مع طبيب معتمد.
+                    <Link href="/booking-Doctor" className="text-accent text-lg tajawal-bold"> تحدثي مع طبيب الآن </Link>
                 </p>
                 <div className="w-full flex flex-col md:flex-row gap-4">
                     <div className="flex-grow w-full">

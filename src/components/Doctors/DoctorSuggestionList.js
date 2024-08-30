@@ -34,7 +34,7 @@ const SuggestionList = async ({ blog }) => {
         <Link href="/booking-Doctor">
           <h1 className="mb-3 md:text-2xl text-lg tajawal-medium text-primary">دكتور اونلاين ؟</h1>
           <p className="text-gray-500 text-sm md:text-base tajawal-regular">
-            اطمن علي صحتك دلوقتي من بيتك مع افضل الدكاترة في مصر والوطن العربي <span className="text-accent">من هنا</span>
+            اطمني علي صحتك دلوقتي من بيتك مع افضل الدكاترة في مصر والوطن العربي <span className="text-accent">من هنا</span>
           </p>
         </Link>
       ) : (

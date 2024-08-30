@@ -69,7 +69,7 @@ const SearchComponent = ({
         />
       </div>
 
-      <div className="flex flex-col w-full">
+      {/* <div className="flex flex-col w-full">
         <label className="mb-2 tajawal-bold text-white">التخصص:</label>
         <Select
           options={tagOptions}
@@ -78,7 +78,7 @@ const SearchComponent = ({
           className="tajawal-bold text-black border-none outline-none cursor-pointer w-full rounded"
           styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }}
         />
-      </div>
+      </div> */}
 
       <div className="flex items-center mr-2 w-full">
         <label htmlFor="featured" className="tajawal-bold text-white">

@@ -4,7 +4,6 @@ import Image from "next/image";
 import BookAppointment from "../Booking/BookAppointment";
 import Rating from "../ELements/Rating";
 
-// Rating rounding function
 const roundRating = (rating) => {
   if (rating > 4.59) return 5;
   if (rating >= 4.2 && rating <= 4.59) return 4.5;
@@ -18,13 +17,7 @@ const roundRating = (rating) => {
   return 5;
 };
 
-// Calculate original price before a 20% discount
-const calculateOriginalPrice = (currentPrice) => {
-  return Math.round(currentPrice / 0.8);
-};
-
 const Details = ({ doctor }) => {
-  const originalPrice = calculateOriginalPrice(doctor.consultationPriceAfterDiscount);
 
   return (
     <>

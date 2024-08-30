@@ -25,59 +25,11 @@ export async function generateMetadata() {
 }
 
 const AboutUsPage = () => {
-  // const [openQuestionIndex, setOpenQuestionIndex] = useState(0);
-
-  // const questions = [
-  //   {
-  //     question: "لماذا يعيش السمك في الماء ؟",
-  //     answer: "Sed sapien netus phasellus suspendisse pellentesque nibh. Vestibulum eu cras class massa commodo. Quam molestie etiam magnis tellus hac habitasse porta."
-  //   },
-  //   {
-  //     question: "لماذا اليوم هو الثلاثاء ؟",
-  //     answer: "Sed sapien netus phasellus suspendisse pellentesque nibh. Vestibulum eu cras class massa commodo. Quam molestie etiam magnis tellus hac habitasse porta."
-  //   },
-  //   {
-  //     question: "لماذا نحن هناااا ؟",
-  //     answer: "Sed sapien netus phasellus suspendisse pellentesque nibh. Vestibulum eu cras class massa commodo. Quam molestie etiam magnis tellus hac habitasse porta."
-  //   },
-  //   {
-  //     question: " سؤال يروادنا ",
-  //     answer: "انا مش عارفني انا توهت مني انا مش اناااااااااا انا بتقطع من جوايا ونسيت طعم الفرحه اه وانتي يدنيا مش فيقالي "
-  //   },
-  //   {
-  //     question: " سؤال يروادنا ",
-  //     answer: "انا مش عارفني انا توهت مني انا مش اناااااااااا انا بتقطع من جوايا ونسيت طعم الفرحه اه وانتي يدنيا مش فيقالي "
-  //   },
-  // ];
-
   return (
     <main className="pt-10 m-auto">
       <GoalPage/>
 
-      {/* <div className="md:w-[75%] w-[95%] m-auto">
-        <div className="mt-32">
-          <div className="flex flex-col md:flex-row ">
-            <div className="md:w-[40%]  flex flex-col md:gap-2 gap-1">
-              <h1 className=" text-accent tajawal-light md:text-2xl text-xl "> أهم الاسئلة </h1>
-              <h1 className=" md:text-[56px] text-[36px] tajawal-bold  "> الأسئلة الشائعة</h1>
-              <p className="pb-8" >  لبسي بشبش بششسب شسبسبسش تمنيبشسبشينكبمشيشبينمكبكشسمنسشبنمكبسشكنبش </p>
-               </div>
-            <div className="md:w-[55%] flex flex-col gap-3">
-              {questions.map((q, index) => (
-                <QuestionComponent
-                  key={index}
-                  question={q.question}
-                  answer={q.answer}
-                  isOpen={openQuestionIndex === index}
-                  onClick={() => setOpenQuestionIndex(openQuestionIndex === index ? null : index)}
-                />
-              ))}
-            </div>
-          </div>
-        </div> */}
-        
-        
-      {/* </div> */}
+   
 
     </main>
   );

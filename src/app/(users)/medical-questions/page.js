@@ -1,4 +1,7 @@
-import QuestionAnswers from "./client";
+import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
+import HeroQestion from "@/src/components/Questions/HeroQestions";
+import Questions from "@/src/components/Questions/Qestions";
+import ScrollButton from "@/src/components/Questions/ScrollButton";
 import api from "@/src/utils/api";
 
 export async function generateMetadata() {
@@ -30,6 +33,28 @@ export async function generateMetadata() {
   };
 }
 
-export default function Page() {
-  return <QuestionAnswers />;
+export default async function QuestionAnswersPage() {
+  let questions = [];
+
+  try {
+    const response = await api.get('/Question');
+    questions = response.data.items;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+
+  return (
+    <div>
+      <HeroQestion />
+      <ScrollButton />
+      <div className="flex flex-col justify-between mx-[4%] lg:mx-20 mt-10 md:mt-28 gap-20 lg:gap-2 lg:flex-row">
+        <div className="w-full">
+          <Questions filteredQuestions={questions} />
+        </div>
+        <div className='sticky lg:max-w-[30%] top-40 lg:h-[calc(100vh-40px)] md:min-w-[370px]'>
+          <SuggestionList blog={true} />
+        </div>
+      </div>
+    </div>
+  );
 }

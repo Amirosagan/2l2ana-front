@@ -25,28 +25,35 @@ const SearchDoctorBar = ({ onSearch }) => {
   }, []);
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    onSearch(category === "جميع التخصصات" ? "" : category, searchTerm);
+    const newCategory = category === "جميع التخصصات" ? "" : category;
+    setSelectedCategory(newCategory);
+    // Trigger the search immediately after setting the category
+    onSearch(newCategory, searchTerm);
   };
 
-  const handleSearch = () => {
-    onSearch(selectedCategory === "جميع التخصصات" ? "" : selectedCategory, searchTerm);
+  const handleSearchTermChange = (e) => {
+    const newSearchTerm = e.target.value;
+    setSearchTerm(newSearchTerm);
+    // Trigger the search immediately after setting the search term state
+    onSearch(selectedCategory, newSearchTerm);
   };
 
   return (
-    <div className="mb-5 items-center flex flex-col gap-2 -mt-10  sm:mt-0 md:mt-10">
-      <h2 className="tajawal-extrabold mb-2  text-center md:text-5xl tracking-wide text-4xl">
-        ابحث عن <span className="text-primary"> دكتورك </span> المفضل
+    <div className="mb-5 items-center flex flex-col gap-2 -mt-10 sm:mt-0 md:mt-10">
+      <h2 className="tajawal-extrabold mb-2 text-center md:text-5xl tracking-wide text-4xl">
+        ابحثي عن <span className="text-primary"> دكتورك </span> المفضل
       </h2>
-      <p className="text-gray-500 text-lg text-center mb-3">   أكثر من 100 طبيب متخصص في جميع التخصصات، متاحون لتقديم الاستشارات عبر الفيديو أو المكالمات الهاتفية. احصل على الرعاية الطبية المتميزة من راحة منزلك </p>
-      <div className="flex w-full  max-w-md items-center mx-10 space-x-2 gap-3">
+      <p className="text-gray-500 text-lg text-center mb-3">
+        أكثر من 100 طبيب متخصص في جميع التخصصات، متاحون لتقديم الاستشارات عبر الفيديو أو المكالمات الهاتفية. احصلي على الرعاية الطبية المتميزة من راحة منزلك
+      </p>
+      <div className="flex w-full max-w-md items-center mx-10 space-x-2 gap-3">
         <TextField
           fullWidth
-          style={{marginRight:"15px"}}
+          style={{ marginRight: "15px" }}
           placeholder="بحث"
           variant="outlined"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearchTermChange}
           sx={{
             "& .MuiOutlinedInput-root": {
               borderRadius: '25px',
@@ -73,9 +80,9 @@ const SearchDoctorBar = ({ onSearch }) => {
           }}
         />
         <Button
-          style={{backgroundColor:"rgb(31 143 160)" , marginLeft:"15px"}}
+          style={{ backgroundColor: "rgb(31 143 160)", marginLeft: "15px" }}
           variant="contained"
-          onClick={handleSearch}
+          onClick={() => onSearch(selectedCategory, searchTerm)}
           sx={{
             backgroundColor: 'rgb(21, 99, 101)',
             '&:hover': {
@@ -85,7 +92,7 @@ const SearchDoctorBar = ({ onSearch }) => {
             borderRadius: '25px',
             fontWeight: "700",
             fontStyle: "normal",
-            fontFamily:"Tajawal"
+            fontFamily: "Tajawal"
           }}
         >
           بحث
@@ -93,7 +100,7 @@ const SearchDoctorBar = ({ onSearch }) => {
       </div>
       <div className="flex gap-2 mt-4 sm:mx-4 items-center justify-center md:mx-10 lg:mx-16 flex-wrap">
         <h1
-          className={`rounded-xl text-primary px-3 py-2 cursor-pointer ${selectedCategory === "جميع التخصصات" ? 'bg-primary text-white' : 'hover:bg-primary hover:text-white  border border-neutral-400'}`}
+          className={`rounded-xl text-primary px-3 py-2 cursor-pointer ${selectedCategory === "" ? 'bg-primary text-white' : 'hover:bg-primary hover:text-white  border border-neutral-400'}`}
           onClick={() => handleCategoryClick("جميع التخصصات")}
         >
           جميع التخصصات

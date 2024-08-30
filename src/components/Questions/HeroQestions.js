@@ -1,11 +1,4 @@
-import { ChevronDown } from "lucide-react";
-
 const HeroQestion = () => {
-
-    const scrollToContent = () => {
-        window.scrollBy({ top: window.innerHeight, left: 0, behavior: 'smooth' });
-    };
-
     return (
         <div className="-mt-4 lg:-mt-28 lg:py-2"> 
             <section
@@ -20,7 +13,7 @@ const HeroQestion = () => {
                 >
                     <div className="max-w-xl text-center ltr:sm:text-left lg:mt-20 rtl:sm:text-right">
                         <h1 className="text-3xl font-extrabold sm:text-5xl">
-                            ابعت استشاراتك الطبية
+                            ابعتي استشاراتك الطبية
                             <strong className="block font-extrabold text-primary"> واحنا نجاوبك </strong>
                         </h1>
                         <p className="mt-4 max-w-lg sm:text-xl/relaxed">
@@ -31,19 +24,17 @@ const HeroQestion = () => {
                                 href="/ask-Doctor"
                                 className="block w-full rounded button bg-primary md:bg-accent px-12 py-3 text-sm font-medium text-white shadow  focus:outline-none focus:ring md:active:bg-accent active:bg-primary sm:w-auto"
                             >
-                                ابعت سؤالك
+                                ابعتي سؤالك
                             </a>
                             <a
                                 href="/booking-Doctor"
                                 className="block w-full rounded button bg-white px-12 py-3 text-sm font-medium text-primary shadow hover:text-teal-900 focus:outline-none focus:ring active:text-primary sm:w-auto"
                             >
-                                احجز مع دكتور
+                                احجزي مع دكتور
                             </a>
                         </div>
                     </div>
-                    <button onClick={scrollToContent} className="absolute bottom-3 left-1/2 transform -translate-x-1/2">
-                        <ChevronDown className="h-14 w-14 text-primary hidden lg:block hover:scale-110 hover:text-primary/80 transition-all duration-300" /> 
-                    </button>
+                 
                 </div>
             </section>
         </div>

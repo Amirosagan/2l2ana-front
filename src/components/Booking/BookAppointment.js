@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import {
     Dialog,
@@ -285,10 +286,10 @@ export default function BookAppointment({ doctorId }) {
                 }}
                 className='tajawal-bold bg-accent py-3 px-10 text-white rounded-md hover:bg-accent/90'
             >
-                احجز معاد
+                احجزي معاد
             </button>
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
-                <DialogTitle>احجز ميعاد</DialogTitle>
+                <DialogTitle>احجزي ميعاد</DialogTitle>
                 <DialogContent 
                     style={{ 
                         minHeight: '400px', 
@@ -302,10 +303,10 @@ export default function BookAppointment({ doctorId }) {
                                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div className="flex flex-col gap-3 items-baseline">
                                             <h2 className="flex gap-2 items-center">
-                                                <CalendarDays /> اختر اليوم
+                                                <CalendarDays /> اختاري اليوم
                                             </h2>
                                             <FormControl fullWidth>
-                                                <InputLabel id="day-select-label">اختر اليوم</InputLabel>
+                                                <InputLabel id="day-select-label">اختاري اليوم</InputLabel>
                                                 <Select
                                                     labelId="day-select-label"
                                                     value={selectedDay !== null ? selectedDay : ''}
@@ -327,7 +328,7 @@ export default function BookAppointment({ doctorId }) {
                                         </div>
                                         <div>
                                             <h2 className="flex gap-2 items-center mb-3">
-                                                <Clock /> اختر الوقت بتوقيت مصر  
+                                                <Clock /> اختاري الوقت بتوقيت مصر  
                                             </h2>
                                             <div className="grid grid-cols-3 gap-2">
                                                 {timeSlot
@@ -355,17 +356,17 @@ export default function BookAppointment({ doctorId }) {
                                     </div>
                                 ) : (
                                     <div className="mt-32 text-2xl tajawal-bold text-center">
-                                        <h1>كل المواعيد محجوزة ، تحب تشوف دكتور تاني؟</h1>
+                                        <h1>كل المواعيد محجوزة ، تحبي تشوفي دكتور تاني؟</h1>
                                         <Link className='flex items-center justify-center' href="/booking-Doctor">
                                             <button className='bg-primary hover:bg-primary/80 px-4 py-3 ml-5 text-xl rounded-md mt-5 text-white'>
-                                                اكتشف الدكاترة
+                                                اكتشفي الدكاترة
                                             </button>
                                         </Link>
                                     </div>
                                 )
                             ) : (
                                 <div className="mt-32 text-2xl tajawal-bold text-center">
-                                    <h1>يجب عليك تسجيل الدخول للمتابعة</h1>
+                                    <h1>يجب تسجيل الدخول للمتابعة</h1>
                                     <Link className='flex items-center justify-center' href="/login">
                                         <button className='bg-primary hover:bg-primary/80 px-4 py-3 ml-5 text-xl rounded-md mt-5 text-white'>
                                             تسجيل الدخول
@@ -389,7 +390,7 @@ export default function BookAppointment({ doctorId }) {
                                     onClick={() => handleBooking(false)}
                                     className="bg-accent text-white p-4"
                                 >
-                                    30 دقيقة "اذهب الي منصة الدفع"
+                                    30 دقيقة "اذهبي الي منصة الدفع"
                                 </Button>
                                 {freeTickets > 0 && (
                                     <>
@@ -421,7 +422,7 @@ export default function BookAppointment({ doctorId }) {
                                 </>
                             ) : (
                                 <>
-                                    <h2 className="mb-4 tajawal-medium text-green-600">بعد اتمام الدفع ستجد الحجز والتفاصيل في حجوزاتي</h2>
+                                    <h2 className="mb-4 tajawal-medium text-green-600">بعد اتمام الدفع ستجدي الحجز والتفاصيل في حجوزاتي</h2>
                                     <Link href="/my-bookings">
                                         <Button variant="contained" color="primary" className="bg-accent text-white">
                                             حجوزاتي

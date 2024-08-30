@@ -1,3 +1,4 @@
+"use client"
 import { useState, useEffect } from "react";
 import Select from "react-select";
 import api from "@/src/utils/api";
@@ -89,7 +90,7 @@ const Search = ({ onSearch }) => {
                     style={{ paddingRight: '10px', paddingLeft: '10px' }}
                 />
                 <button onClick={() => handleSearch(category, searchQuery)} className="bg-accent w-fit absolute top-0 left-0 bottom-0 text-white" style={{ height: '100%', padding: '0 14px' }}>
-                    ابحث
+                    ابحثي
                 </button>
             </div>
             <h1 className="text-primary mx-5 mb-4 sm:mb-0 ml-7 mt-5 lg:mt-0"> أو </h1>

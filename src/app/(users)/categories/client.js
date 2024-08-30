@@ -6,6 +6,7 @@ import RecentPost from "@/src/components/VideoHome/RecentPosts";
 import RecentPosts from "@/src/components/BlogHome/RecentPosts";
 import SearchComponent from "@/src/components/VideoHome/SearchComponent";
 import api from "@/src/utils/api";
+import { slug } from "github-slugger";  
 
 const CategoriesClient = () => {
   const [selectedOption, setSelectedOption] = useState("فيديوهات");
@@ -13,6 +14,7 @@ const CategoriesClient = () => {
   const [searchText, setSearchText] = useState("");
   const [isFeatured, setIsFeatured] = useState(false);
   const [videos, setVideos] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const typeParam = searchParams.get("type") || "videos";
@@ -40,15 +42,38 @@ const CategoriesClient = () => {
           );
 
           setVideos(filteredVideos);
+        } else if (selectedOption === "مقالات") {
+          const res = await api.get("/Post");
+          console.log("API response:", res.data);  // Log the entire response
+
+          const allBlogs = res.data.items.map((item) => ({
+            id: item.id,
+            title: item.title,
+            publishedAt: item.createdAt,
+            image: {
+              filePath: item.imageUrl,
+              blurhashDataUrl: '',
+              width: 800,
+              height: 600,
+            },
+            tags: item.tags.map((tag) => tag.name),  // Transform tags to strings
+            url: `/blogs/${slug(item.id)}`,
+          }));
+
+          console.log("Processed blogs:", allBlogs);  // Log the processed blogs
+
+          if (allBlogs.length > 0) {
+            setBlogs(allBlogs);  // Only set blogs if there is data
+          } else {
+            console.warn("No blogs found");
+          }
         }
       } catch (error) {
-        console.error("Failed to fetch videos:", error);
+        console.error("Failed to fetch data:", error);
       }
     };
 
-    if (selectedOption === "فيديوهات") {
-      fetchData();
-    }
+    fetchData();
   }, [selectedOption, selectedTag, searchText, isFeatured]);
 
   const handleSearch = () => {
@@ -68,8 +93,7 @@ const CategoriesClient = () => {
         <SearchComponent
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          selectedTag={selectedTag}
-          setSelectedTag={setSelectedTag}
+          selectedTag={setSelectedTag}
           searchText={searchText}
           setSearchText={setSearchText}
           isFeatured={isFeatured}
@@ -82,7 +106,9 @@ const CategoriesClient = () => {
           <RecentPost videos={videos} hideHeader={hideHeader} />
         )}
         {selectedOption === "مقالات" && (
-          <RecentPosts hideHeader={hideHeader} />
+          <div className="lg:-mt-12">
+          <RecentPosts blogs={blogs} hideHeader={hideHeader} />
+          </div>
         )}
       </div>
     </div>

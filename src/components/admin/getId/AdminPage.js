@@ -83,14 +83,14 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
             const lowerCaseQuery = searchQuery.toLowerCase();
             setFilteredItems(
                 items.filter((item) =>
-                    type === "users"
-                        ? item.phoneNumber.includes(lowerCaseQuery) ||
-                          `${item.firstName} ${item.lastName}`.toLowerCase().includes(lowerCaseQuery)
-                        : item.title?.toLowerCase().includes(lowerCaseQuery)
+                    // Search by ID, full name, or phone number
+                    item.id.toString().includes(lowerCaseQuery) ||
+                    item.phoneNumber.includes(lowerCaseQuery) ||
+                    `${item.firstName} ${item.lastName}`.toLowerCase().includes(lowerCaseQuery)
                 )
             );
         }
-    }, [searchQuery, items, type]);
+    }, [searchQuery, items]);
 
     const handleDelete = async (id) => {
         if (confirm("Are you sure you want to delete this item?")) {
@@ -201,7 +201,7 @@ const AdminPage = ({ type, apiUrl, headers, addNewLink, refresh }) => {
                 />
             </table>
             <Pagination
-                currentPage={currentPage} // Display 1-based index for users
+                currentPage={currentPage}
                 hasNextPage={hasNextPage}
                 hasPreviousPage={hasPreviousPage}
                 onPageChange={handlePageChange}

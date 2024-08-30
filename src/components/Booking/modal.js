@@ -4,6 +4,7 @@ import BaseModal from "./BaseModal";
 
 const Modal = ({ onClose, handleSubmit, uploading }) => {
   const [notes, setNotes] = useState("");
+  const [notesAboutPatientForAdmin, setNotesAboutPatientForAdmin] = useState("");
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -11,7 +12,7 @@ const Modal = ({ onClose, handleSubmit, uploading }) => {
   };
 
   const handleFormSubmit = () => {
-    handleSubmit(notes, file);
+    handleSubmit(notes, file, notesAboutPatientForAdmin);
   };
 
   const removeFile = () => {
@@ -24,8 +25,19 @@ const Modal = ({ onClose, handleSubmit, uploading }) => {
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
-        placeholder="أدخل ملاحظاتك هنا"
+        placeholder="أدخل ملاحظاتك للمريض هنا"
         className="w-full border p-2 rounded-md"
+      />
+      <textarea
+        value={notesAboutPatientForAdmin}
+        onChange={(e) => setNotesAboutPatientForAdmin(e.target.value)}
+        placeholder=" 
+        
+        أدخل ملاحظاتك الادارية هنا
+               the admin only how can see this
+ "
+        
+        className="w-full border p-2 rounded-md mt-4"
       />
       <div className="w-full">
         <label className="block mb-2 text-gray-700">ارفع الروشته:</label>

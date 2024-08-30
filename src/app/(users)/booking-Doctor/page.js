@@ -1,5 +1,6 @@
 import api from '@/src/utils/api';
-import MainDoctorPageClient from './client';
+import DoctorList from "@/src/components/Doctors/DoctorList";
+import DoctorSearchClient from "@/src/components/Doctors/DoctorSearchClient";
 
 export async function generateMetadata() {
   const res = await api.get('/Doctor/GetDoctors');
@@ -30,10 +31,30 @@ export async function generateMetadata() {
   };
 }
 
-const MainDoctorPage = () => {
-  return (
-    <MainDoctorPageClient />
-  );
-};
+export default async function MainDoctorPage({ searchParams }) {
+  const { searchTerm = "", category = "" } = searchParams || {};
 
-export default MainDoctorPage;
+  const response = await api.get('/Doctor/GetDoctors');
+  
+  const filteredDoctors = response.data.items.filter(doctor => 
+    doctor.isAvailable &&
+    (category ? doctor.category.trim().toLowerCase() === category.trim().toLowerCase() : true) &&
+    (searchTerm ? (
+      doctor.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.category.toLowerCase().includes(searchTerm.toLowerCase())
+    ) : true)
+  );
+
+  const initialDoctorList = filteredDoctors.slice(0, 12);
+
+  return (
+    <div className="mt-14 md:mt-5 lg:-mt-5 pb-3">
+      <div className="xl:mx-[7%] mx-10 m-auto">
+        <DoctorSearchClient searchTerm={searchTerm} category={category} />
+
+        <DoctorList doctorList={initialDoctorList} />
+      </div>
+    </div>
+  );
+}

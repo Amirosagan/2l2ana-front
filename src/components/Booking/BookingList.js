@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import ConsultationCard from "./ConsultationCard";
 import api from "@/src/utils/api";
@@ -8,7 +9,7 @@ import RatingModal from "@/src/components/Booking/RatingModal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious, onRefetchNotDoneConsultations }) => {
+const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious }) => {
   const [userDetails, setUserDetails] = useState({});
   const [medicalFiles, setMedicalFiles] = useState({});
   const [uploading, setUploading] = useState(false);
@@ -100,8 +101,9 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
       toast.error("Failed to cancel consultation");
     }
   };
+  
 
-  const handleConsultationSubmit = async (notes, file) => {
+  const handleConsultationSubmit = async (notes, file, notesAboutPatientForAdmin) => {
     setUploading(true);
 
     try {
@@ -144,6 +146,7 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         {
           consultationId: selectedConsultation.id,
           notes: notes,
+          notesAboutPatientForAdmin: notesAboutPatientForAdmin,
         },
         {
           headers: {
@@ -158,19 +161,15 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         // Update the consultation list
         const updatedConsultationsList = updatedConsultations.map((consultation) =>
           consultation.id === selectedConsultation.id
-            ? { ...consultation, notes, isDone: true }
+            ? { ...consultation, notes, notesAboutPatientForAdmin, isDone: true }
             : consultation
         );
         setUpdatedConsultations(updatedConsultationsList);
 
         setShowModal(false);
-        onRefetchNotDoneConsultations(); // Optionally refetch consultations
       } else {
-        toast.error("Failed to complete consultation");
       }
     } catch (error) {
-      console.error("Error submitting consultation:", error);
-      toast.error("An error occurred while submitting the consultation.");
     } finally {
       setUploading(false);
     }
@@ -274,7 +273,6 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
         </div>
       )}
 
-
       {showNotes && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-5 w-full flex flex-col items-center max-w-sm mx-2">
@@ -304,5 +302,3 @@ const BookingList = React.memo(({ consultations, doctorDetails, role, isPrevious
 
 BookingList.displayName = "BookingList";
 export default BookingList;
-
-

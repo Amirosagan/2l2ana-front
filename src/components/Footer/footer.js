@@ -54,7 +54,7 @@ const Footer = () => {
                                 <Link href="/videos" className="hover:text-accent transition-all duration-200">فيديوهات طبية</Link>
                                 <Link href="/podcasts" className="hover:text-accent transition-all duration-200">بودكاست قلقانة</Link>
                                 <Link href="/medical-questions" className="hover:text-accent transition-all duration-200">اسئلة طبية</Link>
-                                <Link href="/ask-Doctor" className="hover:text-accent transition-all duration-200">اسألنا؟</Link>
+                                <Link href="/ask-Doctor" className="hover:text-accent transition-all duration-200">اسألينا؟</Link>
                             </div>
                         </div>
                     </div>
@@ -64,6 +64,13 @@ const Footer = () => {
                             <div className="flex tajawal-medium gap-2 pt-4 flex-col text-sm md:text-base">
                                 <Link href="/aboutUs" className="hover:text-accent transition-all duration-200"> من نحن </Link>
                                 <Link href="/termsofuse" className="hover:text-accent transition-all duration-200"> سياسة الاستخدام </Link>
+                                <a 
+                                    href="mailto:customer.care@2l2ana.com" 
+                                    className="hover:text-accent transition-all duration-200"
+                                >
+                                    تواصلي معنا
+                                </a>
+
                                 <Image className=" md:w-[130px] hidden lg:hidden md:block mt-2  " alt="Doctor" src={profileImg} />
 
                                 

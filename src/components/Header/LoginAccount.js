@@ -108,10 +108,10 @@ const LoginAccount = () => {
                 <MenuItem onClick={() => handleNavigation('/videos')} label="فيديوهات طبية" icon={<VideoIcon className="text-primary" />} />
                 <MenuItem onClick={() => handleNavigation('/podcasts')} label=" بودكاست قلقانة" icon={<VideoIcon className="text-primary" />} />
                 <MenuItem onClick={() => handleNavigation('/medical-questions')} label="اسئلة طبية" icon={<HelpCircleIcon className="text-primary" />} />
-                <MenuItem onClick={() => handleNavigation('/ask-Doctor')} label="ابعتلنا سؤالك" icon={<SendIcon className="text-primary" />} />
+                <MenuItem onClick={() => handleNavigation('/ask-Doctor')} label="ابعتيلنا سؤالك" icon={<SendIcon className="text-primary" />} />
               </div>
             )}
-            <MenuItem onClick={() => handleNavigation('/booking-Doctor')} label="احجز دكتور" />
+            <MenuItem onClick={() => handleNavigation('/booking-Doctor')} label="احجزي دكتور" />
             <MenuItem onClick={() => handleNavigation('/aboutUs')} label="من نحن" />
             {isLoggedIn ? (
               <MenuItem onClick={handleLogout} label="تسجيل الخروج" />
