@@ -10,7 +10,7 @@ import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
 import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
 import api from "@/src/utils/api";
-import { slug } from "github-slugger";  // Import the slug function
+import { slug } from "github-slugger";  
 
 export async function generateMetadata() {
   return {
@@ -99,7 +99,7 @@ export default async function Home() {
       <AdsSection />
 
       <div className="lg:pb-16 lg:px-28">
-        <div className="relative mt-16 md:mt-24 -mb-10 lg:mx-24 flex flex-col items-center justify-center">
+        <div className="relative -z-10 mt-16 md:mt-24 -mb-10 lg:mx-24 flex flex-col items-center justify-center">
           <h1 className="text-2xl md:text-3xl lg:text-5xl text-center relative">
             قسم التعلم والتوعية
           </h1>
