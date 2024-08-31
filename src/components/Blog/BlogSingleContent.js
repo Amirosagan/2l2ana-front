@@ -6,8 +6,8 @@ import Image from "next/image";
 import { modifyDropboxUrl } from "@/src/utils/modifyDropboxUrl";
 import BlogLayoutThree from "@/src/components/Blog/BlogLayoutThree";
 import { slug as slugify } from "github-slugger";
-import Tag from "../ELements/Tag";
 import SuggestionList from "../Doctors/DoctorSuggestionList";
+import Tag from "../ELements/Tag";
 
 const BlogPageContent = ({ blog, relatedPosts = [], isLoggedIn }) => {
   if (!blog) {
@@ -83,7 +83,7 @@ const BlogPageContent = ({ blog, relatedPosts = [], isLoggedIn }) => {
           <div className="lg:w-[70%] -mt-10 md:mt-0">
             <BlogDetails blog={blog} slug={slugify(blog.title || blog.id || "no-title")} />
             <div className="m-auto">
-              <RenderMdx content={content || "No Content"} preview={!isLoggedIn} />
+              <RenderMdx content={content || "No Content"} preview={isLoggedIn} />
               {isLoggedIn && (
                 <div className="mt-8 mb-10 p-8 rounded-lg shadow-2xl bg-white">
                   <p className="text-center tajawal-regular text-black mb-4">
@@ -103,11 +103,11 @@ const BlogPageContent = ({ blog, relatedPosts = [], isLoggedIn }) => {
           </div>
         </div>
         {relatedPosts.length > 0 && (
-          <div className="w-full mt-28 ">
+          <div className="w-full mt-28">
             <h3 className="text-lg font-bold mx-5 md:mx-20 lg:mx-20 xl:mx-40 tajawal-regular text-primary">مقالات مشابهة</h3>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 mx-5 xl:mx-60 lg:mx-40 md:mx-20 lg:grid-cols-3 gap-6 justify-center">
               {relatedPosts.map((post, index) => (
-                <div key={index} className="max-w-[340px] mx-auto"> 
+                <div key={index} className="max-w-[340px] mx-auto">
                   <BlogLayoutThree blog={post} />
                 </div>
               ))}

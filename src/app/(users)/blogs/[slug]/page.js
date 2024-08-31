@@ -1,4 +1,6 @@
-import BlogPageClient from "./client";
+import BlogPageContent from "@/src/components/Blog/BlogSingleContent";
+import { slug } from "github-slugger";
+import api from "@/src/utils/api";
 
 export async function generateMetadata({ params }) {
   const { slug } = params;
@@ -8,10 +10,11 @@ export async function generateMetadata({ params }) {
       `https://api.2l2ana.com/api/Post/${slug}`,
       {
         cache: "no-cache",
-      },
+      }
     );
     const res = await responseSerilezed.json();
     const blog = res;
+
     return {
       metadataBase: new URL('https://2l2ana.com'),
       title: `${blog.title} | قلقانة`,
@@ -42,27 +45,85 @@ export async function generateMetadata({ params }) {
   }
 }
 
+export async function fetchRelatedPosts(currentBlog) {
+  const relatedPostsResponse = await api.get(`/Post`);
+  const allPosts = relatedPostsResponse.data.items;
+
+  let relatedPosts = allPosts
+    .filter((post) =>
+      post.tags.some((tag) => currentBlog.tags.map((t) => t.name).includes(tag.name))
+    )
+    .filter((post) => post.id !== currentBlog.id) // Exclude the main post
+    .map((post) => ({
+      id: post.id,
+      title: post.title,
+      publishedAt: post.createdAt,
+      image: {
+        filePath: post.imageUrl,
+        blurhashDataUrl: '',
+        width: 800,
+        height: 600,
+      },
+      tags: post.tags.map((tag) => tag.name),
+      url: `/blogs/${slug(post.id)}`,
+    }));
+
+  // Fill relatedPosts if there are fewer than 3 posts
+  if (relatedPosts.length < 3) {
+    const additionalPosts = allPosts
+      .filter((post) => post.id !== currentBlog.id && !relatedPosts.some(rp => rp.id === post.id))
+      .slice(0, 3 - relatedPosts.length)
+      .map((post) => ({
+        id: post.id,
+        title: post.title,
+        publishedAt: post.createdAt,
+        image: {
+          filePath: post.imageUrl,
+          blurhashDataUrl: '',
+          width: 800,
+          height: 600,
+        },
+        tags: post.tags.map((tag) => tag.name),
+        url: `/blogs/${slug(post.id)}`,
+      }));
+
+    relatedPosts = [...relatedPosts, ...additionalPosts];
+  }
+
+  return relatedPosts;
+}
+
 const BlogPage = async ({ params }) => {
   const { slug } = params;
-  const responseSerilezed = await fetch(
-    `https://api.2l2ana.com/api/Post/${slug}`,
-    {
-      cache: "no-cache",
-    },
-  );
 
-  const response = await responseSerilezed.json();
-  const blog = response;
+  try {
+    const responseSerilezed = await fetch(
+      `https://api.2l2ana.com/api/Post/${slug}`,
+      {
+        cache: "no-cache",
+      }
+    );
 
-  if (!blog) {
-    return <div>Blog not found</div>;
+    const blog = await responseSerilezed.json();
+
+    if (!blog) {
+      return <div>Blog not found</div>;
+    }
+
+    const relatedPosts = await fetchRelatedPosts(blog);
+
+    return (
+      <div>
+        <BlogPageContent 
+          blog={blog} 
+          relatedPosts={relatedPosts.slice(0, 3)} 
+        />
+      </div>
+    );
+  } catch (error) {
+    console.error('Error fetching blog:', error);
+    return <div>Error loading blog</div>;
   }
-  return (
-    <div>
-      <BlogPageClient initialBlog={blog} />
-    </div>
-  );
-
 };
 
 export default BlogPage;

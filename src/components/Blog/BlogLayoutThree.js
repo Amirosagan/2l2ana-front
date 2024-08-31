@@ -7,7 +7,7 @@ const BlogLayoutThree = ({ blog }) => {
   const formattedDate = formatDate(blog.publishedAt);
 
   return (
-    <Link href={`${blog.url}`} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out bg-white hover:shadow-sm rounded-lg p-3 h-full">
+    <Link href={blog.url} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out bg-white hover:shadow-sm rounded-lg p-3 h-full">
       <div className="relative h-32 md:h-56 w-full rounded-xl overflow-hidden">
         {blog.image?.filePath ? (
           <Image
@@ -39,7 +39,7 @@ const BlogLayoutThree = ({ blog }) => {
             <div className="flex">
               {blog.tags.map((tag, index) => (
                 <span key={index} className="text-primary text-sm tajawal-medium">
-                  {tag}
+                  {tag} 
                 </span>
               ))}
             </div>

@@ -9,7 +9,7 @@ const mdxComponents = {
 };
 
 const RenderMdx = ({ content, preview }) => {
-  const previewContent = preview ? content : content;
+  const previewContent = preview ? content.split(' ').slice(0, 100).join(' ') + '...' : content;
 
   return (
     <div className={preview ? 'custom-quill preview' : 'custom-quill'}>

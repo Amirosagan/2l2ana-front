@@ -1,7 +1,7 @@
 import React from 'react';
 import OfflineCard from './OfflineCard';
 import firstCase from "@/public/first_medical_case.webp";
-import secondCase from "@/public/case5.jpg";
+import secondCase from "@/public/fourth_medical_case.webp";
 import thirdCase from "@/public/third-case.jpg";
 
 function OfflineSection() {
@@ -31,7 +31,7 @@ function OfflineSection() {
       ]
     }, {
       img: secondCase,
-      title: "التغذية العلاجية",
+      title: " الأمراض الجلدية",
       lists: [
         "قريبا",
       ]
