@@ -3,7 +3,7 @@ import BlogLayoutThreeSkeleton from "./BlogLayoutThreeSkeleton";
 
 const RecentPostsSkeleton = ({ hideHeader, Home }) => {
   return hideHeader ? (
-    <section className="w-full mb-5 px-5 sm:px-5 md:px-24 sxl:px-32 flex mt-16 flex-col items-center justify-center">
+    <section className="w-full mb-5 px-5 sm:px-5 md:px-24 flex mt-16 flex-col items-center justify-center">
       <div className="w-full items-center flex justify-between">
         <div className={`h-8 w-40 bg-gray-300 animate-pulse rounded ${Home ? 'md:text-3xl' : 'md:text-4xl'}`}></div>
       </div>

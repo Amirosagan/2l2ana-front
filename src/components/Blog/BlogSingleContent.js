@@ -9,7 +9,7 @@ import { slug as slugify } from "github-slugger";
 import SuggestionList from "../Doctors/DoctorSuggestionList";
 import Tag from "../ELements/Tag";
 
-const BlogPageContent = ({ blog, relatedPosts = [], isLoggedIn }) => {
+const BlogPageContent = ({ blog, relatedPosts = [] }) => {
   if (!blog) {
     return <div>Blog not found</div>;
   }
@@ -83,23 +83,11 @@ const BlogPageContent = ({ blog, relatedPosts = [], isLoggedIn }) => {
           <div className="lg:w-[70%] -mt-10 md:mt-0">
             <BlogDetails blog={blog} slug={slugify(blog.title || blog.id || "no-title")} />
             <div className="m-auto">
-              <RenderMdx content={content || "No Content"} preview={isLoggedIn} />
-              {isLoggedIn && (
-                <div className="mt-8 mb-10 p-8 rounded-lg shadow-2xl bg-white">
-                  <p className="text-center tajawal-regular text-black mb-4">
-                    يرجى تسجيل الدخول لعرض المحتوى الكامل. التسجيل مجاني!
-                  </p>
-                  <Link href="/login">
-                    <div className="rounded bg-primary tajawal-bold text-white px-4 py-2 cursor-pointer text-center">
-                      تسجيل الدخول
-                    </div>
-                  </Link>
-                </div>
-              )}
+              <RenderMdx content={content || "No Content"} />
             </div>
           </div>
           <div className="sticky mt-20 lg:mt-0 lg:max-w-[30%] top-28 lg:h-[calc(100vh-40px)] md:min-w-[370px]">
-             <SuggestionList blog={true} /> 
+            <SuggestionList blog={true} /> 
           </div>
         </div>
         {relatedPosts.length > 0 && (

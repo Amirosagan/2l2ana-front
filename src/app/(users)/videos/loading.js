@@ -14,7 +14,7 @@ function loading() {
       <div className=" w-[85%] mb-10 lg:mb-0 m-auto">
         <DoctoorBoster />
       </div>
-      <RecentPostsSkeleton />
+      {/* <RecentPostsSkeleton /> */}
     </div>
   </div>
   )

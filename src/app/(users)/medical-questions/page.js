@@ -44,7 +44,7 @@ export default async function QuestionAnswersPage() {
   }
 
   return (
-    <div>
+    <>
       <HeroQestion />
       <ScrollButton />
       <div className="flex flex-col justify-between mx-[4%] lg:mx-20 mt-10 md:mt-28 gap-20 lg:gap-2 lg:flex-row">
@@ -55,6 +55,6 @@ export default async function QuestionAnswersPage() {
           <SuggestionList blog={true} />
         </div>
       </div>
-    </div>
+    </>
   );
 }
