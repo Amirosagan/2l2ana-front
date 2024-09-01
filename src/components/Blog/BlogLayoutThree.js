@@ -1,13 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatDate } from "@/src/utils/formatDate"; 
+import { formatDate } from "@/src/utils/formatDate";
 
 const BlogLayoutThree = ({ blog }) => {
   const formattedDate = formatDate(blog.publishedAt);
 
   return (
-    <Link href={blog.url} className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out bg-white hover:shadow-sm rounded-lg p-3 h-full">
+    <Link
+      href={blog.url}
+      className="group flex flex-col border-[2px] cursor-pointer hover:border-primary transition-all ease-in-out bg-white hover:shadow-sm rounded-lg p-3 h-full"
+    >
       <div className="relative h-32 md:h-56 w-full rounded-xl overflow-hidden">
         {blog.image?.filePath ? (
           <Image
@@ -18,6 +21,7 @@ const BlogLayoutThree = ({ blog }) => {
             className="h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             unoptimized={true}
+            priority={true}  
           />
         ) : (
           <div className="w-full h-full flex justify-center items-center bg-gray-200">
@@ -39,7 +43,7 @@ const BlogLayoutThree = ({ blog }) => {
             <div className="flex">
               {blog.tags.map((tag, index) => (
                 <span key={index} className="text-primary text-sm tajawal-medium">
-                  {tag} 
+                  {tag}
                 </span>
               ))}
             </div>
