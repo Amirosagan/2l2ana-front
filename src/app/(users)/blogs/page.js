@@ -34,7 +34,9 @@ export async function generateMetadata() {
 }
 
 export async function fetchBlogs() {
-  const res = await api.get("/Post?pageSize=9");
+  const res = await api.get("/Post?pageSize=9", {
+    cache: "no-store",  // Add cache control here
+  });
   const blogs = res.data.items.map((item) => ({
     id: item.id,
     title: item.title,
@@ -53,7 +55,7 @@ export async function fetchBlogs() {
 }
 
 const BlogPage = async () => {
-  const blogs = await fetchBlogs();
+  const blogs = await fetchBlogs(); // Fetch blogs with no-store cache
 
   return (
     <div className="md:mt-6">
