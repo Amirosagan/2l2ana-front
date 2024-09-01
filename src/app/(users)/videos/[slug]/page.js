@@ -7,7 +7,7 @@ import api from '@/src/utils/api';
 export async function generateMetadata() {
   try {
     const res = await api.get('/Youtube', {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+      cache: 'no-cache' 
     });
     const data = res.data;
 

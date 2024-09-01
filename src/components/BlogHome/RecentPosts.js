@@ -21,7 +21,6 @@ const RecentPosts = ({ hideHeader, Home, blogs }) => {
         {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
-            {/* Ensure tags are rendered correctly */}
             <div>
               {blog.tags && blog.tags.map((tag, i) => (
                 <span key={i} className="tag-class">{tag.name}</span>  // Safely render tag.name

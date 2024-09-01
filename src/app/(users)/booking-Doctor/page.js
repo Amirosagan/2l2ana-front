@@ -46,7 +46,7 @@ export default async function MainDoctorPage({ searchParams }) {
 
   try {
     const response = await api.get('/Doctor/GetDoctors', {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+      cache: 'no-cache' 
     });
   
     const filteredDoctors = response.data.items.filter(doctor => 
