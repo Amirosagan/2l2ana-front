@@ -2,11 +2,34 @@ import CoverSection from "@/src/components/BlogHome/CoverSection";
 import RecentPosts from "@/src/components/BlogHome/RecentPosts";
 import FeaturedPosts from "@/src/components/BlogHome/FeaturedPosts";
 import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
-import api from "@/src/utils/api";
 import { slug } from "github-slugger";
 
+export async function fetchBlogs() {
+  const response = await fetch('https://api.2l2ana.com/api/Post?pageSize=9', {
+    cache: 'no-cache',  // Ensure the request bypasses the cache
+  });
+
+  const data = await response.json();
+
+  const blogs = data.items.map((item) => ({
+    id: item.id,
+    title: item.title,
+    publishedAt: item.createdAt,
+    image: {
+      filePath: item.imageUrl,
+      blurhashDataUrl: '',
+      width: 800,
+      height: 600,
+    },
+    tags: item.tags.map((tag) => tag.name),
+    url: `/blogs/${slug(item.id)}`,
+  }));
+
+  return blogs;
+}
+
 export async function generateMetadata() {
-  const blogs = await fetchBlogs();
+  const blogs = await fetchBlogs();  // Fetch the latest blogs dynamically
   const titles = blogs.map((blog) => blog.title).join(", ");
 
   return {
@@ -33,36 +56,15 @@ export async function generateMetadata() {
   };
 }
 
-export async function fetchBlogs() {
-  const res = await api.get("/Post?pageSize=9", {
-    cache: "no-store",  // Add cache control here
-  });
-  const blogs = res.data.items.map((item) => ({
-    id: item.id,
-    title: item.title,
-    publishedAt: item.createdAt,
-    image: {
-      filePath: item.imageUrl,
-      blurhashDataUrl: '',
-      width: 800,
-      height: 600,
-    },
-    tags: item.tags.map((tag) => tag.name),
-    url: `/blogs/${slug(item.id)}`,
-  }));
-
-  return blogs;
-}
-
 const BlogPage = async () => {
-  const blogs = await fetchBlogs(); // Fetch blogs with no-store cache
+  const blogs = await fetchBlogs();
 
   return (
     <div className="md:mt-6">
       <div className="flex flex-col items-center lg:w-[83%] m-auto justify-center">
         <CoverSection blog={blogs[0]} />
         <FeaturedPosts />
-        <div className=" w-[85%] mb-10 lg:mb-0 m-auto">
+        <div className="w-[85%] mb-10 lg:mb-0 m-auto">
           <DoctoorBoster />
         </div>
         <RecentPosts blogs={blogs} />
