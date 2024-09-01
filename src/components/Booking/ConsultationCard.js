@@ -18,9 +18,14 @@ const ConsultationCard = ({
   handleDownloadFile,
   onUpdateConsultation,
 }) => {
+
+  
+  
   const displayName = role !== "Doctor"
-    ? `${user?.firstName || "Unknown"} ${user?.lastName || "User"}`
+    ? doctor?.name || "Unknown Doctor"
     : consultation.userId || "Anonymous";
+
+    
 
   const currentTime = new Date();
   const consultationTime = new Date(consultation.date);
@@ -43,16 +48,7 @@ const ConsultationCard = ({
 
   return (
     <div className="gap-4 border p-5 m-3 bg-neutral-100 hover:bg-neutral-200 transition-all duration-200 rounded-lg flex-col md:flex-row items-center flex">
-      {role !== "Doctor" && (
-        <Image
-          alt="profile"
-          src={doctor?.imageUrl || "/noavatar.png"}
-          className="rounded-full border hidden md:block border-black mb-1 object-cover h-[70px] w-[70px]"
-          width={70}
-          height={70}
-          unoptimized={true}
-        />
-      )}
+    
       <div className="flex flex-col gap-2 w-full">
         <h2 className="tajawal-bold flex items-center justify-between text-[18px]">
           {displayName}
