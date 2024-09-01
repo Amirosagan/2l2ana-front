@@ -43,7 +43,7 @@ const translations = {
 const Header = () => {
   const [activeItem, setActiveItem] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState('');
-  const [language, setLanguage] = useState('ar'); // Default language
+  const [language, setLanguage] = useState('ar'); 
   const [direction, setDirection] = useState('rtl');
   const router = useRouter();
   const dropdownRef = useRef(null);
@@ -161,7 +161,7 @@ const Header = () => {
           </nav>
         </div>
         <div className="mx-5 md:mx-0 flex items-center md:gap-4 gap-2">
-          <button onClick={toggleLanguage} className='tajawal-light mt-1 md:mt-0 flex items-center gap-1 md:gap-2 md:text-gray-500'>
+          <button  className='tajawal-light mt-1 md:mt-0 flex items-center gap-1 md:gap-2 md:text-gray-500'>
             <span className='text-black hidden md:block'>{translations[language].language}</span>
             <span className='text-black rounded-full md:hidden text-sm'>{translations[language].shortLanguage}</span>
             <Globe className='hidden md:block' size={18} />

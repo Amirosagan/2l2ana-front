@@ -1,5 +1,4 @@
 import Link from "next/link";
-import PaginationControls from "@/src/components/Questions/PaginationControls";
 
 const Questions = ({ filteredQuestions, pageSize }) => {
     const totalQuestions = filteredQuestions.length > 0 ? filteredQuestions.length : 0;

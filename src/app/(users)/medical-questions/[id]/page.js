@@ -39,7 +39,6 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// Server-side component for rendering the single question page
 const QuestionPage = async ({ params }) => {
   const { id } = params;
 
@@ -96,13 +95,13 @@ const QuestionPage = async ({ params }) => {
             </Link>
           </div>
           {relatedQuestions.length > 0 ? relatedQuestions.map(relatedQuestion => (
-            <div key={relatedQuestion.id} className="mb-4 bg-neutral-100 p-5 items-center flex justify-between">
+            <div key={relatedQuestion.id} className="mb-4 bg-neutral-100 p-5 items-center flex-col md:flex-row flex justify-between">
               <div>
                 <h1 className="text-md text-lg">{relatedQuestion.title}</h1>
                 <p className="text-gray-600">{relatedQuestion.content}</p>
               </div>
-              <Link href={`/medical-questions/${relatedQuestion.id}`}>
-                <button className="bg-primary/70 hover:bg-primary text-white px-4 py-2 rounded">شوف الاجابة</button>
+              <Link className='w-full md:w-fit  md:mt-0 mt-5' href={`/medical-questions/${relatedQuestion.id}`}>
+                <button className="bg-primary/70 hover:bg-primary text-white w-full px-4 py-2  rounded">شوفي الاجابة</button>
               </Link>
             </div>
           )) : <p>No related questions found.</p>}
