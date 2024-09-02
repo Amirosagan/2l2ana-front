@@ -16,7 +16,8 @@ const BlogLayoutOne = ({ blog }) => {
             <Image
               src={blog.imageUrl}
               alt={blog.title}
-              layout="fill"
+              width={200}
+              height={200}
               className="absolute top-0 left-0 w-full h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               unoptimized={true}
