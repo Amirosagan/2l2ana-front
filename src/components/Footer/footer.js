@@ -64,20 +64,28 @@ const Footer = () => {
                             <div className="flex tajawal-medium gap-2 pt-4 flex-col text-sm md:text-base">
                                 <Link href="/aboutUs" className="hover:text-accent transition-all duration-200"> من نحن </Link>
                                 <Link href="/termsofuse" className="hover:text-accent transition-all duration-200"> سياسة الاستخدام </Link>
-                                <a 
-                                    href="mailto:customer.care@2l2ana.com" 
-                                    className="hover:text-accent transition-all duration-200"
-                                >
-                                    تواصلي معنا
-                                </a>
+                                <div className="hover:text-accent transition-all duration-200">تواصلي معنا عبر : </div>
 
-                                <Image className=" md:w-[130px] hidden lg:hidden md:block mt-2  " alt="Doctor" src={profileImg} />
-
-                                
+                                <div>
+                                    <a 
+                                        href="mailto:customer.care@2l2ana.com" 
+                                        className="text-accent transition-all duration-200 block"
+                                    >
+                                         البريد الإلكتروني
+                                    </a>
+                                    <a 
+                                        href="https://wa.me/201210684419" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="text-accent mt-2 transition-all duration-200 block"
+                                    >
+                                         الواتساب
+                                    </a>
+                                </div>
+                                <Image className=" md:w-[130px] hidden lg:hidden md:block mt-2" alt="Doctor" src={profileImg} />
                             </div>
                         </div>
                     </div>
-                
                 </div>
                 <Image className="lg:w-[200px] md:hidden mt-10 lg:mt-0 lg:block w-[130px] pb-5" alt="Doctor" src={profileImg} />
             </div>

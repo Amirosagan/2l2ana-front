@@ -31,7 +31,7 @@ const MyBookings = () => {
         toast.error("لم تنجح العملية يرجي اعادة المحاولة");
       }
     }
-  }, []); // Empty dependency array to ensure this runs only once
+  }, []); 
 
   useEffect(() => {
     const fetchConsultations = async () => {
@@ -246,7 +246,8 @@ const MyBookings = () => {
           onSubmitRating={(rating) => handleRatingSubmit(selectedConsultation.id, rating)}
         />
       )}
-    </div>
+          <p className="mx-5 ">    ترغبين في مساعدة ؟ تواصلي معنا عبر <a href="https://wa.me/201210684419" className="text-accent underline" target="_blank" rel="noopener noreferrer">WhatsApp</a> </p>
+          </div>
   );
 };
 

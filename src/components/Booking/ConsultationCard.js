@@ -17,15 +17,11 @@ const ConsultationCard = ({
   downloadLoading,
   handleDownloadFile,
   onUpdateConsultation,
+  onCancelConsultation,  // Added this prop
 }) => {
-
-  
-  
   const displayName = role !== "Doctor"
     ? doctor?.name || "Unknown Doctor"
     : consultation.userId || "Anonymous";
-
-    
 
   const currentTime = new Date();
   const consultationTime = new Date(consultation.date);
@@ -48,7 +44,6 @@ const ConsultationCard = ({
 
   return (
     <div className="gap-4 border p-5 m-3 bg-neutral-100 hover:bg-neutral-200 transition-all duration-200 rounded-lg flex-col md:flex-row items-center flex">
-    
       <div className="flex flex-col gap-2 w-full">
         <h2 className="tajawal-bold flex items-center justify-between text-[18px]">
           {displayName}
@@ -58,13 +53,13 @@ const ConsultationCard = ({
             <ClipboardPlus className="h-5 w-5 text-primary" /> {doctor?.headLine || "Specialization not available"}
           </h2>
         )}
-         {role === "Doctor" && (
+        {role === "Doctor" && (
           <h2 className="tajawal-regular flex gap-2">
-            <ClipboardPlus className="h-5 w-5 text-primary" /> {consultation.freeConsultation  ? "free consultation" : "paid consultation"}
+            <ClipboardPlus className="h-5 w-5 text-primary" /> {consultation.freeConsultation ? "free consultation" : "paid consultation"}
           </h2>
         )}
         <h2 className="tajawal-regular flex gap-2">
-          <Calendar className="h-5 w-5 text-primary" /> المعاد : {consultationTime.toLocaleDateString()} 
+          <Calendar className="h-5 w-5 text-primary" /> المعاد : {consultationTime.toLocaleDateString()}
         </h2>
         <h2 className="tajawal-regular flex gap-2">
           <Clock className="h-5 w-5 text-primary" /> الساعة : {egyptTimeString} بتوقيت مصر
@@ -89,7 +84,8 @@ const ConsultationCard = ({
         onShowNotes={() => onShowNotes(consultation)}
         onShowRatingModal={() => onShowRatingModal(consultation)}
         onCompleteConsultation={() => onCompleteConsultation(consultation)}
-        onUpdateConsultation={onUpdateConsultation} 
+        onUpdateConsultation={onUpdateConsultation}
+        onCancelConsultation={onCancelConsultation}  // Pass the function here
       />
     </div>
   );
