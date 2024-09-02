@@ -140,7 +140,7 @@ const ConsultationActions = ({
       {role !== "Doctor" && isWithinCancelWindow && (
         <button
           className="bg-red-500 text-white py-3 shadow-lg tajawal-regular hover:scale-105 transition-all duration-200 rounded-md w-[200px]"
-          onClick={() => onCancelConsultation(updatedConsultation)}
+          onClick={() => onCancelConsultation(consultation)}
         >
           الغاء الحجز
         </button>
