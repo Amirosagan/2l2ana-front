@@ -9,8 +9,7 @@ import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
 import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
-import api from "@/src/utils/api";
-import { slug } from "github-slugger";  
+import { slug } from "github-slugger";
 
 export async function generateMetadata() {
   return {
@@ -38,10 +37,11 @@ export async function generateMetadata() {
 
 export async function fetchVideos() {
   try {
-    const videoRes = await api.get('/Youtube', {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+    const response = await fetch('https://api.2l2ana.com/api/Youtube', {
+      cache: 'no-cache',  // Ensure the request bypasses the cache
     });
-    const allVideos = videoRes.data.items;
+    const data = await response.json();
+    const allVideos = data.items;
 
     const featuredVideos = allVideos.filter(item =>
       item.youtubeLink.tags.some(tag => tag.name === "featured")
@@ -67,10 +67,11 @@ export async function fetchVideos() {
 
 export async function fetchPosts() {
   try {
-    const postRes = await api.get("/Post?pageSize=3", {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+    const response = await fetch('https://api.2l2ana.com/api/Post?pageSize=3', {
+      cache: 'no-cache',
     });
-    const blogs = postRes.data.items.map((item) => ({
+    const data = await response.json();
+    const blogs = data.items.map((item) => ({
       id: item.id,
       title: item.title,
       publishedAt: item.createdAt,
@@ -81,7 +82,7 @@ export async function fetchPosts() {
         height: 600,
       },
       tags: item.tags.map((tag) => tag.name),
-      url: `/blogs/${slug(item.id)}`, 
+      url: `/blogs/${slug(item.id)}`,
     }));
 
     return blogs;
