@@ -10,7 +10,7 @@ const BlogLayoutOne = ({ blog }) => {
 
   return (
     <Link href={blogUrl} legacyBehavior>
-      <a className="group relative flex flex-col border-[2px]  cursor-pointer hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg lg:min-h-[300px] min-h-[220px] overflow-hidden">
+      <a className="group relative flex flex-col border-[2px]  cursor-pointer  max-h-[220px] lg:max-h-[300px] hover:border-primary transition-all ease-in-out hover:shadow-sm rounded-lg lg:min-h-[300px] min-h-[220px] overflow-hidden">
         <div className="relative top-0 left-0  lg:min-h-[300px] min-h-[220px] max-h-[220px]  lg:max-h-[300px]   overflow-hidden">
           {blog.imageUrl ? (
             <Image
