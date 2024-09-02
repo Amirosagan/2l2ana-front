@@ -5,7 +5,7 @@ import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
 import { slug } from "github-slugger";
 
 export async function fetchBlogs() {
-  const response = await fetch('https://api.2l2ana.com/api/Post?pageSize=9', {
+  const response = await fetch('https://api.2l2ana.com/api/Post?pageSize=15', {
     cache: 'no-cache',  // Ensure the request bypasses the cache
   });
 
@@ -29,7 +29,7 @@ export async function fetchBlogs() {
 }
 
 export async function generateMetadata() {
-  const blogs = await fetchBlogs();  // Fetch the latest blogs dynamically
+  const blogs = await fetchBlogs(); 
   const titles = blogs.map((blog) => blog.title).join(", ");
 
   return {
