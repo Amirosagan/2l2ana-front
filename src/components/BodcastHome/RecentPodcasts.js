@@ -5,7 +5,9 @@ const RecentPodcast = async ({ Home }) => {
     let podcasts = [];
 
     try {
-        const response = await api.get('/Podcast');
+        const response = await api.get('/Podcast', {
+            cache: 'no-cache'  // Ensure the request bypasses the cache
+        });
         podcasts = response.data.podcasts;
 
         if (Home) {

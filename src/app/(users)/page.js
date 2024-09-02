@@ -37,44 +37,58 @@ export async function generateMetadata() {
 }
 
 export async function fetchVideos() {
-  const videoRes = await api.get('/Youtube');
-  const allVideos = videoRes.data.items;
+  try {
+    const videoRes = await api.get('/Youtube', {
+      cache: 'no-cache'  // Ensure the request bypasses the cache
+    });
+    const allVideos = videoRes.data.items;
 
-  const featuredVideos = allVideos.filter(item =>
-    item.youtubeLink.tags.some(tag => tag.name === "featured")
-  );
-
-  let selectedVideos = featuredVideos;
-  if (featuredVideos.length < 2) {
-    const remainingVideos = allVideos.filter(item =>
-      !item.youtubeLink.tags.some(tag => tag.name === "featured")
+    const featuredVideos = allVideos.filter(item =>
+      item.youtubeLink.tags.some(tag => tag.name === "featured")
     );
-    selectedVideos = [
-      ...featuredVideos,
-      ...remainingVideos.slice(0, 2 - featuredVideos.length)
-    ];
-  }
 
-  return selectedVideos.slice(0, 2);
+    let selectedVideos = featuredVideos;
+    if (featuredVideos.length < 2) {
+      const remainingVideos = allVideos.filter(item =>
+        !item.youtubeLink.tags.some(tag => tag.name === "featured")
+      );
+      selectedVideos = [
+        ...featuredVideos,
+        ...remainingVideos.slice(0, 2 - featuredVideos.length)
+      ];
+    }
+
+    return selectedVideos.slice(0, 2);
+  } catch (error) {
+    console.error('Error fetching videos:', error);
+    return [];
+  }
 }
 
 export async function fetchPosts() {
-  const postRes = await api.get("/Post?pageSize=3");
-  const blogs = postRes.data.items.map((item) => ({
-    id: item.id,
-    title: item.title,
-    publishedAt: item.createdAt,
-    image: {
-      filePath: item.imageUrl,
-      blurhashDataUrl: '',
-      width: 800,
-      height: 600,
-    },
-    tags: item.tags.map((tag) => tag.name),
-    url: `/blogs/${slug(item.id)}`, 
-  }));
+  try {
+    const postRes = await api.get("/Post?pageSize=3", {
+      cache: 'no-cache'  // Ensure the request bypasses the cache
+    });
+    const blogs = postRes.data.items.map((item) => ({
+      id: item.id,
+      title: item.title,
+      publishedAt: item.createdAt,
+      image: {
+        filePath: item.imageUrl,
+        blurhashDataUrl: '',
+        width: 800,
+        height: 600,
+      },
+      tags: item.tags.map((tag) => tag.name),
+      url: `/blogs/${slug(item.id)}`, 
+    }));
 
-  return blogs;
+    return blogs;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
 }
 
 export default async function Home() {
