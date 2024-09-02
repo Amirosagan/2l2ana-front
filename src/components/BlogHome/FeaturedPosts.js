@@ -80,9 +80,7 @@ const FeaturePosts = () => {
           ))
         ) : (
           blogs.map((blog, index) => (
-            <article key={index} className="group relative bg-neutral-200 flex flex-col border-[2px] cursor-pointer rounded-lg lg:min-h-[300px] min-h-[220px] overflow-hidden">
-              <BlogLayoutOne blog={blog} className="w-full h-full" />
-            </article>
+              <BlogLayoutOne blog={blog} key={index} className="w-full h-full" />
           ))
         )}
       </div>
