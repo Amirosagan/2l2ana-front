@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import RecentPost from "@/src/components/VideoHome/RecentPosts";
-import RecentPosts from "@/src/components/BlogHome/RecentPosts";
 import SearchComponent from "@/src/components/VideoHome/SearchComponent";
+import CategoryVideos from "@/src/components/CategoryVideos";
 import api from "@/src/utils/api";
-import { slug } from "github-slugger";  
+import { slug } from "github-slugger";
+import CategoryPosts from "@/src/components/categoryPost";
 
 const CategoriesClient = () => {
   const [selectedOption, setSelectedOption] = useState("فيديوهات");
@@ -15,6 +15,8 @@ const CategoriesClient = () => {
   const [isFeatured, setIsFeatured] = useState(false);
   const [videos, setVideos] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const typeParam = searchParams.get("type") || "videos";
@@ -31,21 +33,23 @@ const CategoriesClient = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+
         if (selectedOption === "فيديوهات") {
-          const res = await api.get("/Youtube");
+          const res = await api.get("/Youtube", { cache: 'no-cache' });
           const allVideos = res.data.items;
 
-          const filteredVideos = allVideos.filter((video) =>
-            (selectedTag === "0" || video.youtubeLink.tags.some(tag => tag.id === selectedTag)) &&
-            (isFeatured ? video.youtubeLink.tags.some(tag => tag.name === "featured") : true) &&
-            (searchText === "" || video.youtubeLink.title.includes(searchText))
-          );
+          const filteredVideos = allVideos.filter((video) => {
+            const matchesTag = selectedTag === "0" || video.youtubeLink.tags.some(tag => tag.id.toString() === selectedTag);
+            const matchesFeatured = !isFeatured || video.youtubeLink.tags.some(tag => tag.name === "featured");
+            const matchesSearchText = searchText === "" || video.youtubeLink.title.includes(searchText);
+
+            return matchesTag && matchesFeatured && matchesSearchText;
+          });
 
           setVideos(filteredVideos);
         } else if (selectedOption === "مقالات") {
-          const res = await api.get("/Post");
-          console.log("API response:", res.data);  // Log the entire response
-
+          const res = await api.get("/Post", { cache: 'no-cache' });
           const allBlogs = res.data.items.map((item) => ({
             id: item.id,
             title: item.title,
@@ -56,20 +60,24 @@ const CategoriesClient = () => {
               width: 800,
               height: 600,
             },
-            tags: item.tags.map((tag) => tag.name),  // Transform tags to strings
+            tags: item.tags.map((tag) => tag.name),
             url: `/blogs/${slug(item.id)}`,
           }));
 
-          console.log("Processed blogs:", allBlogs);  // Log the processed blogs
+          const filteredBlogs = allBlogs.filter((blog) => {
+            const matchesTag = selectedTag === "0" || blog.tags.some(tag => tag.id.toString() === selectedTag);
+            const matchesSearchText = searchText === "" || blog.title.includes(searchText);
 
-          if (allBlogs.length > 0) {
-            setBlogs(allBlogs);  // Only set blogs if there is data
-          } else {
-            console.warn("No blogs found");
-          }
+            return matchesTag && matchesSearchText;
+          });
+
+          console.log("Filtered Blogs:", filteredBlogs); 
+          setBlogs(filteredBlogs);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -93,7 +101,8 @@ const CategoriesClient = () => {
         <SearchComponent
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
-          selectedTag={setSelectedTag}
+          selectedTag={selectedTag}
+          setSelectedTag={setSelectedTag}
           searchText={searchText}
           setSearchText={setSearchText}
           isFeatured={isFeatured}
@@ -103,11 +112,11 @@ const CategoriesClient = () => {
       </div>
       <div className="flex-grow mt-10 lg:mt-0">
         {selectedOption === "فيديوهات" && (
-          <RecentPost videos={videos} hideHeader={hideHeader} />
+          <CategoryVideos videos={videos} hideHeader={hideHeader} loading={loading} />
         )}
         {selectedOption === "مقالات" && (
           <div className="lg:-mt-12">
-          <RecentPosts blogs={blogs} hideHeader={hideHeader} />
+            <CategoryPosts blogs={blogs} hideHeader={hideHeader} loading={loading} />
           </div>
         )}
       </div>

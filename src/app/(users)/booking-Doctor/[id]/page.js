@@ -2,10 +2,12 @@ import api from "@/src/utils/api";
 import Details from "@/src/components/Doctors/DoctorDetails";
 import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
 
-// Function to fetch doctor data based on ID
+// Function to fetch doctor data based on ID with no-cache
 async function getDoctorData(id) {
   try {
-    const response = await api.get(`/Doctor/${id}`);
+    const response = await api.get(`/Doctor/${id}`, {
+      cache: 'no-cache',  // Ensure the request bypasses the cache
+    });
     return response.data;
   } catch (error) {
     console.error(`Failed to fetch doctor data for ID ${id}:`, error);
@@ -16,7 +18,9 @@ async function getDoctorData(id) {
 // Function to pre-generate static paths
 export async function generateStaticParams() {
   try {
-    const response = await api.get('/Doctor');
+    const response = await api.get('/Doctor', {
+      cache: 'no-cache',  // Ensure the request bypasses the cache
+    });
     const doctors = response.data;
 
     // Map through doctors and return an array of params
