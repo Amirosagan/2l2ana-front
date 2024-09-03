@@ -22,17 +22,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
   const [weekDaysOptions, setWeekDaysOptions] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-
-  const categories = [
-    { value: 'نساء وتوليد', label: 'نساء وتوليد' },
-    { value: 'أمراض نساء', label: 'أمراض نساء' },
-    { value: 'صحة المرأة', label: 'صحة المرأة' },
-    { value: 'صحة نفسية', label: 'صحة نفسية' },
-    { value: 'طب نفسي', label: 'طب نفسي' },
-    { value: 'علاج نفسي', label: 'علاج نفسي' },
-    { value: 'استشارات نفسية', label: 'استشارات نفسية' },
-    { value: 'تأهيل نفسي', label: 'تأهيل نفسي' },
-  ];
+  const [categories, setCategories] = useState([]);
 
   const formatToEgyptTime = (time) => {
     const [hour, minute] = time.split(':').map(Number);
@@ -50,19 +40,60 @@ const UpdateDoctorForm = ({ doctorId }) => {
   };
 
   useEffect(() => {
-    const fetchAvailabilityData = async () => {
+    const predefinedCategories = [
+      { value: 'نساء وتوليد', label: 'نساء وتوليد' },
+      { value: 'أمراض نساء', label: 'أمراض نساء' },
+      { value: 'صحة المرأة', label: 'صحة المرأة' },
+      { value: 'صحة نفسية', label: 'صحة نفسية' },
+      { value: 'طب نفسي', label: 'طب نفسي' },
+      { value: 'علاج نفسي', label: 'علاج نفسي' },
+      { value: 'استشارات نفسية', label: 'استشارات نفسية' },
+      { value: 'تأهيل نفسي', label: 'تأهيل نفسي' },
+    ];
+
+    const fetchCategoriesAndAvailabilityData = async () => {
       try {
-        const response = await api.get('/Time');
+        const response = await api.get('/Doctor/GetDoctors');
 
-        const groupedDayTimes = response.data.timesRanges.reduce((acc, timeRange) => {
-          const dayId = timeRange.dayNumber;
-          const timeOption = { value: timeRange.id, label: formatToEgyptTime(timeRange.time) };
+        // Extract unique categories from API
+        const fetchedCategories = [
+          ...new Set(
+            response.data.items
+              .map((doctor) => doctor.category)
+              .filter((category) => category.trim() !== "")
+          ),
+        ].map((category) => ({ value: category, label: category }));
 
-          if (!acc[dayId]) {
-            acc[dayId] = [];
-          }
+        // Merge predefined and fetched categories, avoiding duplicates
+        const mergedCategories = [
+          ...predefinedCategories,
+          ...fetchedCategories.filter(
+            (fetchedCategory) =>
+              !predefinedCategories.some(
+                (predefinedCategory) =>
+                  predefinedCategory.value === fetchedCategory.value
+              )
+          ),
+        ];
 
-          acc[dayId].push(timeOption);
+        setCategories(mergedCategories);
+
+        // Group times by day and map to options
+        const groupedDayTimes = response.data.items.reduce((acc, doctor) => {
+          doctor.timesRanges.forEach((timeRange) => {
+            const dayId = timeRange.dayNumber;
+            const timeOption = {
+              value: timeRange.id,
+              label: formatToEgyptTime(timeRange.time),
+            };
+
+            if (!acc[dayId]) {
+              acc[dayId] = [];
+            }
+
+            acc[dayId].push(timeOption);
+          });
+
           return acc;
         }, {});
 
@@ -117,7 +148,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
       }
     };
 
-    fetchAvailabilityData();
+    fetchCategoriesAndAvailabilityData();
     fetchDoctorData();
   }, [doctorId]);
 
