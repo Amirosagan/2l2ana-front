@@ -49,13 +49,19 @@ export default async function MainDoctorPage({ searchParams }) {
       cache: 'no-cache' 
     });
   
+    // Split search term into parts if it's more than one word
+    const searchTerms = searchTerm.trim().toLowerCase().split(' ');
+
     const filteredDoctors = response.data.items.filter(doctor => 
       doctor.isAvailable &&
       (category ? doctor.category.trim().toLowerCase() === category.trim().toLowerCase() : true) &&
       (searchTerm ? (
-        doctor.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        doctor.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        doctor.category.toLowerCase().includes(searchTerm.toLowerCase())
+        // Check if each part of the search term matches either the first name or the last name
+        searchTerms.every(term =>
+          doctor.firstName.toLowerCase().includes(term) ||
+          doctor.lastName.toLowerCase().includes(term) ||
+          doctor.category.toLowerCase().includes(term)
+        )
       ) : true)
     );
   

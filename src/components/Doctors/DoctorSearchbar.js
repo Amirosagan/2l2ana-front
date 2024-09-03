@@ -5,16 +5,22 @@ import { Search } from "lucide-react";
 import { Button, TextField, InputAdornment } from "@mui/material";
 import api from "@/src/utils/api";
 
-const SearchDoctorBar = ({ onSearch }) => {
+const SearchDoctorBar = ({ onSearch, category, searchTerm, onCategoryChange, onSearchTermChange }) => {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("جميع التخصصات");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(category || "جميع التخصصات");
+  const [currentSearchTerm, setCurrentSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await api.get('/Doctor/GetDoctors');
-        const uniqueCategories = [...new Set(response.data.items.map(doctor => doctor.category).filter(category => category.trim() !== ""))];
+        // Filter only available doctors and get unique categories
+        const uniqueCategories = [...new Set(
+          response.data.items
+            .filter(doctor => doctor.isAvailable)  // Only consider available doctors
+            .map(doctor => doctor.category)
+            .filter(category => category.trim() !== "")
+        )];
         setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -27,15 +33,18 @@ const SearchDoctorBar = ({ onSearch }) => {
   const handleCategoryClick = (category) => {
     const newCategory = category === "جميع التخصصات" ? "" : category;
     setSelectedCategory(newCategory);
-    // Trigger the search immediately after setting the category
-    onSearch(newCategory, searchTerm);
+    onCategoryChange(newCategory); // Pass the updated category to the parent component
   };
 
   const handleSearchTermChange = (e) => {
     const newSearchTerm = e.target.value;
-    setSearchTerm(newSearchTerm);
-    // Trigger the search immediately after setting the search term state
-    onSearch(selectedCategory, newSearchTerm);
+    setCurrentSearchTerm(newSearchTerm);
+    onSearchTermChange(newSearchTerm); // Pass the updated search term to the parent component
+  };
+
+  const handleSearchClick = () => {
+    console.log("Button Clicked: Triggering search"); // Debugging: Ensure this function is called
+    onSearch();
   };
 
   return (
@@ -52,7 +61,7 @@ const SearchDoctorBar = ({ onSearch }) => {
           style={{ marginRight: "15px" }}
           placeholder="بحث"
           variant="outlined"
-          value={searchTerm}
+          value={currentSearchTerm}
           onChange={handleSearchTermChange}
           sx={{
             "& .MuiOutlinedInput-root": {
@@ -82,7 +91,7 @@ const SearchDoctorBar = ({ onSearch }) => {
         <Button
           style={{ backgroundColor: "rgb(31 143 160)", marginLeft: "15px" }}
           variant="contained"
-          onClick={() => onSearch(selectedCategory, searchTerm)}
+          onClick={handleSearchClick}
           sx={{
             backgroundColor: 'rgb(21, 99, 101)',
             '&:hover': {
