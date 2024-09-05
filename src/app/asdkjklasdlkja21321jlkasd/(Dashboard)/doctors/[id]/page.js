@@ -1,30 +1,72 @@
+'use client';
+
+import { useState } from "react";
 import UpdateConsultationPrice from "@/src/components/admin/UpdateConsultationPrice";
 import Image from "next/image";
+import axios from "axios";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import { toast } from "react-toastify";
+import Cookies from "js-cookie"; // Assuming you're using cookies for token storage
 
-const SingleDoctorPage = async ({ params }) => {
+const SingleDoctorPage = ({ params }) => {
   const { id } = params;
+  const [doctorData, setDoctorData] = useState(null);
+  const [error, setError] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  let doctorData = null;
-  let error = null;
+  const fetchDoctorData = async () => {
+    try {
+      const response = await fetch(`https://api.2l2ana.com/api/Doctor/${id}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("authToken")}`, // Retrieve the token from cookies
+        },
+      });
 
-  try {
-    const response = await fetch(`https://api.2l2ana.com/api/Doctor/${id}`, {
-      headers: {
-        Authorization: `Bearer your-token-here`,
-      },
-    });
+      if (!response.ok) {
+        throw new Error("Failed to fetch doctor data");
+      }
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch doctor data");
+      const data = await response.json();
+      setDoctorData(data);
+    } catch (err) {
+      setError(err.message);
     }
+  };
 
-    doctorData = await response.json();
-  } catch (err) {
-    error = err.message;
-  }
+  // Fetch doctor data when the component mounts
+  useState(() => {
+    fetchDoctorData();
+  }, []);
+
+  const handleDeleteDoctor = async () => {
+    try {
+      const token = Cookies.get("authToken"); // Get token from cookies
+
+      const response = await axios.delete(`https://api.2l2ana.com/api/Doctor/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        toast.success("تم حذف الدكتور");
+        setShowDeleteDialog(false);
+      }
+    } catch (error) {
+      toast.error("فشل في حذف الدكتور");
+    }
+  };
+
+  const confirmDeleteDoctor = () => {
+    setShowDeleteDialog(true);
+  };
 
   if (error) {
     return <div>{error}</div>;
+  }
+
+  if (!doctorData) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -48,6 +90,27 @@ const SingleDoctorPage = async ({ params }) => {
         <p>{doctorData.isActive ? "Active" : "Inactive"}</p>
 
         <UpdateConsultationPrice doctorId={id} />
+
+        <button
+          className="mt-5 bg-red-500 text-white py-2 px-4 rounded-md"
+          onClick={confirmDeleteDoctor}
+        >
+          حذف الدكتور
+        </button>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog  maxWidth="md" open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)}>
+          <DialogTitle>تأكيد الحذف</DialogTitle>
+          <DialogContent>
+            <p>هل تريد حذف الدكتور؟</p>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowDeleteDialog(false)}>إلغاء</Button>
+            <Button onClick={handleDeleteDoctor} color="error">
+              نعم، احذف
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

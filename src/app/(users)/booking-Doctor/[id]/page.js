@@ -2,11 +2,10 @@ import api from "@/src/utils/api";
 import Details from "@/src/components/Doctors/DoctorDetails";
 import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
 
-// Function to fetch doctor data based on ID with no-cache
 async function getDoctorData(id) {
   try {
     const response = await api.get(`/Doctor/${id}`, {
-      cache: 'no-cache',  // Ensure the request bypasses the cache
+      cache: 'no-cache', 
     });
     return response.data;
   } catch (error) {
@@ -15,17 +14,15 @@ async function getDoctorData(id) {
   }
 }
 
-// Function to pre-generate static paths
 export async function generateStaticParams() {
   try {
     const response = await api.get('/Doctor', {
-      cache: 'no-cache',  // Ensure the request bypasses the cache
+      cache: 'no-cache', 
     });
     const doctors = response.data;
 
-    // Map through doctors and return an array of params
     const paths = doctors.map((doctor) => ({
-      id: doctor.id.toString(), // Ensure this matches the structure of your route
+      id: doctor.id.toString(),
     }));
 
     return paths;
@@ -35,7 +32,6 @@ export async function generateStaticParams() {
   }
 }
 
-// Function to generate metadata for the page
 export async function generateMetadata({ params }) {
   const { id } = params;
   const doctor = await getDoctorData(id);

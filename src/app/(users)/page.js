@@ -97,7 +97,7 @@ export default async function Home() {
   const recentPosts = await fetchPosts();
 
   return (
-    <main className="flex flex-col md:-mt-3 lg:mt-0 items-center justify-center">
+    <main className="flex flex-col md:-mt-5 lg:mt-0 -mt-5  items-center justify-center">
       <HeroDoctor />
       <WhyCard />
 
