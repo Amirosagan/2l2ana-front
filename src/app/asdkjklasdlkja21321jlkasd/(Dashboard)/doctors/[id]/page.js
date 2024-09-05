@@ -6,7 +6,7 @@ import Image from "next/image";
 import axios from "axios";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie"; // Assuming you're using cookies for token storage
+import Cookies from "js-cookie"; 
 
 const SingleDoctorPage = ({ params }) => {
   const { id } = params;
@@ -18,7 +18,7 @@ const SingleDoctorPage = ({ params }) => {
     try {
       const response = await fetch(`https://api.2l2ana.com/api/Doctor/${id}`, {
         headers: {
-          Authorization: `Bearer ${Cookies.get("authToken")}`, // Retrieve the token from cookies
+          Authorization: `Bearer ${Cookies.get("authToken")}`,
         },
       });
 
@@ -33,15 +33,13 @@ const SingleDoctorPage = ({ params }) => {
     }
   };
 
-  // Fetch doctor data when the component mounts
   useState(() => {
     fetchDoctorData();
   }, []);
 
   const handleDeleteDoctor = async () => {
     try {
-      const token = Cookies.get("authToken"); // Get token from cookies
-
+      const token = Cookies.get("authToken");
       const response = await axios.delete(`https://api.2l2ana.com/api/Doctor/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,22 +75,22 @@ const SingleDoctorPage = ({ params }) => {
         width={200}
         height={200}
         unoptimized={true}
+        className="w-[400px]"
       />
-      <div>
-        <h1>{doctorData.name}</h1>
+      <div className="rtl text-xl text-gray-700 ">
+        <h1 className="text-black" >{doctorData.name}</h1>
         <p>{doctorData.description}</p>
         <p>{doctorData.headLine}</p>
-        <p>Category: {doctorData.category}</p>
+        <p>التخصص: {doctorData.category}</p>
         <p>
-          Rating: {doctorData.rating} ({doctorData.ratingCount} reviews)
+          التقييم: {doctorData.rating} ({doctorData.ratingCount} reviews)
         </p>
-        <p>Consultation Price: ${doctorData.consultationPrice}</p>
-        <p>{doctorData.isActive ? "Active" : "Inactive"}</p>
+        <p className="">{doctorData.isActive ? "Active : yes" : "Active : no"}</p>
 
         <UpdateConsultationPrice doctorId={id} />
 
         <button
-          className="mt-5 bg-red-500 text-white py-2 px-4 rounded-md"
+          className="mt-5 bg-red-500 w-full text-base text-white py-2 px-4 rounded-md"
           onClick={confirmDeleteDoctor}
         >
           حذف الدكتور

@@ -65,7 +65,7 @@ const UpdateConsultationPrice = ({ doctorId }) => {
   };
 
   return (
-    <div className="flex flex-col mt-20">
+    <div className="flex flex-col mt-20 text-base">
       <div dir="rtl">
         <label className=""> السعر قبل الخصم </label>
         <input
