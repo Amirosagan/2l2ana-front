@@ -14,7 +14,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
     category: '',
     headLine: '',
     consultationPrice: 0,
-    weekDaysAvailable: [],
+    weekDaysAvailable: [], // Array of objects containing dayId and selected timeIds
     isActive: true,
     imageUrl: '',
   });
@@ -22,78 +22,44 @@ const UpdateDoctorForm = ({ doctorId }) => {
   const [weekDaysOptions, setWeekDaysOptions] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [categories, setCategories] = useState([]);
 
-  const formatToEgyptTime = (time) => {
-    const [hour, minute] = time.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hour);
-    date.setMinutes(minute);
-    date.setSeconds(0);
-
-    return date.toLocaleTimeString('en-US', {
-      timeZone: 'Africa/Cairo',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
-  };
+  const categories = [
+    { value: 'نساء وتوليد', label: 'نساء وتوليد' },
+    { value: 'أمراض نساء', label: 'أمراض نساء' },
+    { value: 'صحة المرأة', label: 'صحة المرأة' },
+    { value: 'صحة نفسية', label: 'صحة نفسية' },
+    { value: 'طب نفسي', label: 'طب نفسي' },
+    { value: 'علاج نفسي', label: 'علاج نفسي' },
+    { value: 'استشارات نفسية', label: 'استشارات نفسية' },
+    { value: 'تأهيل نفسي', label: 'تأهيل نفسي' },
+  ];
 
   useEffect(() => {
-    const predefinedCategories = [
-      { value: 'نساء وتوليد', label: 'نساء وتوليد' },
-      { value: 'أمراض نساء', label: 'أمراض نساء' },
-      { value: 'صحة المرأة', label: 'صحة المرأة' },
-      { value: 'صحة نفسية', label: 'صحة نفسية' },
-      { value: 'طب نفسي', label: 'طب نفسي' },
-      { value: 'علاج نفسي', label: 'علاج نفسي' },
-      { value: 'استشارات نفسية', label: 'استشارات نفسية' },
-      { value: 'تأهيل نفسي', label: 'تأهيل نفسي' },
-    ];
-
-    const fetchCategoriesAndAvailabilityData = async () => {
+    const fetchAvailabilityData = async () => {
       try {
-        const response = await api.get('/Doctor/GetDoctors');
+        const response = await api.get('/Time');
 
-        // Extract unique categories from API
-        const fetchedCategories = [
-          ...new Set(
-            response.data.items
-              .map((doctor) => doctor.category)
-              .filter((category) => category.trim() !== "")
-          ),
-        ].map((category) => ({ value: category, label: category }));
-
-        // Merge predefined and fetched categories, avoiding duplicates
-        const mergedCategories = [
-          ...predefinedCategories,
-          ...fetchedCategories.filter(
-            (fetchedCategory) =>
-              !predefinedCategories.some(
-                (predefinedCategory) =>
-                  predefinedCategory.value === fetchedCategory.value
-              )
-          ),
-        ];
-
-        setCategories(mergedCategories);
-
-        // Group times by day and map to options
-        const groupedDayTimes = response.data.items.reduce((acc, doctor) => {
-          doctor.timesRanges.forEach((timeRange) => {
-            const dayId = timeRange.dayNumber;
-            const timeOption = {
-              value: timeRange.id,
-              label: formatToEgyptTime(timeRange.time),
-            };
-
-            if (!acc[dayId]) {
-              acc[dayId] = [];
-            }
-
-            acc[dayId].push(timeOption);
+        // Function to format time to Egypt's local time
+        const formatEgyptTime = (time) => {
+          const date = new Date(`1970-01-01T${time}Z`);
+          return date.toLocaleTimeString('en-US', {
+            timeZone: 'Africa/Cairo',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
           });
+        };
 
+        const groupedDayTimes = response.data.timesRanges.reduce((acc, timeRange) => {
+          const dayId = timeRange.dayNumber;
+          const formattedTime = formatEgyptTime(timeRange.time);
+          const timeOption = { value: timeRange.id, label: formattedTime };
+
+          if (!acc[dayId]) {
+            acc[dayId] = [];
+          }
+
+          acc[dayId].push(timeOption);
           return acc;
         }, {});
 
@@ -121,18 +87,11 @@ const UpdateDoctorForm = ({ doctorId }) => {
         const response = await api.get(`/Doctor/${doctorId}`);
         const doctor = response.data;
 
-        const weekDaysAvailable = doctor.timesRanges.reduce((acc, timeRange) => {
-          const day = acc.find((day) => day.dayId === timeRange.dayNumber);
-          if (day) {
-            day.timeIds.push(timeRange.id);
-          } else {
-            acc.push({
-              dayId: timeRange.dayNumber,
-              timeIds: [timeRange.id],
-            });
-          }
-          return acc;
-        }, []);
+        // Map timesRanges to the correct format for the form
+        const weekDaysAvailable = doctor.timesRanges.map((timeRange) => ({
+          dayId: timeRange.dayNumber,
+          timeIds: [timeRange.id], // Assuming each timeRange has a unique ID
+        }));
 
         setProfileData({
           description: doctor.description,
@@ -148,7 +107,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
       }
     };
 
-    fetchCategoriesAndAvailabilityData();
+    fetchAvailabilityData();
     fetchDoctorData();
   }, [doctorId]);
 
@@ -219,6 +178,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
     e.preventDefault();
     const token = Cookies.get('authToken');
 
+    // Flatten the timesIds array from weekDaysAvailable
     const timesIds = profileData.weekDaysAvailable.reduce((acc, day) => {
       return acc.concat(day.timeIds);
     }, []);
@@ -230,7 +190,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
       headLine: profileData.headLine,
       consultationPrice: profileData.consultationPrice,
       imageUrl: profileData.imageUrl,
-      timesIds: timesIds,
+      timesIds: timesIds,  // This is the flattened array of time IDs
     };
 
     try {
@@ -307,7 +267,7 @@ const UpdateDoctorForm = ({ doctorId }) => {
 
             return (
               <div key={day.value} className="mb-4">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center">
                   <input
                     type="checkbox"
                     id={`day-${day.value}`}
