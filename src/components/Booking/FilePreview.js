@@ -16,7 +16,10 @@ const FilePreview = ({ medicalFiles, onRemoveFile, onDownloadFile }) => {
 
   const handleDownload = (fileId, url) => {
     setDownloadLoading((prevState) => ({ ...prevState, [fileId]: true }));
-    onDownloadFile(fileId, url);
+
+    // Open the file in a new tab/window
+    window.open(url, "_blank");
+
     setDownloadLoading((prevState) => ({ ...prevState, [fileId]: false }));
   };
 

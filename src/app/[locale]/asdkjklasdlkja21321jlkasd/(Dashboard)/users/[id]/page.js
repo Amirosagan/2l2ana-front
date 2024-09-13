@@ -53,7 +53,7 @@ const UserSinglePage = ({ params }) => {
           Accept: "*/*",
         },
         params: {
-          UserId: userId,
+          userId: userId,
         },
       });
 
@@ -69,44 +69,44 @@ const UserSinglePage = ({ params }) => {
     }
   };
 
-  const handleDownloadFile = async (fileId, url) => {
-    try {
-      const token = Cookies.get("authToken");
-      const response = await api.get(`/MedicalFile/Download/${fileId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        responseType: "blob", // To handle the download as a file
-      });
+  const handleDownloadFile = (fileId, url) => {
+    console.log("Downloading file:", fileId, "with URL:", url);  // Debug log to verify URL
+    if (!url) {
+      console.error("URL is missing for file download");
+      return;
+    }
 
-      const blob = new Blob([response.data], { type: response.data.type });
-      const downloadUrl = window.URL.createObjectURL(blob);
+    setTimeout(() => {
       const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.setAttribute("download", fileId); // Optionally, set a custom filename
+      link.href = url;
+      link.download = "";  // Optionally set a filename
       document.body.appendChild(link);
       link.click();
-      link.remove();
-    } catch (error) {
-      console.error("Error downloading file:", error);
-    }
+      document.body.removeChild(link);
+    }, 1000);
   };
 
   const handleAddTicket = async (isBigTicket) => {
     if (user && user.id) {
       try {
         const token = Cookies.get("authToken");
-        const updatedFreeTickets = user.freeTickits + (isBigTicket ? 0 : 1);
-        const updatedBigFreeTickets = user.bigFreeTickits + (isBigTicket ? 1 : 0);
 
+        // Define the updated freeTickets based on whether it's a big or regular ticket
+        const updatedFreeTickets = isBigTicket
+          ? user.bigFreeTickits + 1 // Big ticket: freeTickets = bigFreeTickits + 1
+          : user.freeTickits + 1;   // Regular ticket: freeTickets = freeTickits + 1
+
+        // Create the payload for the API
+        const payload = {
+          userId: user.id,
+          freeTickets: updatedFreeTickets, // Send the updated freeTickets in both cases
+          isPaid: isBigTicket, // isPaid is true for big tickets, false for regular tickets
+        };
+
+        // Send the patch request with the correct payload
         await api.patch(
           `/User/UpdateFreeTickets`,
-          {
-            userId: user.id,
-            freeTickets: updatedFreeTickets,
-            bigFreeTickits: updatedBigFreeTickets,
-            isPaid: isBigTicket,
-          },
+          payload,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -117,10 +117,12 @@ const UserSinglePage = ({ params }) => {
 
         alert(isBigTicket ? "تمت إضافة 30 دقيقة بنجاح" : "تمت إضافة 10 دقائق بنجاح");
 
+        // Update the local state based on the ticket type
         setUser((prevUser) => ({
           ...prevUser,
-          freeTickits: updatedFreeTickets,
-          bigFreeTickits: updatedBigFreeTickets,
+          ...(isBigTicket
+            ? { bigFreeTickits: prevUser.bigFreeTickits + 1 } // Update bigFreeTickits only for big tickets
+            : { freeTickits: prevUser.freeTickits + 1 }) // Update freeTickits only for regular tickets
         }));
       } catch (error) {
         console.error("Error adding ticket:", error);
