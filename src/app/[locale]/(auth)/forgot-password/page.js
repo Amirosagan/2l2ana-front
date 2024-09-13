@@ -46,7 +46,7 @@ const ForgotPasswordForm = () => {
     setDialogMessage("");
     setIsSuccessMessage(false);
     if (isSuccessMessage) {
-      router.push("/login"); 
+      router.push("/ar/login"); 
     }
   };
 

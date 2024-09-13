@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import api from "@/src/utils/api";
 
 const TableBody = ({ items, onBlock, onDelete, type }) => {

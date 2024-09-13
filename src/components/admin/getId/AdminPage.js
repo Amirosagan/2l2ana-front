@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import api from "@/src/utils/api";
 import Search from "@/src/components/admin/Search";
 import Pagination from "@/src/components/admin/pagination";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import TableHeader from "@/src/components/admin/getId/TableHeader";
 import TableBody from "@/src/components/admin/getId/TableBody";
 import Cookies from "js-cookie";

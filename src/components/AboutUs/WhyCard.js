@@ -7,58 +7,60 @@ import fourthcard from "@/public/card4.svg";
 import road from "@/public/road.svg";
 import road2 from "@/public/road2.svg";
 import Image from 'next/image';
-
+import { useTranslations } from 'next-intl';
 
 function WhyCard() {
+  const t = useTranslations('WhyCard');
+
   return (
-    <div className="flex flex-col items-center w-full py-10 pb-20 bg-neutral-100">
-      <h1 className="text-2xl  md:text-3xl lg:text-4xl md:mb-20 mt-5 md:mt-10">ليه تستخدمي قلقانة ؟</h1>
+    <div dir='rtl' className="flex flex-col items-center w-full py-10 pb-20 bg-neutral-100">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl md:mb-20 mt-5 md:mt-10">
+        {t('headline')}
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:mt-16 sm:mt-0 mt-10 w-full lg:w-[80%] relative">
         
         <div className='relative'>
           <CardHome 
-            number="1" 
+            number={t('cards.0.number')} 
             icon={firstcard} 
-            title="خدمة 24 ساعة علي مدار الأسبوع" 
-            paragraph="لا داعي للانتظار في العيادات. تواصل مع أفضل الأطباء وعلى مدار الساعة." 
+            title={t('cards.0.title')} 
+            paragraph={t('cards.0.paragraph')} 
           />
         </div>
         
         <div className='relative lg:-mt-16'> 
-        <div className="absolute hidden lg:block right-[-110px] top-[100px] transform -translate-y-1/2 text-primary text-3xl">
+          <div className="absolute hidden lg:block right-[-110px] top-[100px] transform -translate-y-1/2 text-primary text-3xl">
             <Image src={road} alt='road'/>
           </div>
           <CardHome 
-            number="2" 
+            number={t('cards.1.number')} 
             icon={secondcard} 
-            title="خصوصية وأمان" 
-            paragraph="نحرص على خصوصية معلوماتك الصحية ونستخدم أحدث التقنيات لضمان أمان بياناتك." 
+            title={t('cards.1.title')} 
+            paragraph={t('cards.1.paragraph')} 
           />
-         
         </div>
         
         <div className='relative'>
-        <div className="absolute hidden lg:block right-[-110px]  transform -translate-y-1/2 text-primary text-3xl">
-        <Image src={road2} alt='road'/>
+          <div className="absolute hidden lg:block right-[-110px] transform -translate-y-1/2 text-primary text-3xl">
+            <Image src={road2} alt='road'/>
           </div>
           <CardHome 
-            number="3" 
+            number={t('cards.2.number')} 
             icon={thirdcard} 
-            title="أطباء معتمدين" 
-            paragraph="استشارات طبية مباشرة مع الأطباء من خلال الفيديو او المكالمات الصوتية." 
+            title={t('cards.2.title')} 
+            paragraph={t('cards.2.paragraph')} 
           />
-         
         </div>
         
         <div className='relative lg:-mt-16'> 
-        <div className="absolute hidden lg:block right-[-110px] top-[100px] transform -translate-y-1/2 text-primary text-3xl">
-        <Image src={road} alt='road'/>
+          <div className="absolute hidden lg:block right-[-110px] top-[100px] transform -translate-y-1/2 text-primary text-3xl">
+            <Image src={road} alt='road'/>
           </div>
           <CardHome 
-            number="4" 
+            number={t('cards.3.number')} 
             icon={fourthcard} 
-            title="تكلفة مناسبة" 
-            paragraph="خدمات رعاية صحية بباقات مختلفة تناسب احتياجاتك." 
+            title={t('cards.3.title')} 
+            paragraph={t('cards.3.paragraph')} 
           />
         </div>
       </div>

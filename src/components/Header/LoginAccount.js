@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation';
 import Avatar from './Avatar';
 import MenuItem from './MenuItem';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/src/i18n/routing';
 import profileImg from '@/public/profile-imgr.png';
 import { MenuIcon, XIcon, ChevronDownIcon, ChevronUpIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, InfoIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl'; // Import useTranslations for i18n
 
 const LoginAccount = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,7 @@ const LoginAccount = () => {
   const [user, setUser] = useState(null);
   const [submenuOpen, setSubmenuOpen] = useState('');
   const router = useRouter();
+  const t = useTranslations('LoginAccount'); // Use useTranslations hook
 
   useEffect(() => {
     const verifySession = async () => {
@@ -55,7 +57,7 @@ const LoginAccount = () => {
       logout();
       setIsLoggedIn(false);
       setUser(null);
-      router.push('/login');
+      router.push('/ar/login');
       setIsOpen(false);
     } catch (error) {
       console.error('Error logging out:', error);
@@ -95,34 +97,61 @@ const LoginAccount = () => {
                 <XIcon className="h-5 w-5" />
               </div>
             </div>
-            <MenuItem onClick={() => handleNavigation('/')} label="الرئيسية" />
-            {isLoggedIn && <MenuItem onClick={() => handleNavigation('/my-profile')} label="ملفي الشخصي" />}
-            {isLoggedIn && <MenuItem onClick={() => handleNavigation('/my-bookings')} label="حجوزاتي " />}
+            <Link href="/"> 
+            <MenuItem label={t('home')} />
+                </Link>
+
+            {isLoggedIn && <Link href="/my-profile"> <MenuItem  label={t('myProfile')}  /> </Link>}
+            {isLoggedIn && <Link href="/my-bookings"> <MenuItem  label={t('myBookings')} /> </Link>}
             <div onClick={() => toggleSubmenu('content')} className="cursor-pointer flex justify-between items-center">
-              <MenuItem label="المحتوي الطبي" />
+              <MenuItem label={t('medicalContent')} />
               {submenuOpen === 'content' ? <ChevronUpIcon className="text-primary" /> : <ChevronDownIcon className="text-primary" />}
             </div>
             {submenuOpen === 'content' && (
               <div className="ml-4 transition-all text-gray-800 duration-300 ease-in-out">
-                <MenuItem onClick={() => handleNavigation('/blogs')} label="مقالات طبية" icon={<FileTextIcon className="text-primary" />} />
-                <MenuItem onClick={() => handleNavigation('/videos')} label="فيديوهات طبية" icon={<VideoIcon className="text-primary" />} />
-                <MenuItem onClick={() => handleNavigation('/podcasts')} label=" بودكاست قلقانة" icon={<VideoIcon className="text-primary" />} />
-                <MenuItem onClick={() => handleNavigation('/medical-questions')} label="اسئلة طبية" icon={<HelpCircleIcon className="text-primary" />} />
-                <MenuItem onClick={() => handleNavigation('/ask-Doctor')} label="ابعتيلنا سؤالك" icon={<SendIcon className="text-primary" />} />
+                <Link href="/blogs"> 
+                <MenuItem  label={t('blogs')} icon={<FileTextIcon className="text-primary" />} />
+                </Link>
+                <Link href="/videos"> 
+                <MenuItem label={t('videos')} icon={<VideoIcon className="text-primary" />} />
+
+                </Link>
+                <Link href="/podcasts"> 
+                <MenuItem  label={t('podcasts')} icon={<VideoIcon className="text-primary" />} />
+
+                </Link>
+                <Link href="/medical-questions"> 
+                <MenuItem  label={t('medicalQuestions')} icon={<HelpCircleIcon className="text-primary" />} />
+
+                </Link>
+                <Link href="/ask-Doctor"> 
+                <MenuItem label={t('askDoctor')} icon={<SendIcon className="text-primary" />} />
+
+                </Link>
               </div>
             )}
-            <MenuItem onClick={() => handleNavigation('/booking-Doctor')} label="احجزي دكتور" />
-            <MenuItem onClick={() => handleNavigation('/aboutUs')} label="من نحن" />
+
+<Link href="/booking-Doctor"> 
+<MenuItem onClick={() => handleNavigation('/booking-Doctor')} label={t('bookDoctor')} />
+                </Link>
+            
+                <Link href="/aboutUs"> 
+                <MenuItem label={t('aboutUs')} />
+                </Link>
             {isLoggedIn ? (
-              <MenuItem onClick={handleLogout} label="تسجيل الخروج" />
+              <MenuItem onClick={handleLogout} label={t('logout')} />
             ) : (
               <>
-                <MenuItem onClick={() => handleNavigation('/login')} label="تسجيل الدخول" />
-                <MenuItem onClick={() => handleNavigation('/register')} label="إنشاء حساب" />
+                <Link href="/login"> 
+                <MenuItem label={t('login')} />
+                </Link>
+                <Link href="/login"> 
+                <MenuItem label={t('register')} />
+                </Link>
               </>
             )}
             <div className="mt-auto flex flex-col items-center mb-8">
-              <Link href={"/"} className='flex justify-center mb-4'>
+              <Link href="/" className='flex justify-center mb-4'>
                 <div className='w-32'>
                   <Image alt='logo' src={profileImg} className='h-auto' />
                 </div>
@@ -134,14 +163,23 @@ const LoginAccount = () => {
       <div className={`hidden lg:flex flex-col cursor-pointer absolute rounded-xl shadow-md w-[40vw] md:w-[200%] bg-white overflow-hidden right-0 top-16 text-sm transition-transform duration-300 transform ${isOpen ? 'scale-100' : 'scale-0'}`}>
         {isLoggedIn ? (
           <>
-            <MenuItem onClick={() => handleNavigation('/my-profile')} label="ملفي الشخصي" />
-            <MenuItem onClick={() => handleNavigation('/my-bookings')} label="حجوزاتي " />
-            <MenuItem onClick={handleLogout} label="تسجيل الخروج" />
+          <Link href="/my-profile">    
+                  <MenuItem label={t('myProfile')} />
+          </Link>
+          <Link href="/my-bookings">    
+          <MenuItem label={t('myBookings')} />
+          </Link>
+            
+          <MenuItem onClick={handleLogout} label={t('logout')} />
           </>
         ) : (
           <>
-            <MenuItem onClick={() => handleNavigation('/login')} label="تسجيل الدخول" />
-            <MenuItem onClick={() => handleNavigation('/register')} label="إنشاء حساب" />
+          <Link href="/login">         
+             <MenuItem label={t('login')} />
+          </Link>
+          <Link href="/register">         
+          <MenuItem label={t('register')} />
+          </Link>
           </>
         )}
       </div>

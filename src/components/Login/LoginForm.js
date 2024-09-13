@@ -7,10 +7,11 @@ import { useRouter } from "next/navigation";
 import { login, checkSession } from "@/src/utils/auth";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react"; // Import the icons
+import { Link } from '@/src/i18n/routing';
+import { Eye, EyeOff } from "lucide-react";
 import FormFieldComponent from "../ELements/FormField";
 import ErrorMessageComponent from "../ELements/ErrorMessage";
+import { useTranslations } from "next-intl";
 
 const Spinner = () => (
   <div className="spinner">
@@ -46,6 +47,7 @@ const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false); 
   const router = useRouter();
+  const t = useTranslations("LoginForm"); // useTranslations for component-specific translations
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -74,12 +76,12 @@ const LoginForm = () => {
 
       const session = await checkSession();
       if (session?.session?.role === 'Admin') {
-        router.push('/asdkjklasdlkja21321jlkasd/users');
+        router.push('/ar/asdkjklasdlkja21321jlkasd/users');
       } else {
         router.push('/');
       }
     } catch (error) {
-      setErrorMessage("بريد إلكتروني أو كلمة مرور غير صالحة. حاول مرة اخرى.");
+      setErrorMessage(t("invalidLogin"));
     } finally {
       setIsSubmitting(false);
     }
@@ -97,14 +99,14 @@ const LoginForm = () => {
             <FormFieldComponent 
               form={form} 
               name="email" 
-              label="البريد الالكتروني" 
+              label={t("emailLabel")} // Translated label
               type="email" 
             />
             <div className="relative">
               <FormFieldComponent 
                 form={form} 
                 name="password" 
-                label="كلمة السر" 
+                label={t("passwordLabel")} // Translated label
                 type={showPassword ? "text" : "password"} 
               />
               <div
@@ -115,14 +117,14 @@ const LoginForm = () => {
               </div>
             </div>
             <div className="flex items-center justify-end -mt-3">
-              <Link href="/forgot-password" className="text-accent text-sm tajawal-bold cursor-pointer">نسيت كلمة السر؟</Link>
+              <Link href="/forgot-password" className="text-accent text-sm tajawal-bold cursor-pointer">{t("forgotPassword")}</Link> {/* Translated text */}
             </div>
             <ErrorMessageComponent errorMessage={errorMessage} />
             <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white tajawal-bold" disabled={isSubmitting}>
-              {isSubmitting ? <Spinner /> : "تسجيل الدخول"}
+              {isSubmitting ? <Spinner /> : t("login")} {/* Translated button text */}
             </Button>
             <div>
-              <h1 className="text-sm tajawal-regular">ليس لديك حساب؟ <Link className="text-accent" href="/register">سجل الأن</Link></h1>
+              <h1 className="text-sm tajawal-regular">{t("noAccount")} <Link className="text-accent" href="/register">{t("registerNow")}</Link></h1> {/* Translated text */}
             </div>
           </form>
         </Form>

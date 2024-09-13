@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout();
-    router.push("/login");
+    router.push("/ar/login");
   };
 
   const menuItems = [

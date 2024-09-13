@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import Tag from "@/src/components/ELements/Tag";
 import YouTubePlayer from "./YouTubePlayer";
 import { formatDate } from "@/src/utils/formatDate"; 

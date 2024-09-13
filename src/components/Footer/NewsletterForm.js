@@ -15,13 +15,13 @@ const NewsletterForm = () => {
   return (
     <form 
       onSubmit={handleSubmit(onSubmit)}
-      className="my-6 w-fit sm:min-w-[384px] flex items-stretch bg-light p-1 sm:p-2 rounded mx04"
+      className="my-6 w-fit sm:min-w-[384px] flex items-stretch bg-light p-1 sm:p-2 rounded"
     >
       <input
         type="email"
         placeholder="Enter your email"
         {...register("email", { required: true, maxLength: 80 })}
-        className="w-full bg-transparent pl-2 sm:pl-0 text-dark focus:border-dark focus:ring-0 border-0 border-b mr-2 pb-1"
+        className="w-full bg-transparent px-2 sm:pl-0 text-dark focus:border-dark focus:ring-0 border-0 border-b mx-2 pb-1"
       />
       <input
         type="submit"

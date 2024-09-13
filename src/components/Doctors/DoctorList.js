@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
+import { useTranslations } from 'next-intl';  
 import Rating from "../ELements/Rating";
 
 const roundRating = (rating) => {
@@ -16,9 +19,11 @@ const roundRating = (rating) => {
   return 5;
 };
 
-const DoctorList = ({ doctorList = [] }) => {  
+const DoctorList = ({ doctorList = [] }) => {
+  const t = useTranslations('DoctorList');  // Use the translation hook
+
   if (doctorList.length === 0) {
-    return <p>No doctors found matching your criteria.</p>;
+    return <p>{t('noDoctorsFound')}</p>;  // Translated text
   }
 
   return (
@@ -35,9 +40,9 @@ const DoctorList = ({ doctorList = [] }) => {
                 alt={`${doctor.firstName} ${doctor.lastName}`}
                 unoptimized={true}
               />
-              <div className="mt-3 flex-grow flex flex-col items-start gap-2">
+              <div dir="rtl" className="mt-3 flex-grow flex flex-col items-start gap-2">
                 <h2 className="text-[12px] p-1 tajawal-bold rounded-full px-5 py-2 text-primary bg-[rgb(218,231,239)]">
-                  {doctor.category || "تخصص عام"}
+                  {doctor.category || t('generalSpecialty')}  {/* Translated specialty */}
                 </h2>
                 <h2 className="tajawal-bold text-lg lg:-mb-1">
                   {doctor.firstName} {doctor.lastName}
@@ -45,20 +50,21 @@ const DoctorList = ({ doctorList = [] }) => {
                 <h3 className="text-sm text-gray-600">{doctor.headLine}</h3>
               </div>
               <div className="flex flex-col mt-1">
-                <div className="flex flex-col items-start gap-2 justify-between">
-                  <Rating rating={roundRating(doctor.rating)} />
+                <div  className="flex flex-col items-start gap-2 justify-between">
+                  <div >                   <Rating rating={roundRating(doctor.rating)} />
+                  </div>
                   <div className="text-gray tajawal-regular text-sm md:text-base flex">
                     <h2 className="flex md:text-sm xl:text-[15px]">
-                      الكشف:{" "}
+                      {t('consultationPrice')}:{" "}
                       <span className="text-red-600 mx-2 line-through">
                         {doctor.consultationPriceBeforeDiscount}
                       </span>{" "}
-                      {doctor.consultationPriceAfterDiscount} ج
+                      {doctor.consultationPriceAfterDiscount} {t('currency')}
                     </h2>
                   </div>
                 </div>
                 <h2 className="p-2 px-3 transition-all duration-300 border-[1px] tajawal-bold text-base hover:text-white w-full hover:bg-primary cursor-pointer mt-2 text-[11px] text-center rounded-full text-primary border-primary">
-                  احجزي الأن
+                  {t('bookNow')}
                 </h2>
               </div>
             </div>

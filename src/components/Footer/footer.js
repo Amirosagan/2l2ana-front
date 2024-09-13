@@ -1,9 +1,11 @@
 import { FaFacebookF, FaInstagram, FaYoutube, FaTiktok, FaSnapchatGhost, FaTwitter } from 'react-icons/fa';
-import Link from "next/link";
-import profileImg from '@/public/profile-imgr.svg';
+import { Link } from '@/src/i18n/routing';
 import Image from "next/image";
+import { useTranslations } from 'next-intl';
+import profileImg from '@/public/profile-imgr.svg';
 
 const Footer = () => {
+    const t = useTranslations('Footer'); 
     const currentYear = new Date().getFullYear();
 
     return (
@@ -11,18 +13,18 @@ const Footer = () => {
             <div className="flex justify-between lg:gap-16 items-center flex-col md:flex-row w-full md:w-[90%] lg:w-[75%] m-auto">
                 <div className="flex flex-col md:flex-row gap-12 lg:gap-24 justify-around">
                     <div>
-                        <h1 className="tajawal-bold text-xl md:text-lg">احجزي اشطر دكتور</h1>
+                        <h1 className="tajawal-bold text-xl md:text-lg">{t('bookDoctor')}</h1>
                         <div>
                             <div className="flex tajawal-medium gap-2 pt-4 flex-col md:text-base text-sm">
-                                <Link href="booking-Doctor" className="hover:text-accent transition-all duration-200">دكتور نسا وتوليد</Link>
-                                <Link href="booking-Doctor" className="hover:text-accent transition-all duration-200">اخصائي علم نفس</Link>
-                                <Link href="booking-Doctor" className="hover:text-accent transition-all duration-200">دكتور ادمان وامراض نفسية</Link>
-                                <Link href="booking-Doctor" className="hover:text-accent transition-all duration-200">المزيد من التخصصات</Link>
+                                <Link href="/booking-Doctor" className="hover:text-accent transition-all duration-200">{t('specialist1')}</Link>
+                                <Link href="/booking-Doctor" className="hover:text-accent transition-all duration-200">{t('specialist2')}</Link>
+                                <Link href="/booking-Doctor" className="hover:text-accent transition-all duration-200">{t('specialist3')}</Link>
+                                <Link href="/booking-Doctor" className="hover:text-accent transition-all duration-200">{t('moreSpecialists')}</Link>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h1 className="tajawal-bold text-xl md:text-lg ">تابعينا</h1>
+                        <h1 className="tajawal-bold text-xl md:text-lg ">{t('followUs')}</h1>
                         <div>
                             <div className="grid grid-cols-3 gap-2 pt-4 transition-all duration-200">
                                 <Link href="https://www.facebook.com/profile.php?id=61564115679821&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
@@ -47,31 +49,31 @@ const Footer = () => {
                         </div>
                     </div>
                     <div>
-                        <h1 className="tajawal-bold text-xl md:text-lg">خدماتنا</h1>
+                        <h1 className="tajawal-bold text-xl md:text-lg">{t('ourServices')}</h1>
                         <div>
-                            <div className="flex tajawal-medium gap-2 pt-4  flex-col text-sm md:text-base">
-                                <Link href="/blogs" className="hover:text-accent transition-all duration-200">مقالات طبية</Link>
-                                <Link href="/videos" className="hover:text-accent transition-all duration-200">فيديوهات طبية</Link>
-                                <Link href="/podcasts" className="hover:text-accent transition-all duration-200">بودكاست قلقانة</Link>
-                                <Link href="/medical-questions" className="hover:text-accent transition-all duration-200">اسئلة طبية</Link>
-                                <Link href="/ask-Doctor" className="hover:text-accent transition-all duration-200">اسألينا؟</Link>
+                            <div className="flex tajawal-medium gap-2 pt-4 flex-col text-sm md:text-base">
+                                <Link href="/blogs" className="hover:text-accent transition-all duration-200">{t('medicalArticles')}</Link>
+                                <Link href="/videos" className="hover:text-accent transition-all duration-200">{t('medicalVideos')}</Link>
+                                <Link href="/podcasts" className="hover:text-accent transition-all duration-200">{t('podcast')}</Link>
+                                <Link href="/medical-questions" className="hover:text-accent transition-all duration-200">{t('medicalQuestions')}</Link>
+                                <Link href="/ask-Doctor" className="hover:text-accent transition-all duration-200">{t('askUs')}</Link>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h1 className="tajawal-bold md:text-xl text-lg"> اعرفي عننا</h1>
+                        <h1 className="tajawal-bold md:text-xl text-lg">{t('aboutUs')}</h1>
                         <div>
                             <div className="flex tajawal-medium gap-2 pt-4 flex-col text-sm md:text-base">
-                                <Link href="/aboutUs" className="hover:text-accent transition-all duration-200"> من نحن </Link>
-                                <Link href="/termsofuse" className="hover:text-accent transition-all duration-200"> سياسة الاستخدام </Link>
-                                <div className="hover:text-accent transition-all duration-200">تواصلي معنا عبر : </div>
+                                <Link href="/aboutUs" className="hover:text-accent transition-all duration-200">{t('whoWeAre')}</Link>
+                                <Link href="/termsofuse" className="hover:text-accent transition-all duration-200">{t('termsOfUse')}</Link>
+                                <div className="hover:text-accent transition-all duration-200">{t('contactUs')}</div>
 
                                 <div>
                                     <a 
                                         href="mailto:customer.care@2l2ana.com" 
                                         className="text-accent transition-all duration-200 block"
                                     >
-                                         البريد الإلكتروني
+                                         {t('email')}
                                     </a>
                                     <a 
                                         href="https://wa.me/201210684419" 
@@ -79,7 +81,7 @@ const Footer = () => {
                                         rel="noopener noreferrer" 
                                         className="text-accent mt-2 transition-all duration-200 block"
                                     >
-                                         الواتساب
+                                         {t('whatsapp')}
                                     </a>
                                 </div>
                                 <Image className=" md:w-[130px] hidden lg:hidden md:block mt-2" alt="Doctor" src={profileImg} />
@@ -90,7 +92,7 @@ const Footer = () => {
                 <Image className="lg:w-[200px] md:hidden mt-10 lg:mt-0 lg:block w-[130px] pb-5" alt="Doctor" src={profileImg} />
             </div>
             <div className="w-full mt-8 relative font-medium pb-8 px-8 flex flex-col md:flex-row items-center justify-center">
-                <span className="text-center text-sm md:text-base">
+            <span className="text-center text-sm md:text-base">
                     &copy;{currentYear} 2l2ana. All rights reserved.
                 </span>
             </div>

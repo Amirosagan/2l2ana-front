@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Calendar, ClipboardPlus, Clock } from "lucide-react";
 import ConsultationActions from "./ConsultationActions";
 import ConsultationFiles from "./ConsultationFiles";
@@ -43,7 +42,7 @@ const ConsultationCard = ({
   });
 
   return (
-    <div className="gap-4 border p-5 m-3 bg-neutral-100 hover:bg-neutral-200 transition-all duration-200 rounded-lg flex-col md:flex-row items-center flex">
+    <div dir="rtl" className="gap-4 border p-5 m-3 bg-neutral-100 hover:bg-neutral-200 transition-all duration-200 rounded-lg flex-col md:flex-row items-center flex">
       <div className="flex flex-col gap-2 w-full">
         <h2 className="tajawal-bold flex items-center justify-between text-[18px]">
           {displayName}

@@ -4,20 +4,21 @@ import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { Button, TextField, InputAdornment } from "@mui/material";
 import api from "@/src/utils/api";
+import { useTranslations } from "next-intl"; 
 
 const SearchDoctorBar = ({ onSearch, category, searchTerm, onCategoryChange, onSearchTermChange }) => {
+  const t = useTranslations('SearchDoctorBar'); 
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(category || "جميع التخصصات");
+  const [selectedCategory, setSelectedCategory] = useState(category || t("allSpecialties"));
   const [currentSearchTerm, setCurrentSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await api.get('/Doctor/GetDoctors');
-        // Filter only available doctors and get unique categories
         const uniqueCategories = [...new Set(
           response.data.items
-            .filter(doctor => doctor.isAvailable)  // Only consider available doctors
+            .filter(doctor => doctor.isAvailable)
             .map(doctor => doctor.category)
             .filter(category => category.trim() !== "")
         )];
@@ -31,7 +32,7 @@ const SearchDoctorBar = ({ onSearch, category, searchTerm, onCategoryChange, onS
   }, []);
 
   const handleCategoryClick = (category) => {
-    const newCategory = category === "جميع التخصصات" ? "" : category;
+    const newCategory = category === t("allSpecialties") ? "" : category;
     setSelectedCategory(newCategory);
     onCategoryChange(newCategory); // Pass the updated category to the parent component
   };
@@ -48,18 +49,18 @@ const SearchDoctorBar = ({ onSearch, category, searchTerm, onCategoryChange, onS
   };
 
   return (
-    <div className="mb-5 items-center flex flex-col gap-2 -mt-10 sm:mt-0 md:mt-10">
+    <div dir="rtl" className="mb-5 items-center flex flex-col gap-2 -mt-10 sm:mt-0 md:mt-10">
       <h2 className="tajawal-extrabold mb-2 text-center md:text-5xl tracking-wide text-4xl">
-        ابحثي عن <span className="text-primary"> دكتورك </span> المفضل
+        {t("searchFavoriteDoctor")} <span className="text-primary"> {t("yourDoctor")} </span>
       </h2>
       <p className="text-gray-500 text-lg text-center mb-3">
-        أكثر من 100 طبيب متخصص في جميع التخصصات، متاحون لتقديم الاستشارات عبر الفيديو أو المكالمات الهاتفية. احصلي على الرعاية الطبية المتميزة من راحة منزلك
+        {t("doctorDescription")}
       </p>
       <div className="flex w-full max-w-md items-center mx-10 space-x-2 gap-3">
         <TextField
           fullWidth
           style={{ marginRight: "15px" }}
-          placeholder="بحث"
+          placeholder={t("searchPlaceholder")}
           variant="outlined"
           value={currentSearchTerm}
           onChange={handleSearchTermChange}
@@ -104,15 +105,15 @@ const SearchDoctorBar = ({ onSearch, category, searchTerm, onCategoryChange, onS
             fontFamily: "Tajawal"
           }}
         >
-          بحث
+          {t("searchButton")}
         </Button>
       </div>
       <div className="flex gap-2 mt-4 sm:mx-4 items-center justify-center md:mx-10 lg:mx-16 flex-wrap">
         <h1
           className={`rounded-xl text-primary px-3 py-2 cursor-pointer ${selectedCategory === "" ? 'bg-primary text-white' : 'hover:bg-primary hover:text-white  border border-neutral-400'}`}
-          onClick={() => handleCategoryClick("جميع التخصصات")}
+          onClick={() => handleCategoryClick(t("allSpecialties"))}
         >
-          جميع التخصصات
+          {t("allSpecialties")}
         </h1>
         {categories.map((category, index) => (
           <h1

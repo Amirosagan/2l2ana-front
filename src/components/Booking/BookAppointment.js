@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import {
     Dialog,
@@ -12,21 +12,12 @@ import {
     InputLabel,
 } from "@mui/material";
 import { CalendarDays, Clock } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/src/i18n/routing';
 import { checkSession } from "@/src/utils/auth";
 import api from "@/src/utils/api";
+import { useTranslations } from 'next-intl';
 
-const daysOfWeek = [
-    { value: 0, label: "الأحد", englishName: "Sunday" },
-    { value: 1, label: "الاثنين", englishName: "Monday" },
-    { value: 2, label: "الثلاثاء", englishName: "Tuesday" },
-    { value: 3, label: "الأربعاء", englishName: "Wednesday" },
-    { value: 4, label: "الخميس", englishName: "Thursday" },
-    { value: 5, label: "الجمعة", englishName: "Friday" },
-    { value: 6, label: "السبت", englishName: "Saturday" },
-];
-
-const getNextWeekDays = () => {
+const getNextWeekDays = (daysOfWeek) => {
     const today = new Date();
     const currentDayIndex = today.getDay();
     const orderedDaysOfWeek = [
@@ -45,7 +36,6 @@ const formatDateTime = (date) => {
     return date.toISOString().split('.')[0];
 };
 
-// New function to format time to Egypt's local time
 const formatEgyptTime = (date) => {
     return date.toLocaleTimeString("en-US", {
         timeZone: "Africa/Cairo",
@@ -56,6 +46,17 @@ const formatEgyptTime = (date) => {
 };
 
 export default function BookAppointment({ doctorId }) {
+    const t = useTranslations(); // Fetch translations
+    const daysOfWeek = [
+        { value: 0, label: t('daysOfWeek.sunday') },
+        { value: 1, label: t('daysOfWeek.monday') },
+        { value: 2, label: t('daysOfWeek.tuesday') },
+        { value: 3, label: t('daysOfWeek.wednesday') },
+        { value: 4, label: t('daysOfWeek.thursday') },
+        { value: 5, label: t('daysOfWeek.friday') },
+        { value: 6, label: t('daysOfWeek.saturday') },
+    ];
+
     const [open, setOpen] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null);
     const [timeSlot, setTimeSlot] = useState([]);
@@ -69,15 +70,16 @@ export default function BookAppointment({ doctorId }) {
     const [bookingTrigger, setBookingTrigger] = useState(0);
     const [session, setSession] = useState(null);
     const [freeTickets, setFreeTickets] = useState(0);
+    const [bigFreeTickets, setBigFreeTickets] = useState(0);
 
-    const nextWeekDays = getNextWeekDays();
+    const nextWeekDays = getNextWeekDays(daysOfWeek);
 
     useEffect(() => {
         async function initializeSession() {
             const sessionData = await checkSession();
             if (sessionData) {
                 setSession(sessionData.session);
-                fetchFreeConsultationTickets(); 
+                fetchFreeConsultationTickets();
             }
         }
 
@@ -108,7 +110,7 @@ export default function BookAppointment({ doctorId }) {
             });
             const doctorData = response.data;
 
-            const validDays = daysOfWeek.filter(day => 
+            const validDays = daysOfWeek.filter(day =>
                 doctorData.timesRanges.some(timeRange => timeRange.dayNumber === day.value)
             );
 
@@ -120,13 +122,12 @@ export default function BookAppointment({ doctorId }) {
             setTimeSlot(timeList);
             setAvailableDays(validDays);
 
-            // Automatically select the first available day and time slot
             const firstAvailableDay = nextWeekDays.find(day => {
                 if (!validDays.some(validDay => validDay.value === day.value)) {
                     return false;
                 }
                 const date = day.date;
-                const hasAvailableTime = timeList.some(time => 
+                const hasAvailableTime = timeList.some(time =>
                     time.dayNumber === day.value && !isPastTime(date, time.time) && !isTimeUnavailable(date, time.time)
                 );
                 return hasAvailableTime;
@@ -179,7 +180,9 @@ export default function BookAppointment({ doctorId }) {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            setFreeTickets(response.data.freeTickets);
+            const { freeTickets, bigFreeTickets } = response.data;
+            setFreeTickets(freeTickets);
+            setBigFreeTickets(bigFreeTickets);
         } catch (error) {
             console.error('Error fetching free consultation tickets:', error);
         }
@@ -204,29 +207,12 @@ export default function BookAppointment({ doctorId }) {
         dateTimeWithTime.setMinutes(parseInt(minutes, 10));
         dateTimeWithTime.setSeconds(parseInt(seconds, 10));
         const formattedDateTimeWithTime = formatDateTime(dateTimeWithTime);
-        return notAvailableTimes.some(unavailableDate => 
+        return notAvailableTimes.some(unavailableDate =>
             formatDateTime(new Date(unavailableDate)) === formattedDateTimeWithTime
         );
     };
 
-    const formatTime = (time) => {
-        const [hours, minutes] = time.split(':');
-        let period = 'AM';
-        let formattedHours = parseInt(hours, 10);
-
-        if (formattedHours >= 12) {
-            period = 'PM';
-            if (formattedHours > 12) {
-                formattedHours -= 12;
-            }
-        } else if (formattedHours === 0) {
-            formattedHours = 12;
-        }
-
-        return `${formattedHours}:${minutes} ${period}`;
-    };
-
-    const handleBooking = async (isFree) => {
+    const handleBooking = async (isFree, isBigFree = false) => {
         const sessionData = await checkSession();
         if (!sessionData || !sessionData.session) {
             return;
@@ -248,16 +234,16 @@ export default function BookAppointment({ doctorId }) {
             const response = await api.post("/Consultation", {
                 doctorId: doctorId,
                 dateTime: formattedDateTime,
-                isFree,
+                isFree: isFree || isBigFree,
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
             if (response.status === 200) {
-                setIsFreeConsultation(isFree);
-                setStep(3); 
+                setIsFreeConsultation(isFree || isBigFree);
+                setStep(3);
 
-                if (isFree) {
+                if (isFree || isBigFree) {
                     const { consultation } = response.data;
                     setBookingSuccess(true);
                     setMeetingUrl(consultation.meetingUrl);
@@ -286,10 +272,10 @@ export default function BookAppointment({ doctorId }) {
                 }}
                 className='tajawal-bold bg-accent py-3 px-10 text-white rounded-md hover:bg-accent/90'
             >
-                احجزي معاد
+                {t('BookAppointment.book')}
             </button>
             <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md" fullWidth>
-                <DialogTitle>احجزي ميعاد</DialogTitle>
+                <DialogTitle>{t('BookAppointment.book')}</DialogTitle>
                 <DialogContent 
                     style={{ 
                         minHeight: '400px', 
@@ -303,10 +289,10 @@ export default function BookAppointment({ doctorId }) {
                                     <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-5">
                                         <div className="flex flex-col gap-3 items-baseline">
                                             <h2 className="flex gap-2 items-center">
-                                                <CalendarDays /> اختاري اليوم
+                                                <CalendarDays /> {t('BookAppointment.selectDay')}
                                             </h2>
                                             <FormControl fullWidth>
-                                                <InputLabel id="day-select-label">اختاري اليوم</InputLabel>
+                                                <InputLabel id="day-select-label">{t('BookAppointment.selectDay')}</InputLabel>
                                                 <Select
                                                     labelId="day-select-label"
                                                     value={selectedDay !== null ? selectedDay : ''}
@@ -328,7 +314,7 @@ export default function BookAppointment({ doctorId }) {
                                         </div>
                                         <div>
                                             <h2 className="flex gap-2 items-center mb-3">
-                                                <Clock /> اختاري الوقت بتوقيت مصر  
+                                                <Clock /> {t('BookAppointment.selectTime')}
                                             </h2>
                                             <div className="grid grid-cols-3 gap-2">
                                                 {timeSlot
@@ -356,20 +342,20 @@ export default function BookAppointment({ doctorId }) {
                                     </div>
                                 ) : (
                                     <div className="mt-32 text-2xl tajawal-bold text-center">
-                                        <h1>كل المواعيد محجوزة ، تحبي تشوفي دكتور تاني؟</h1>
+                                        <h1>{t('BookAppointment.fullyBooked')}</h1>
                                         <Link className='flex items-center justify-center' href="/booking-Doctor">
                                             <button className='bg-primary hover:bg-primary/80 px-4 py-3 ml-5 text-xl rounded-md mt-5 text-white'>
-                                                اكتشفي الدكاترة
+                                                {t('BookAppointment.findAnotherDoctor')}
                                             </button>
                                         </Link>
                                     </div>
                                 )
                             ) : (
                                 <div className="mt-32 text-2xl tajawal-bold text-center">
-                                    <h1>يجب تسجيل الدخول للمتابعة</h1>
+                                    <h1>{t('BookAppointment.loginRequired')}</h1>
                                     <Link className='flex items-center justify-center' href="/login">
                                         <button className='bg-primary hover:bg-primary/80 px-4 py-3 ml-5 text-xl rounded-md mt-5 text-white'>
-                                            تسجيل الدخول
+                                            {t('BookAppointment.login')}
                                         </button>
                                     </Link>
                                 </div>
@@ -379,29 +365,47 @@ export default function BookAppointment({ doctorId }) {
 
                     {step === 2 && (
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                            <h2 className="mb-4 tajawal-medium text-accent">خطوة واحدة ونكمل الحجز</h2>
-                            <p><strong>اليوم المختار:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.label}</p>
-                            <p><strong>التاريخ المختار:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.date.toLocaleDateString()}</p>
-                            <p className='mb-10'><strong >الوقت المختار بتوقيت مصر:</strong> {formatEgyptTime(new Date(`${nextWeekDays.find(day => day.value === selectedDay)?.date.toDateString()} ${selectedTimeSlot}`))}</p>
+                            <h2 className="mb-4 tajawal-medium text-accent">{t('BookAppointment.oneStepLeft')}</h2>
+                            <p><strong>{t('BookAppointment.selectedDay')}:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.label}</p>
+                            <p><strong>{t('BookAppointment.selectedDate')}:</strong> {nextWeekDays.find(day => day.value === selectedDay)?.date.toLocaleDateString()}</p>
+                            <p className='mb-10'><strong>{t('BookAppointment.selectedTime')}:</strong> {formatEgyptTime(new Date(`${nextWeekDays.find(day => day.value === selectedDay)?.date.toDateString()} ${selectedTimeSlot}`))}</p>
                             <div className='flex gap-4 flex-col items-center'>
+                            {bigFreeTickets === 0 && (
+                                <>
                                 <Button
                                     variant="contained"
                                     color="primary"
                                     onClick={() => handleBooking(false)}
                                     className="bg-accent text-white p-4"
                                 >
-                                    30 دقيقة "اذهبي الي منصة الدفع"
+                                    {t('BookAppointment.goToPayment')}
                                 </Button>
+                                <h1> {t('or')} </h1>
+                                </>
+                            )}                 
+
+                                {bigFreeTickets > 0 && (
+                                    <>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => handleBooking(true, true)} 
+                                            className=" bg-accent px-10 p-4 text-white"
+                                        >
+                                            {t('BookAppointment.free30Min')}
+                                        </Button>
+                                        <h1> {t('or')} </h1>
+                                    </>
+                                )}
                                 {freeTickets > 0 && (
                                     <>
-                                        <h1> أو </h1>
                                         <Button
                                             variant="contained"
                                             color="primary"
                                             onClick={() => handleBooking(true)}
-                                            className="mb-2 bg-accent text-white"
+                                            className="mb-2 bg-accent  text-white"
                                         >
-                                            10 دقائق مجاني
+                                            {t('BookAppointment.free10Min')}
                                         </Button>
                                     </>
                                 )}
@@ -413,19 +417,19 @@ export default function BookAppointment({ doctorId }) {
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                             {isFreeConsultation ? (
                                 <>
-                                    <h2 className="mb-4 tajawal-medium text-green-600">مبروك ، تم الحجز بنجاح !</h2>
+                                    <h2 className="mb-4 tajawal-medium text-green-600">{t('BookAppointment.success')}</h2>
                                     <Link href="/my-bookings">
                                         <Button variant="contained" color="primary" className="bg-accent text-white">
-                                            حجوزاتي
+                                            {t('BookAppointment.myBookings')}
                                         </Button>
                                     </Link>
                                 </>
                             ) : (
                                 <>
-                                    <h2 className="mb-4 tajawal-medium text-green-600">بعد اتمام الدفع ستجدي الحجز والتفاصيل في حجوزاتي</h2>
+                                    <h2 className="mb-4 tajawal-medium text-green-600">{t('BookAppointment.paymentPending')}</h2>
                                     <Link href="/my-bookings">
                                         <Button variant="contained" color="primary" className="bg-accent text-white">
-                                            حجوزاتي
+                                            {t('BookAppointment.myBookings')}
                                         </Button>
                                     </Link>
                                 </>
@@ -437,14 +441,14 @@ export default function BookAppointment({ doctorId }) {
                     {step === 1 && session && (
                         <>
                             <Button onClick={() => setOpen(false)} color="primary">
-                                اغلاق
+                                {t('close')}
                             </Button>
                             <Button
                                 onClick={() => setStep(2)}
                                 color="primary"
                                 disabled={!(selectedDay !== null && selectedTimeSlot)}
                             >
-                                التالي
+                                {t('next')}
                             </Button>
                         </>
                     )}
@@ -454,13 +458,13 @@ export default function BookAppointment({ doctorId }) {
                                 onClick={() => setStep(1)}
                                 color="primary"
                             >
-                                رجوع
+                                {t('back')}
                             </Button>
                         </>
                     )}
                     {step === 3 && (
                         <Button onClick={() => setOpen(false)} color="primary">
-                            اغلاق
+                            {t('close')}
                         </Button>
                     )}
                 </DialogActions>

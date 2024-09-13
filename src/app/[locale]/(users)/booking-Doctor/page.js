@@ -68,7 +68,7 @@ export default async function MainDoctorPage({ searchParams }) {
     const initialDoctorList = filteredDoctors.slice(0, 12);
   
     return (
-      <div className="mt-14 md:mt-5 lg:-mt-5 pb-3">
+      <div  className="mt-14 md:mt-5 lg:-mt-5 pb-3">
         <div className="xl:mx-[7%] mx-10 m-auto">
           <DoctorSearchClient searchTerm={searchTerm} category={category} />
   

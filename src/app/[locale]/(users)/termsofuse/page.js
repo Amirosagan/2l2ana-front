@@ -133,7 +133,7 @@ export const metadata = {
   
         <h2 className="text-xl md:text-2xl font-bold mt-8 mb-4 text-primary tajawal-medium">12. الاتصال بنا</h2>
         <p className="text-sm md:text-base mb-4 text-gray-500">
-          إذا كان لديك أية استفسارات بخصوص سياسة الخصوصية، يمكنك التواصل معنا عبر البريد الإلكتروني على العنوان التالي: <a href="mailto:customercare@2l2ana.com" className="text-blue-600 hover:underline">customercare@2l2ana.com</a>
+          إذا كان لديك أية استفسارات بخصوص سياسة الخصوصية، يمكنك التواصل معنا عبر البريد الإلكتروني على العنوان التالي: <a href="mailto:customercare@2l2ana.com" className="text-blue-600 hover:underline">customer.care@2l2ana.com</a>
         </p>
       </div>
     );

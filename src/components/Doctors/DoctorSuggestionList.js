@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import avatar from "@/public/noavatar.png";
 import api from "@/src/utils/api";
 import StaticStarRating from "../Booking/StaticStarRating";

@@ -34,10 +34,14 @@ const ResetPassword = () => {
   });
 
   useEffect(() => {
-    const emailParam = decodeURIComponent(searchParams.get("email") || "");
+    let emailParam = decodeURIComponent(searchParams.get("email") || "");
     let tokenParam = decodeURIComponent(searchParams.get("token") || "");
 
-    tokenParam = tokenParam.replace(/ /g, "+");
+    // Replace any spaces with + and remove any leading +
+    tokenParam = tokenParam.replace(/ /g, "+").replace(/^\+/, "");
+
+    // Trim any spaces from the email
+    emailParam = emailParam.trim();
 
     if (emailParam && tokenParam) {
       setEmail(emailParam);
@@ -60,20 +64,21 @@ const ResetPassword = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(requestBody),
-        },
+        }
       );
 
-      const responseData = await response.json();
-      console.log("Response Status:", response.status);
-      console.log("Response Data:", responseData);
-
-      if (response.ok) {
+      // Check for the response status
+      if (response.status === 200 || response.status === 204) {
+        // Password reset succeeded
         toast.success("تم تغيير كلمة المرور بنجاح");
-        router.push("/login");
+        router.push("/ar/login");
       } else {
+        // Response was not successful, parse the error
+        const responseData = await response.json();
         toast.error(`فشل في إعادة تعيين كلمة المرور: ${responseData.message}`);
       }
     } catch (error) {
+      // Catch network errors or other unexpected issues
       console.error("Error resetting password:", error);
       toast.error("حدث خطأ. حاول مرة أخرى.");
     }

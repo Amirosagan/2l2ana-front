@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import BlogDetails from "@/src/components/Blog/BlogDetails";
 import RenderMdx from "@/src/components/Blog/RenderMdx";
 import siteMetadata from "@/src/utils/siteMetaData";

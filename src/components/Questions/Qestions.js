@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 
 const Questions = ({ filteredQuestions, pageSize }) => {
     const totalQuestions = filteredQuestions.length > 0 ? filteredQuestions.length : 0;

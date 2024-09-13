@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/src/i18n/routing';
 import { checkSession } from '@/src/utils/auth';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });

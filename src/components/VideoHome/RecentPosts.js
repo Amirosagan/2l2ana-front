@@ -1,6 +1,6 @@
 import React from "react";
 import VideoLayoutThree from "./VideoLayoutThree";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 
 const RecentPost = ({ videos, hideHeader, Home }) => {
   if (!videos || videos.length === 0) {

@@ -10,6 +10,7 @@ import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
 import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
 import { slug } from "github-slugger";
+import Learning from "@/src/components/AboutUs/Learning";
 
 export async function generateMetadata() {
   return {
@@ -114,14 +115,8 @@ export default async function Home() {
       <AdsSection />
 
       <div className="lg:pb-16 lg:px-28">
-        <div className="relative -z-10 mt-16 md:mt-24 -mb-10 lg:mx-24 flex flex-col items-center justify-center">
-          <h1 className="text-2xl md:text-3xl lg:text-5xl text-center relative">
-            قسم التعلم والتوعية
-          </h1>
-          <p className="text-gray-500 md:text-lg md:mt-5 mt-3 mx-4 mb-24 md:mb-0 text-center">
-            تعلمي واستكشفي أكتر عن صحتك الجسدية والنفسية من خلال محتوى قلقانة الطبي
-          </p>
-        </div>
+        
+        <Learning/>
 
         <RecentPosts Home={true} blogs={recentPosts} />
 

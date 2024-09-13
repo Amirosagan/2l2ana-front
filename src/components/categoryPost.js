@@ -2,7 +2,6 @@ import React from "react";
 import BlogLayoutThree from "@/src/components/Blog/BlogLayoutThree";
 
 const CategoryPosts = ({ blogs, hideHeader, loading }) => {
-  console.log("Blogs received in CategoryPosts:", blogs); // Log the blogs received
 
   if (loading) {
     return (

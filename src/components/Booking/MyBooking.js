@@ -2,16 +2,18 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from 'next-intl'; // Import useTranslations
 import BookingList from "@/src/components/Booking/BookingList";
 import api from "@/src/utils/api";
 import { checkSession } from "@/src/utils/auth";
 import { TabPanel, Tabs } from "@/components/ui/tabs";
 import RatingModal from "@/src/components/Booking/RatingModal";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import { toast, ToastContainer } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css';
 
 const MyBookings = () => {
+  const t = useTranslations('MyBookings'); // Initialize useTranslations
   const router = useRouter(); 
   const [notDoneConsultations, setNotDoneConsultations] = useState([]);
   const [doneConsultations, setDoneConsultations] = useState([]);
@@ -26,18 +28,18 @@ const MyBookings = () => {
     if (typeof window !== "undefined") {
       const success = new URLSearchParams(window.location.search).get('success');
       if (success === "true") {
-        toast.success("تمت العملية بنجاح");
+        toast.success(t('operationSuccess')); // Use translation key
       } else if (success === "false") {
-        toast.error("لم تنجح العملية يرجي اعادة المحاولة");
+        toast.error(t('operationFailed')); // Use translation key
       }
     }
-  }, []); 
+  }, [t]); 
 
   useEffect(() => {
     const fetchConsultations = async () => {
       const { session, token } = await checkSession();
       if (!session || !token) {
-        console.error("User is not authenticated. Redirecting to login...");
+        console.error(t('userNotAuthenticated')); // Translated message
         return;
       }
 
@@ -60,7 +62,7 @@ const MyBookings = () => {
               });
         setDoneConsultations(doneResponse.data.consultations || []);
       } catch (error) {
-        console.error("Failed to fetch consultations:", error);
+        console.error(t('fetchFailed'), error); // Translated error message
         setNotDoneConsultations([]);
         setDoneConsultations([]);
       }
@@ -71,7 +73,7 @@ const MyBookings = () => {
     if (!isDataFetched) {
       fetchConsultations();
     }
-  }, [isDataFetched]);
+  }, [isDataFetched, t]);
 
   const fetchDoctorDetails = useCallback(
     async (doctorId) => {
@@ -81,11 +83,11 @@ const MyBookings = () => {
         });
         return response.data;
       } catch (error) {
-        console.error(`Failed to fetch details for doctor ${doctorId}:`, error);
+        console.error(t('fetchDoctorFailed', { doctorId }), error); // Translated error with interpolation
         return null;
       }
     },
-    [token]
+    [token, t]
   );
 
   const fetchAllDoctorDetails = useCallback(
@@ -133,29 +135,29 @@ const MyBookings = () => {
       setShowRatingModal(false);
       setSelectedConsultation(null);
     } catch (error) {
-      console.error("Failed to submit rating:", error);
+      console.error(t('ratingFailed'), error); // Translated message for failed rating
     }
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-10"  >
       <ToastContainer />
       <div className="flex items-center flex-col md:flex-row gap-3 justify-between">
-        <h2 className="text-2xl tajawal-bold">حجوزاتي</h2>
+        <h2 className="text-2xl mx-5 tajawal-bold">{t('myBookings')}</h2> {/* Translated header */}
         <div className="flex flex-col gap-1">
           {role === "Doctor" && (
             <button
               onClick={() => {
                 const link = document.createElement("a");
                 link.href = "/doc.pdf";
-                link.download = "واجبات الدكتور تجاه المريض.pdf";
+                link.download = t('doctorDuties'); // Translated file name
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
               }}
               className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
             >
-              واجبات الدكتور تجاه المريض.pdf
+              {t('doctorDuties')}
             </button>
           )}
           {role === "Doctor" && (
@@ -164,44 +166,45 @@ const MyBookings = () => {
                 onClick={() => {
                   const link = document.createElement("a");
                   link.href = "/Dr.consent.pdf";
-                  link.download = "الموافقات الطبية.pdf";
+                  link.download = t('medicalConsent'); // Translated file name
                   document.body.appendChild(link);
                   link.click();
                   document.body.removeChild(link);
                 }}
                 className="bg-primary text-white w-full tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
               >
-                الموافقات الطبية .pdf
+                {t('medicalConsent')}
               </button>
               <h1 className="tajawal-regular">
-                بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية
-              </h1>
+                {t('doctorConsentNote')}
+              </h1> {/* Translated message */}
             </div>
           )}
         </div>
         {role !== "Doctor" && (
-          <div>
+          <div dir="ltr">
             <button
               onClick={() => {
                 const link = document.createElement("a");
                 link.href = "/Patientconsent.pdf";
-                link.download = "الموافقات الطبية.pdf";
+                link.download = t('medicalConsent'); // Translated file name
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
               }}
               className="bg-primary text-white tajawal-regular md:text-lg text-sm py-2 px-4 rounded hover:bg-primary-dark mt-2 inline-block"
             >
-              الموافقات الطبية .pdf
+              {t('medicalConsent')}
             </button>
             <h1 className="tajawal-regular">
-              بمجرد دخولك اللقاء يعني موافقتك علي الشروط الطبية
+              {t('patientConsentNote')} {/* Translated message */}
             </h1>
           </div>
         )}
       </div>
       <Tabs>
-        <TabPanel label="القادم">
+        <TabPanel label={t('upcoming')}>
+          
           {notDoneConsultations.length > 0 ? (
             <BookingList
               consultations={notDoneConsultations}
@@ -210,20 +213,20 @@ const MyBookings = () => {
               isPrevious={false}
             />
           ) : (
-            <div className="text-center py-10">
-              <p className="text-lg font-bold">لا يوجد حجوزات حالية</p>
+            <div className="text-center py-10" >
+              <p className="text-lg font-bold">{t('noUpcomingBookings')}</p> {/* Translated */}
               {role !== "Doctor" && (
                 <Link
                   href="/booking-Doctor"
                   className="text-primary underline hover:text-primary-dark mt-2 inline-block"
                 >
-                  احجز الان
+                  {t('bookNow')} {/* Translated */}
                 </Link>
               )}
             </div>
           )}
         </TabPanel>
-        <TabPanel label="الحجوزات السابقة">
+        <TabPanel label={t('pastBookings')}>
           {doneConsultations?.length > 0 && (
             <BookingList
               consultations={doneConsultations}
@@ -246,8 +249,8 @@ const MyBookings = () => {
           onSubmitRating={(rating) => handleRatingSubmit(selectedConsultation.id, rating)}
         />
       )}
-          <p className="mx-5 ">    ترغبين في مساعدة ؟ تواصلي معنا عبر <a href="https://wa.me/201210684419" className="text-accent underline" target="_blank" rel="noopener noreferrer">WhatsApp</a> </p>
-          </div>
+          <p className="mx-5">{t('helpMessage')} <a href="https://wa.me/201210684419" className="text-accent underline" target="_blank" rel="noopener noreferrer">WhatsApp</a></p> {/* Translated help message */}
+    </div>
   );
 };
 

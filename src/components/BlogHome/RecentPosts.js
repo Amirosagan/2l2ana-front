@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import BlogLayoutThree from "../Blog/BlogLayoutThree";
 
 const RecentPosts = ({ hideHeader, Home, blogs }) => {

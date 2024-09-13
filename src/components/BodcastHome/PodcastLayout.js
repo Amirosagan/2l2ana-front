@@ -1,6 +1,6 @@
 import React from "react";
 import { format, isValid } from "date-fns";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 
 const PodcastLayout = ({ podcast }) => {
   if (!podcast) return <div>No podcast available</div>;
