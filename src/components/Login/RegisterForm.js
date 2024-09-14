@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/src/i18n/routing";
 import { useTranslations } from 'next-intl';
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -99,7 +99,7 @@ const RegisterForm = () => {
 
             <ErrorMessageComponent errorMessage={errorMessage} />
             <Button type="submit" className="w-full bg-primary p-7 flex md:text-xl text-lg text-white font-bold" disabled={isSubmitting}>
-              {isSubmitting ? t("submitting") : t("register")} {/* Dynamic button text */}
+              {isSubmitting ? t("submitting") : t("register")} 
             </Button>
             <div className="flex justify-between items-center">
               <h1 className="text-sm">{t("alreadyHaveAccount")} <Link className="text-accent" href="/login">{t("loginNow")}</Link></h1>

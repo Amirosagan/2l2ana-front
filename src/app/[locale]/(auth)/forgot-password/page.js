@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { TextField, Button as MuiButton, Box, CircularProgress } from '@mui/material';
 import api from "@/src/utils/api";
 import Dialog from '@mui/material/Dialog';
@@ -8,6 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useRouter } from "@/src/i18n/routing";
 
 const ForgotPasswordForm = () => {
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
@@ -46,7 +46,7 @@ const ForgotPasswordForm = () => {
     setDialogMessage("");
     setIsSuccessMessage(false);
     if (isSuccessMessage) {
-      router.push("/ar/login"); 
+      router.push("/login"); 
     }
   };
 

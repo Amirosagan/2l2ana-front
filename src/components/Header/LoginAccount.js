@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { checkSession, logout } from '@/src/utils/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter } from "@/src/i18n/routing";
 import Avatar from './Avatar';
 import MenuItem from './MenuItem';
 import Image from 'next/image';
 import { Link } from '@/src/i18n/routing';
 import profileImg from '@/public/profile-imgr.png';
 import { MenuIcon, XIcon, ChevronDownIcon, ChevronUpIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, InfoIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl'; // Import useTranslations for i18n
+import { useTranslations } from 'next-intl'; 
 
 const LoginAccount = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +17,7 @@ const LoginAccount = () => {
   const [user, setUser] = useState(null);
   const [submenuOpen, setSubmenuOpen] = useState('');
   const router = useRouter();
-  const t = useTranslations('LoginAccount'); // Use useTranslations hook
+  const t = useTranslations('LoginAccount'); 
 
   useEffect(() => {
     const verifySession = async () => {
@@ -57,7 +57,7 @@ const LoginAccount = () => {
       logout();
       setIsLoggedIn(false);
       setUser(null);
-      router.push('/ar/login');
+      router.push('/login');
       setIsOpen(false);
     } catch (error) {
       console.error('Error logging out:', error);

@@ -1,5 +1,5 @@
 import { Users, Hospital, HelpCircle, Film, FileText, Tag, LogOut, Tags, Radio, Folders, Store } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/src/i18n/routing";
 import MneuLink from "./menuLink";
 import { logout } from "@/src/utils/auth";
 
@@ -8,7 +8,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout();
-    router.push("/ar/login");
+    router.push("/login");
   };
 
   const menuItems = [

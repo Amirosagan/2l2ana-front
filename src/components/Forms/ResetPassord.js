@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams} from "next/navigation";
+import { useRouter } from "@/src/i18n/routing";
+
 import { TextField, Button, Box } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -71,7 +73,7 @@ const ResetPassword = () => {
       if (response.status === 200 || response.status === 204) {
         // Password reset succeeded
         toast.success("تم تغيير كلمة المرور بنجاح");
-        router.push("/ar/login");
+        router.push("/login");
       } else {
         // Response was not successful, parse the error
         const responseData = await response.json();

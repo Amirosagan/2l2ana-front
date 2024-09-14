@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/src/i18n/routing";
 import { login, checkSession } from "@/src/utils/auth";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -47,7 +47,7 @@ const LoginForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false); 
   const router = useRouter();
-  const t = useTranslations("LoginForm"); // useTranslations for component-specific translations
+  const t = useTranslations("LoginForm");
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -76,7 +76,7 @@ const LoginForm = () => {
 
       const session = await checkSession();
       if (session?.session?.role === 'Admin') {
-        router.push('/ar/asdkjklasdlkja21321jlkasd/users');
+        router.push('/asdkjklasdlkja21321jlkasd/users');
       } else {
         router.push('/');
       }
