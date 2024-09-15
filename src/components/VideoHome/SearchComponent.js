@@ -71,7 +71,7 @@ const SearchComponent = ({
         />
       </div>
 
-      <div className="flex flex-col w-full">
+      {/* <div className="flex flex-col w-full">
         <label className="mb-2 tajawal-bold text-white">التخصص:</label>
         <Select
           options={tagOptions}
@@ -93,7 +93,7 @@ const SearchComponent = ({
           className="mr-2"
           id="featured"
         />
-      </div>
+      </div> */}
 
       <button
         onClick={handleSearch}
