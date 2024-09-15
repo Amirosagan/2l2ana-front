@@ -50,9 +50,9 @@ const Details = ({ doctor }) => {
             </div>
           </div>
 
-          <div className="flex items-center mt-2 md:mt-5">
+          {/* <div className="flex items-center mt-2 md:mt-5">
             <BookAppointment doctorId={doctor.doctorId} availableTimes={doctor.timesRanges} />
-          </div>
+          </div> */}
         </div>
       </div>
       
