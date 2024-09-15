@@ -20,29 +20,29 @@ async function getDoctorData(id) {
   }
 }
 
-export async function generateStaticParams() {
-  try {
-    const response = await axios.get('https://api.2l2ana.com/api/Doctor', {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-        Expires: "0",
-      },
-    });
-    const doctors = response.data;
+// export async function generateStaticParams() {
+//   try {
+//     const response = await axios.get('https://api.2l2ana.com/api/Doctor', {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Accept: "*/*",
+//         "Cache-Control": "no-cache",
+//         Pragma: "no-cache",
+//         Expires: "0",
+//       },
+//     });
+//     const doctors = response.data;
 
-    const paths = doctors.map((doctor) => ({
-      id: doctor.id.toString(),
-    }));
+//     const paths = doctors.map((doctor) => ({
+//       id: doctor.id.toString(),
+//     }));
 
-    return paths;
-  } catch (error) {
-    console.error("Failed to generate static params:", error);
-    return [];
-  }
-}
+//     return paths;
+//   } catch (error) {
+//     console.error("Failed to generate static params:", error);
+//     return [];
+//   }
+// }
 
 export async function generateMetadata({ params }) {
   const { id } = params;
