@@ -380,7 +380,6 @@ export default function BookAppointment({ doctorId }) {
                                 >
                                     {t('BookAppointment.goToPayment')}
                                 </Button>
-                                <h1> {t('or')} </h1>
                                 </>
                             )}                 
 
@@ -394,11 +393,12 @@ export default function BookAppointment({ doctorId }) {
                                         >
                                             {t('BookAppointment.free30Min')}
                                         </Button>
-                                        <h1> {t('or')} </h1>
                                     </>
                                 )}
                                 {freeTickets > 0 && (
                                     <>
+                                        <h1> {t('or')} </h1>
+
                                         <Button
                                             variant="contained"
                                             color="primary"
