@@ -86,10 +86,11 @@ const DoctorDetailsPage = async ({ params }) => {
         <div className="lg:col-span-6 mb-10">
           <Details doctor={doctor} />
         </div>
-        <div className="lg:col-span-3 lg:mx-5 m-auto mt-5 lg:min-w-[370px] w-full">
+       
+      </div> */}
+       <div className="lg:col-span-3 lg:mx-5 m-auto mt-5 lg:min-w-[370px] w-full">
           <SuggestionList />
         </div>
-      </div> */}
     </div>
   );
 };
