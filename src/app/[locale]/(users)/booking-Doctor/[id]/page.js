@@ -20,7 +20,56 @@ async function getDoctorData(id) {
   }
 }
 
+export async function generateStaticParams() {
+  try {
+    const response = await axios.get('https://api.2l2ana.com/api/Doctor', {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
+    });
+    const doctors = response.data;
 
+    const paths = doctors.map((doctor) => ({
+      id: doctor.id.toString(),
+    }));
+
+    return paths;
+  } catch (error) {
+    console.error("Failed to generate static params:", error);
+    return [];
+  }
+}
+
+export async function generateMetadata({ params }) {
+  const { id } = params;
+  const doctor = await getDoctorData(id);
+
+  return {
+    metadataBase: new URL('https://2l2ana.com'),
+    title: `قلقانة | ${doctor?.name || 'Doctor Details'}`,
+    description: doctor?.description || "احصل على استشارة طبية من أفضل الأطباء المتخصصين.",
+    keywords: "تفاصيل الطبيب, استشارة طبية, أطباء متخصصون, حجز استشارة, معلومات الطبيب",
+    author: "قلقانة",
+    openGraph: {
+      title: `تفاصيل الطبيب | ${doctor?.name || 'Doctor Details'}`,
+      description: doctor?.description || "احصل على استشارة طبية من أفضل الأطباء المتخصصين.",
+      type: 'profile',
+      url: `https://2l2ana.com/doctor/${id}`,
+      images: [
+        {
+          url: doctor?.imageUrl || 'default-image-url.jpg',
+          width: 800,
+          height: 600,
+          alt: doctor?.name || 'Doctor',
+        },
+      ],
+    },
+  };
+}
 
 const DoctorDetailsPage = async ({ params }) => {
   const { id } = params;
