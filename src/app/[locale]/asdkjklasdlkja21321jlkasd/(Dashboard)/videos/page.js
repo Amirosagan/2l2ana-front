@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import api from "@/src/utils/api";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 import Cookies from "js-cookie";
 
 const VideoPage = () => {
