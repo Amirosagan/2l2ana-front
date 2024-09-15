@@ -1,11 +1,17 @@
-import api from "@/src/utils/api";
+import axios from "axios";
 import Details from "@/src/components/Doctors/DoctorDetails";
 import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
 
 async function getDoctorData(id) {
   try {
-    const response = await api.get(`/Doctor/${id}`, {
-      cache: 'no-cache', 
+    const response = await axios.get(`https://api.2l2ana.com/api/Doctor/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
     });
     return response.data;
   } catch (error) {
@@ -16,8 +22,14 @@ async function getDoctorData(id) {
 
 export async function generateStaticParams() {
   try {
-    const response = await api.get('/Doctor', {
-      cache: 'no-cache', 
+    const response = await axios.get('https://api.2l2ana.com/api/Doctor', {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Expires: "0",
+      },
     });
     const doctors = response.data;
 
