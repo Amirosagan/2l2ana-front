@@ -79,8 +79,8 @@
   },
     "ArticleCard": {
       "title": "محتارة في سؤال ؟ ابعتي استشاراتك الطبية مجانا دلوقتي",
-      "seeQuestions": "شوف اسئلة الباقي",
-      "askQuestion": "ابعت سؤالك"
+      "seeQuestions": "شوفي اسئلة الباقي",
+      "askQuestion": "ابعتي سؤالك"
     },
     "AdsSection": {
         "title": "أفضل عروض قلقانة",
@@ -258,6 +258,102 @@
     "noUpcomingBookings": "لا يوجد حجوزات حالية",
     "bookNow": "احجز الان",
     "helpMessage": "ترغبين في مساعدة؟ تواصلي معنا عبر"
+  },  "RecentPodcast": {
+    "titleHome": "بودكاست قلقانة",
+    "titleWatchAlso": "شاهد أيضاً",
+    "noPodcasts": "لا توجد بودكاست متاحة.",
+    "errorLoading": "حدث خطأ أثناء تحميل البودكاست."
+  }, "RecentPost": {
+    "noVideos": "لا توجد فيديوهات متاحة.",
+    "videos": "الفيديوهات",
+    "latestVideos": "أحدث الفيديوهات",
+    "more": "المزيد"
+  },"FeaturedPosts": {
+    "mostPopular": "الأكثر رواجا",
+    "errorFetching": "حدث خطأ أثناء جلب الفيديوهات."
+  }, "CoverSection": {
+    "videos": "الفيديوهات",
+    "consultationLink": "محتارة في استشارة؟ احجزي مكالمة صوتية أو فيديو الآن مع أفضل الدكاترة في مصر من بيتك."
+,
+    "errorLoadingVideo": "خطأ في تحميل الفيديو",
+    "podcast": "بودكاست",
+    "errorLoadingPodcast": "خطأ في تحميل البودكاست",
+    "articles": "المقالات",
+    "errorLoadingBlog": "خطأ في تحميل المقال",
+    "noImageAvailable": "لا توجد صورة متاحة",
+    "uncategorized": "غير مصنفة"
+  }, "FeaturePosts": {
+    "mostPopular": "الأكثر رواجا",
+    "errorFetchingBlogs": "حدث خطأ أثناء جلب المقالات."
+  }, "DoctoorBoster": {
+    "onlineConsultation": "استشارتك اونلاين مع اشطر دكتور في مصر",
+    "seeDoctors": "شوفي الدكاترة",
+    "doctorImageAlt": "طبيب"
+  }, "HeroQestion": {
+    "title": "ابعتي استشاراتك الطبية",
+    "subtitle": "واحنا نجاوبك",
+    "description": "لأن صحتك اهم حاجة عندنا ، وفرنالك فريق عمل متخصص للرد علي جميع استفساراتك الطبية",
+    "askButton": "ابعتي سؤالك",
+    "bookButton": "احجزي مع دكتور"
+  }, "AskDoctor": {
+    "successMessage": "تم ارسال سؤالك بنجاح، نعدك بالرد قريبا وشكرا لاستخدامك قلقانة!",
+    "askAnotherQuestion": "اسألي سؤال تاني؟",
+    "bookOnlineNow": "احجزي مع دكتور اونلاين الآن",
+    "askYourQuestion": "اطرح سؤالك الآن ليصل إلى آلاف الأطباء",
+    "description": "احصلي على إجابة لسؤالك في غضون 48 ساعة، أو اشتركي مع قلقانة لتحصلي على استشارة فورية وسرية مع طبيب معتمد.",
+    "talkToDoctorNow": "تحدثي مع طبيب الآن",
+    "questionTitlePlaceholder": "عنوان السؤال (عنوان مختصر لمشكلتك الصحية)",
+    "questionContentPlaceholder": "محتوى السؤال (اشرح كافة استفساراتك)",
+    "selectTag": "اختر تصنيفًا للسؤال",
+    "selectTagPlaceholder": "اختر تصنيفًا",
+    "errorTitle": "عنوان السؤال مطلوب",
+    "errorContent": "محتوى السؤال مطلوب",
+    "errorTag": "اختر تصنيفًا للسؤال",
+    "warning": "بعد ارفاق السؤال سيتم عرضه للجمهور، لذا يرجي توخي الحذر وازالة اي معلومات خاصة",
+    "submit": "ارسال",
+    "emergencyMessage": "إذا كانت الحالة الطبية طارئة ننصحك بالتوجه إلى أقرب مركز طوارئ في منطقتك"
+  }, "Details": {
+    "generalSpeciality": "تخصص عام",
+    "consultationPrice": "الكشف",
+    "currency": "ج",
+    "doctorInfo": "معلومات عن الدكتور",
+    "noAdditionalInfo": "لا توجد معلومات إضافية."
+  }, "FileManagement": {
+    "keepAll": "احتفظ بكل",
+    "yourMedicalData": "بياناتك الصحية",
+    "inOnePlace": "في مكان واحد بكل سهولة وأمان.",
+    "tooltipInfo": "بياناتك الطبية مؤمنة بالكامل. لا يمكن لأحد رؤيتها إلا عند الاشتراك مع أحد الأطباء، وهو الوحيد الذي يستطيع الاطلاع عليها.",
+    "fetchError": "خطأ في جلب الملفات الطبية.",
+    "deleteSuccess": "تم حذف الملف بنجاح.",
+    "deleteError": "خطأ في حذف الملف.",
+    "loading": "جارٍ التحميل..."
+  },
+  "MyProfile": {
+    "unauthorizedUser": "المستخدم غير مصرح له",
+    "fetchUserFailed": "فشل في جلب بيانات المستخدم",
+    "fetchUserError": "حدث خطأ أثناء جلب بيانات المستخدم"
+  },"UpdatePhoneNumberForm": {
+    "updatePhoneNumber": "تحديث رقم الهاتف",
+    "editPhoneNumber": "تعديل رقم الهاتف",
+    "unauthorizedUser": "المستخدم غير مصرح له",
+    "fetchUserFailed": "فشل في جلب بيانات المستخدم",
+    "fetchUserError": "حدث خطأ أثناء جلب بيانات المستخدم",
+    "phoneNumberMinLength": "رقم الهاتف يجب أن يكون على الأقل 5 أرقام.",
+    "phoneNumberUpdateSuccess": "تم تحديث رقم الهاتف بنجاح",
+    "phoneNumberUpdateFailed": "فشل في تحديث رقم الهاتف",
+    "phoneNumberUpdateError": "حدث خطأ أثناء تحديث رقم الهاتف"
+  },  "FileUpload": {
+    "uploadButton": "رفع ملفات (صور أو ملفات PDF)",
+    "uploadingFiles": "جاري تحميل الملفات ...",
+    "uploadError": "خطأ في تحميل الملف.",
+    "uploadSuccess": "تم تحميل الملف الطبي بنجاح.",
+    "uploadFileFailed": "فشل في تحميل الملف.",
+    "uploadMedicalInfoFailed": "فشل في تحميل بيانات الملف الطبي.",
+    "medicalFileInfoError": "خطأ في تحميل بيانات الملف الطبي."
+  }, "FilePreview": {
+    "pdfFile": "ملف PDF",
+    "download": "تحميل",
+    "fullSize": "الحجم الكامل"
   }
 }
     

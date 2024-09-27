@@ -7,7 +7,7 @@ import api from "@/src/utils/api";
 export async function generateMetadata() {
   try {
     const res = await api.get('/Question', {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+      cache: 'no-cache'  
     });
     const data = res.data;
 
@@ -48,7 +48,7 @@ export default async function QuestionAnswersPage() {
 
   try {
     const response = await api.get('/Question', {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+      cache: 'no-cache' 
     });
     questions = response.data.items;
   } catch (error) {
@@ -59,7 +59,7 @@ export default async function QuestionAnswersPage() {
     <>
       <HeroQestion />
       <ScrollButton />
-      <div className="flex flex-col justify-between mx-[4%] lg:mx-20 mt-10 md:mt-28 gap-20 lg:gap-2 lg:flex-row">
+      <div className="flex flex-col justify-between mx-[4%] lg:mx-20 mt-10 md:mt-28 gap-20 lg:gap-2 lg:flex-row" dir="rtl">
         <div className="w-full">
           <Questions filteredQuestions={questions} />
         </div>

@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import BlogLayoutOne from "../Blog/BlogLayoutOne";
 import api from "@/src/utils/api";
 import { slug } from "github-slugger";
+import { useTranslations } from 'next-intl'; 
 
 const FeaturePosts = () => {
+  const t = useTranslations('FeaturePosts'); 
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,7 +46,7 @@ const FeaturePosts = () => {
         setBlogs(mappedBlogs.slice(0, 2)); 
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching blogs:", error);
+        console.error(t('errorFetchingBlogs'), error); // Localized error message
         setLoading(false);
       }
     };
@@ -54,7 +56,9 @@ const FeaturePosts = () => {
 
   return (
     <section className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 lg:px-24 flex flex-col items-center justify-center ">
-      <h2  className="tajawal-bold w-full text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">الأكثر رواجا</h2>
+      <h2 className="tajawal-bold w-full text-primary/90 inline-block font-bold capitalize text-2xl md:text-4xl">
+        {t('mostPopular')} {/* Localized heading */}
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 sm:mt-10 w-full h-full">
         {loading ? (
           [...Array(2)].map((_, index) => (
@@ -80,7 +84,7 @@ const FeaturePosts = () => {
           ))
         ) : (
           blogs.map((blog, index) => (
-              <BlogLayoutOne blog={blog} key={index} className="w-full h-full" />
+            <BlogLayoutOne blog={blog} key={index} className="w-full h-full" />
           ))
         )}
       </div>

@@ -145,7 +145,7 @@ const LoginAccount = () => {
                 <Link href="/login"> 
                 <MenuItem label={t('login')} />
                 </Link>
-                <Link href="/login"> 
+                <Link href="/register"> 
                 <MenuItem label={t('register')} />
                 </Link>
               </>

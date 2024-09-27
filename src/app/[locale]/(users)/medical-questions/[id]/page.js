@@ -1,6 +1,6 @@
 import api from '@/src/utils/api';
 import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
-import Link from "next/link";
+import { Link } from '@/src/i18n/routing';
 
 export async function generateMetadata({ params }) {
   const { id } = params;

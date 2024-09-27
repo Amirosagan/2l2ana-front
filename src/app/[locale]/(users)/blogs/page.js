@@ -60,7 +60,7 @@ const BlogPage = async () => {
   const blogs = await fetchBlogs();
 
   return (
-    <div className="md:mt-6">
+    <div className="md:mt-6" >
       <div className="flex flex-col items-center lg:w-[83%] m-auto justify-center">
         <CoverSection blog={blogs[0]} />
         <FeaturedPosts />

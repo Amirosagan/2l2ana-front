@@ -3,8 +3,10 @@ import { toast } from "react-toastify";
 import api from "@/src/utils/api";
 import Cookies from "js-cookie";
 import { checkSession } from "@/src/utils/auth";
+import { useTranslations } from "next-intl"; // Importing useTranslations
 
 const UpdatePhoneNumberForm = () => {
+  const t = useTranslations('UpdatePhoneNumberForm'); // Using 'UpdatePhoneNumberForm' namespace for translations
   const [profileData, setProfileData] = useState({
     firstName: "",
     lastName: "",
@@ -18,7 +20,7 @@ const UpdatePhoneNumberForm = () => {
       const sessionData = await checkSession();
 
       if (!sessionData) {
-        toast.error("المستخدم غير مصرح له");
+        toast.error(t("unauthorizedUser")); // Translated error message
         return;
       }
 
@@ -39,26 +41,26 @@ const UpdatePhoneNumberForm = () => {
             profilePicture: response.data.profilePicture,
           });
         } else {
-          toast.error("فشل في جلب بيانات المستخدم");
+          toast.error(t("fetchUserFailed")); // Translated error message
         }
       } catch (error) {
-        toast.error("حدث خطأ أثناء جلب بيانات المستخدم");
+        toast.error(t("fetchUserError")); // Translated error message
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [t]);
 
   const handleUpdate = async () => {
     const token = Cookies.get("authToken");
 
     if (profileData.phoneNumber.length < 5) {
-      toast.warn("رقم الهاتف يجب أن يكون على الأقل 5 أرقام.");
+      toast.warn(t("phoneNumberMinLength")); // Translated warning message
       return;
     }
 
     if (!token) {
-      toast.error("المستخدم غير مصرح له");
+      toast.error(t("unauthorizedUser")); // Translated error message
       return;
     }
 
@@ -75,13 +77,13 @@ const UpdatePhoneNumberForm = () => {
       );
 
       if (response.status === 200) {
-        toast.success("تم تحديث رقم الهاتف بنجاح");
+        toast.success(t("phoneNumberUpdateSuccess")); // Translated success message
         setIsEditable(false);
       } else {
-        toast.error("فشل في تحديث رقم الهاتف");
+        toast.error(t("phoneNumberUpdateFailed")); // Translated error message
       }
     } catch (error) {
-      toast.error("حدث خطأ أثناء تحديث رقم الهاتف");
+      toast.error(t("phoneNumberUpdateError")); // Translated error message
     }
   };
 
@@ -99,7 +101,9 @@ const UpdatePhoneNumberForm = () => {
 
   return (
     <div className="mt-5">
-      <h3 className="tajawal-bold text-xl text-gray-700 mb-2">تحديث رقم الهاتف</h3>
+      <h3 className="tajawal-bold text-xl text-gray-700 mb-2">
+        {t('updatePhoneNumber')} {/* Translated label */}
+      </h3>
       <input
         type="text"
         name="phoneNumber"
@@ -112,11 +116,11 @@ const UpdatePhoneNumberForm = () => {
       />
       {!isEditable ? (
         <button onClick={handleEditClick} className="bg-primary text-white px-4 py-2 rounded tajawal-bold hover:bg-primary-dark transition w-full">
-          تعديل رقم الهاتف
+          {t('editPhoneNumber')} {/* Translated button */}
         </button>
       ) : (
         <button onClick={handleUpdate} className="bg-primary text-white px-4 py-2 rounded tajawal-bold hover:bg-primary-dark transition w-full">
-          تحديث رقم الهاتف
+          {t('updatePhoneNumber')} {/* Translated button */}
         </button>
       )}
     </div>

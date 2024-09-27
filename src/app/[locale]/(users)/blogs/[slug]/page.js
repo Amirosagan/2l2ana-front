@@ -113,7 +113,7 @@ const BlogPage = async ({ params }) => {
     const relatedPosts = await fetchRelatedPosts(blog);
 
     return (
-      <div>
+      <div dir="rtl">
         <BlogPageContent 
           blog={blog} 
           relatedPosts={relatedPosts.slice(0, 3)} 

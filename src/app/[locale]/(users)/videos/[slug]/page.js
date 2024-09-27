@@ -68,7 +68,7 @@ const VideoPage = async ({ params }) => {
   const videoDetails = response.data.youtubeLink;
 
   return (
-    <div>
+    <div dir="rtl">
       <VideoPageClient initialVideoDetails={videoDetails} />
     </div>
   );

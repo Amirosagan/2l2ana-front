@@ -9,6 +9,7 @@ import api from "@/src/utils/api";
 import FileManagement from "@/src/components/Booking/FileManagement";
 import UpdatePhoneNumberForm from "@/src/components/User/UpdatePhoneNumberForm";
 import UpdateDoctorForm from "@/src/components/Doctors/UbdateDoctorForm";
+import { useLocale, useTranslations } from "next-intl";
 const jwt = require("jsonwebtoken");
 
 const MyProfileClient = () => {
@@ -16,11 +17,14 @@ const MyProfileClient = () => {
   const [doctorId, setDoctorId] = useState(null);
   const [firstName, setFirstName] = useState("");
 
+  const t = useTranslations('MyProfile'); // Translations for the toast messages
+  const locale = useLocale(); // Get current locale
+
   useEffect(() => {
     const fetchUserData = async () => {
       const session = await checkSession();
       if (!session) {
-        toast.error("المستخدم غير مصرح له");
+        toast.error(t("unauthorizedUser")); // Translated error message
         return;
       }
 
@@ -38,7 +42,7 @@ const MyProfileClient = () => {
               setFirstName(decodedToken.firstName);
             }
             if (session.session.role) {
-              setRole(session.session.role); 
+              setRole(session.session.role);
             }
           }
 
@@ -51,10 +55,10 @@ const MyProfileClient = () => {
           if (response.status === 200) {
             setFirstName(response.data.firstName);
           } else {
-            toast.error("فشل في جلب بيانات المستخدم");
+            toast.error(t("fetchUserFailed")); // Translated error message
           }
         } catch (error) {
-          toast.error("حدث خطأ أثناء جلب بيانات المستخدم");
+          toast.error(t("fetchUserError")); // Translated error message
         }
       }
     };
@@ -62,13 +66,17 @@ const MyProfileClient = () => {
     if (typeof window !== "undefined") {
       fetchUserData();
     }
-  }, []);
+  }, [t]); // Add t (translation) as a dependency
 
   return (
     <div className="px-4 sm:px-10 lg:mx-20 mb-5">
       <ToastContainer />
       <div className="mt-3 px-4 sm:px-10">
-          <h2 className="font-bold text-2xl tajawal-bold lg:-mt-2">مرحبا, {firstName}</h2>
+        {/* Show greeting based on locale */}
+        <h2 className="font-bold text-2xl tajawal-bold lg:-mt-2">
+          {locale === 'ar' ? `مرحبا, ${firstName}` : `Hello, ${firstName}`}
+        </h2>
+
         {role === "Doctor" ? (
           <UpdateDoctorForm doctorId={doctorId} />
         ) : (

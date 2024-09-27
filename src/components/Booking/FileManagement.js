@@ -10,8 +10,10 @@ import api from "@/src/utils/api";
 import FilePreview from "./FilePreview";
 import FileUpload from "../Doctors/FileUbload";
 import { toast } from "react-toastify";
+import { useTranslations } from "next-intl"; // Importing useTranslations
 
 const FileManagement = () => {
+  const t = useTranslations('FileManagement'); // Use the 'FileManagement' namespace for translations
   const [medicalFiles, setMedicalFiles] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [user, setUser] = useState(null);
@@ -46,10 +48,10 @@ const FileManagement = () => {
       if (response.data && Array.isArray(response.data.medicalFiles)) {
         setMedicalFiles(response.data.medicalFiles);
       } else {
-        throw new Error("Failed to fetch medical files");
+        throw new Error(t('fetchError'));
       }
     } catch (error) {
-      console.error("Error fetching medical files:", error);
+      console.error(t('fetchError'), error);
     } finally {
       setIsFetching(false);
     }
@@ -65,7 +67,7 @@ const FileManagement = () => {
 
       if (response.status === 200) {
         setMedicalFiles(medicalFiles.filter((file) => file.id !== fileId));
-        toast.success("تم حذف الملف بنجاح.", {
+        toast.success(t('deleteSuccess'), {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -75,11 +77,11 @@ const FileManagement = () => {
           progress: undefined,
         });
       } else {
-        throw new Error("Failed to delete file");
+        throw new Error(t('deleteError'));
       }
     } catch (error) {
-      console.error("Error deleting file:", error);
-      toast.error("خطأ في حذف الملف.", {
+      console.error(t('deleteError'), error);
+      toast.error(t('deleteError'), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -113,18 +115,17 @@ const FileManagement = () => {
   return (
     <div className="border-2 rounded-md p-4 mt-5 text-center">
       <h1 className="tajawal-bold text-xl sm:text-2xl mt-4 text-gray-400 flex items-center justify-center text-center flex-wrap">
-        احتفظ بكل{" "}
+        {t('keepAll')}{" "}
         <span className="tajawal-extrabold mx-2 text-primary">
-          بياناتك الصحية
+          {t('yourMedicalData')}
         </span>{" "}
-        في مكان واحد بكل سهولة وأمان
+        {t('inOnePlace')}
         <ClickAwayListener onClickAway={handleTooltipClose}>
           <div className="mx-2 mt-2 md:mt-0">
             <Tooltip
               title={
                 <Typography variant="body2" sx={{ p: 1 }}>
-                  بياناتك الطبية مؤمنة بالكامل. لا يمكن لأحد رؤيتها إلا عند
-                  الاشتراك مع أحد الأطباء، وهو الوحيد الذي يستطيع الاطلاع عليها.
+                  {t('tooltipInfo')}
                 </Typography>
               }
               open={open}
@@ -147,7 +148,7 @@ const FileManagement = () => {
       <FileUpload user={user} fetchMedicalFiles={fetchMedicalFiles} />
 
       {isFetching ? (
-        <div className="mt-4">Loading...</div>
+        <div className="mt-4">{t('loading')}</div>
       ) : (
         <FilePreview
           medicalFiles={medicalFiles}

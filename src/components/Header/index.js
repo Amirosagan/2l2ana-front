@@ -170,7 +170,7 @@ const Header = () => {
         </div>
         <div className="mx-5 md:mx-0 flex items-center md:gap-4 gap-2">
           {/* Toggle Language Button */}
-          <button  className="tajawal-light mt-1 md:mt-0 flex items-center gap-1 md:gap-2 md:text-gray-500">
+          <button onClick={toggleLanguage} className="tajawal-light mt-1 md:mt-0 flex items-center gap-1 md:gap-2 md:text-gray-500">
             {translations[language] && (
               <>
                 <span className="text-black hidden md:block">{translations[language].language}</span>

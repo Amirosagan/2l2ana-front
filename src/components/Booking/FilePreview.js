@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useTranslations } from "next-intl"; // Importing useTranslations for translations
 
 const FilePreview = ({ medicalFiles, onRemoveFile, onDownloadFile }) => {
+  const t = useTranslations("FilePreview"); // Using 'FilePreview' namespace for translations
   const [modalImage, setModalImage] = useState(null);
   const [downloadLoading, setDownloadLoading] = useState({});
 
@@ -42,7 +44,7 @@ const FilePreview = ({ medicalFiles, onRemoveFile, onDownloadFile }) => {
             />
           ) : (
             <div className="h-40 w-full flex items-center justify-center bg-gray-200 rounded">
-              <span className="text-gray-600">PDF: {file.fileName}</span>
+              <span className="text-gray-600">{t("pdfFile")}: {file.fileName}</span> {/* Translated PDF label */}
             </div>
           )}
           <button
@@ -59,7 +61,7 @@ const FilePreview = ({ medicalFiles, onRemoveFile, onDownloadFile }) => {
             {downloadLoading[file.id] ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "تحميل"
+              t("download") // Translated download button text
             )}
           </button>
         </div>
@@ -73,7 +75,7 @@ const FilePreview = ({ medicalFiles, onRemoveFile, onDownloadFile }) => {
             width={500}
             height={500}
             src={modalImage}
-            alt="Full Size"
+            alt={t("fullSize")} // Translated alt text
             className="max-w-full max-h-full"
             unoptimized={true}
           />

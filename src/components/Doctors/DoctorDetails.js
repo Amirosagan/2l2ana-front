@@ -3,6 +3,7 @@ import { BadgeInfo, ClipboardPlus } from "lucide-react";
 import Image from "next/image";
 import BookAppointment from "../Booking/BookAppointment";
 import Rating from "../ELements/Rating";
+import { useTranslations, useLocale } from "next-intl";
 
 const roundRating = (rating) => {
   if (rating > 4.59) return 5;
@@ -18,10 +19,15 @@ const roundRating = (rating) => {
 };
 
 const Details = ({ doctor }) => {
+  const t = useTranslations('Details'); // Use the 'Details' namespace for translations
+  const locale = useLocale(); // Get the current locale (e.g., 'ar', 'en')
+  
+  // Determine the direction (RTL for Arabic, LTR for others)
+  const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-3 border-[1px] p-5 md:mt-5 rounded-lg">
+    <div dir={dir}>
+      <div dir="rtl" className="grid grid-cols-1 md:grid-cols-3 border-[1px] p-5 md:mt-5 rounded-lg">
         <div className="">
           <Image
             src={doctor.imageUrl ? doctor.imageUrl : avatar}
@@ -33,20 +39,22 @@ const Details = ({ doctor }) => {
           />
         </div>
 
-        <div className="col-span-2 mt-5 md:px-10 flex flex-col gap-3">
+        <div  className="col-span-2 mt-5 md:px-10 flex flex-col gap-3">
           <h2 className="tajawal-bold text-2xl">
             {doctor.name}
           </h2>
           <h2 className="tajawal-bold text-primary w-fit bg-teal-100 px-3 p-2 rounded-full text-[12px]">
-            {doctor.category || "تخصص عام"}
+            {doctor.category || t('generalSpeciality')}
           </h2>
           <h2 className="tajawal-regular text-gray-500 flex gap-2 text-md">
             <ClipboardPlus /> {doctor.headLine}
           </h2>
           <div className="tajawal-regular text-gray-500 flex flex-col items-start gap-2 text-md">
-            <Rating rating={roundRating(doctor.rating)} />  
-            <div className="flex items-center text-gray tajawal-regular text-sm md:text-base">
-              الكشف : <span className="text-red-600 mx-2 line-through">{doctor.consultationPriceBeforeDiscount} ج</span> {doctor.consultationPriceAfterDiscount} ج
+            <Rating rating={roundRating(doctor.rating)} />
+            <div dir={dir} className="flex items-center text-gray tajawal-regular text-sm md:text-base">
+              {t('consultationPrice')} : 
+              <span className="text-red-600 mx-2 line-through">{doctor.consultationPriceBeforeDiscount} {t('currency')}</span> 
+              {doctor.consultationPriceAfterDiscount} {t('currency')}
             </div>
           </div>
 
@@ -58,13 +66,13 @@ const Details = ({ doctor }) => {
       
       <div className="p-3 border-[1px] rounded-lg mt-5">
         <h2 className="tajawal-medium text-[18px] flex gap-2 items-center text-primary">
-          <BadgeInfo className="p-[1px]" /> معلومات عن الدكتور
+          <BadgeInfo className="p-[1px]" /> {t('doctorInfo')}
         </h2>
-        <p className="text-gray-500 tracking-wide text-[15px] mt-4 p-2">
-          {doctor.description || "لا توجد معلومات إضافية."}
+        <p dir="rtl" className="text-gray-500 tracking-wide text-[15px] mt-4 p-2">
+          {doctor.description || t('noAdditionalInfo')}
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

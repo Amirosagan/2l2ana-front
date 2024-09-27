@@ -4,13 +4,13 @@ import RecentPost from "@/src/components/VideoHome/RecentPosts";
 import ArticleCard from "@/src/components/ArticleCard";
 import Image from "next/image";
 import Podcast from "@/public/podcast.svg";
-import Link from "next/link";
 import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
 import RecentPodcast from "@/src/components/BodcastHome/RecentPodcasts";
 import { slug } from "github-slugger";
 import Learning from "@/src/components/AboutUs/Learning";
+import { Link } from "@/src/i18n/routing";
 
 export async function generateMetadata() {
   return {

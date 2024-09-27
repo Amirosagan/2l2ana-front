@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
 import api from "@/src/utils/api";
+import { useTranslations } from "next-intl"; // Importing useTranslations for translations
 
 const FileUpload = ({ user, fetchMedicalFiles }) => {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("FileUpload"); // Using 'FileUpload' namespace for translations
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -30,14 +32,14 @@ const FileUpload = ({ user, fetchMedicalFiles }) => {
         });
 
         if (!response.data) {
-          throw new Error("Failed to upload file");
+          throw new Error(t("uploadFileFailed")); // Translated error message
         }
 
         const fileUrl = response.data.fileUrl;
         await uploadMedicalFileInfo(file.name, file.type, fileUrl);
       } catch (error) {
         console.error("Error uploading file:", error);
-        toast.error("خطأ في تحميل الملف.", {
+        toast.error(t("uploadError"), { // Translated toast error
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -69,10 +71,10 @@ const FileUpload = ({ user, fetchMedicalFiles }) => {
       });
 
       if (!response.data) {
-        throw new Error("Failed to upload medical file info");
+        throw new Error(t("uploadMedicalInfoFailed")); // Translated error message
       }
 
-      toast.success("تم تحميل الملف الطبي بنجاح.", {
+      toast.success(t("uploadSuccess"), { // Translated success message
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -83,7 +85,7 @@ const FileUpload = ({ user, fetchMedicalFiles }) => {
       });
     } catch (error) {
       console.error("Error uploading medical file info:", error);
-      toast.error("خطأ في تحميل بيانات الملف الطبي.", {
+      toast.error(t("medicalFileInfoError"), { // Translated toast error
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -103,8 +105,8 @@ const FileUpload = ({ user, fetchMedicalFiles }) => {
         disabled={loading}
       >
         {loading
-          ? "جاري تحميل الملفات ..."
-          : "رفع ملفات (صور أو ملفات PDF)"}
+          ? t("uploadingFiles")
+          : t("uploadButton")} 
       </button>
     </div>
   );

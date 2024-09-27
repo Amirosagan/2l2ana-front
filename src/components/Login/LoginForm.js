@@ -11,7 +11,7 @@ import { Link } from '@/src/i18n/routing';
 import { Eye, EyeOff } from "lucide-react";
 import FormFieldComponent from "../ELements/FormField";
 import ErrorMessageComponent from "../ELements/ErrorMessage";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const Spinner = () => (
   <div className="spinner">
@@ -90,6 +90,10 @@ const LoginForm = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const locale = useLocale(); // Get the current locale (e.g., 'ar', 'en')
+  
+  // Determine the direction (RTL for Arabic, LTR for others)
+  const dir = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -109,12 +113,13 @@ const LoginForm = () => {
                 label={t("passwordLabel")} // Translated label
                 type={showPassword ? "text" : "password"} 
               />
-              <div
-                onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 left-0 pl-3 flex mt-5 items-center cursor-pointer"
-              >
-                {showPassword ? <Eye className="h-5 w-5 text-gray-500" /> : <EyeOff className="h-5 w-5 text-gray-500" />}
-              </div>
+             <div
+  onClick={togglePasswordVisibility}
+  className={`absolute inset-y-0 ${locale === 'en' ? 'right-0' : 'left-0'} px-3 flex mt-5 items-center cursor-pointer`}
+>
+  {showPassword ? <Eye className="h-5 w-5 text-gray-500" /> : <EyeOff className="h-5 w-5 text-gray-500" />}
+</div>
+
             </div>
             <div className="flex items-center justify-end -mt-3">
               <Link href="/forgot-password" className="text-accent text-sm tajawal-bold cursor-pointer">{t("forgotPassword")}</Link> {/* Translated text */}

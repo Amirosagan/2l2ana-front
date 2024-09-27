@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import api from "@/src/utils/api";
 import VideoLayoutOne from "../VideoHome/VideoLayoutOne";
+import { useTranslations } from 'next-intl'; // Import useTranslations for localization
 
 const FeaturedPosts = () => {
+  const t = useTranslations('FeaturedPosts'); // Use the 'FeaturedPosts' namespace for translations
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +29,7 @@ const FeaturedPosts = () => {
 
         setVideos(selectedVideos.slice(0, 2));
       } catch (error) {
-        console.error("Error fetching videos:", error);
+        console.error(t('errorFetching'), error); // Use localized error message
       } finally {
         setLoading(false);
       }
@@ -38,7 +40,9 @@ const FeaturedPosts = () => {
 
   return (
     <section className="w-full mt-16 sm:mt-24  px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center ">
-      <h2  className="tajawal-bold text-primary/90 w-full inline-block font-bold capitalize text-2xl md:text-4xl">الأكثر رواجا</h2>
+      <h2 className="tajawal-bold text-primary/90 w-full inline-block font-bold capitalize text-2xl md:text-4xl">
+        {t('mostPopular')} {/* Localized heading */}
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 sm:mt-10 w-full h-full">
         {loading ? (
           [...Array(2)].map((_, index) => (

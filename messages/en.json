@@ -259,6 +259,100 @@
     "noUpcomingBookings": "No upcoming bookings",
     "bookNow": "Book now",
     "helpMessage": "Need help? Contact us via"
+  }, "RecentPodcast": {
+    "titleHome": "2l2ana Podcast",
+    "titleWatchAlso": "Watch Also",
+    "noPodcasts": "No podcasts available.",
+    "errorLoading": "Error loading podcasts."
+  },"RecentPost": {
+    "noVideos": "No videos available.",
+    "videos": "Videos",
+    "latestVideos": "Latest Videos",
+    "more": "More"
+  }, "FeaturedPosts": {
+    "mostPopular": "Most Popular",
+    "errorFetching": "Error fetching videos."
+  },"CoverSection": {
+    "videos": "Videos",
+    "errorLoadingVideo": "Error loading video",
+      "consultationLink": "Confused about a consultation? Book a voice or video call now with the best doctors in Egypt from your home.",
+    "podcast": "Podcast",
+    "errorLoadingPodcast": "Error loading podcast",
+    "articles": "Articles",
+    "errorLoadingBlog": "Error loading blog",
+    "noImageAvailable": "No Image Available",
+    "uncategorized": "Uncategorized"
+  }, "FeaturePosts": {
+    "mostPopular": "Most Popular",
+    "errorFetchingBlogs": "Error fetching blogs."
+  }, "DoctoorBoster": {
+    "onlineConsultation": "Your online consultation with the best doctor in Egypt",
+    "seeDoctors": "See Doctors",
+    "doctorImageAlt": "Doctor"
+  },  "HeroQestion": {
+    "title": "Send your medical inquiries",
+    "subtitle": "& get your answers",
+    "description": "Because your health is our top priority, we provide a specialized team to answer all your medical inquiries.",
+    "askButton": "Send your question",
+    "bookButton": "Book with a doctor"
+  },  "AskDoctor": {
+    "successMessage": "Your question has been submitted successfully! We'll respond soon. Thank you for using Qalaqana!",
+    "askAnotherQuestion": "Ask another question?",
+    "bookOnlineNow": "Book with a doctor online now",
+    "askYourQuestion": "Ask your question now and reach thousands of doctors",
+    "description": "Get an answer to your question within 48 hours, or subscribe to 2l2ana for an instant and private consultation with a certified doctor.",
+    "talkToDoctorNow": "Talk to a doctor now",
+    "questionTitlePlaceholder": "Question title (a brief summary of your health problem)",
+    "questionContentPlaceholder": "Question content (explain all your inquiries)",
+    "selectTag": "Select a category for the question",
+    "selectTagPlaceholder": "Select a tag",
+    "errorTitle": "Question title is required",
+    "errorContent": "Question content is required",
+    "errorTag": "Please select a category",
+    "warning": "After submitting, your question will be made public, so be cautious and remove any private information.",
+    "submit": "Submit",
+    "emergencyMessage": "If it's a medical emergency, we recommend visiting the nearest emergency center."
+  }, "Details": {
+    "generalSpeciality": "General Speciality",
+    "consultationPrice": "Consultation Price",
+    "currency": "EGP",
+    "doctorInfo": "Doctor Information",
+    "noAdditionalInfo": "No additional information available."
+  },  "FileManagement": {
+    "keepAll": "Keep all your",
+    "yourMedicalData": "medical data",
+    "inOnePlace": "in one place easily and securely.",
+    "tooltipInfo": "Your medical data is fully secure. Only your subscribed doctors can view your medical files.",
+    "fetchError": "Error fetching medical files.",
+    "deleteSuccess": "File deleted successfully.",
+    "deleteError": "Error deleting file.",
+    "loading": "Loading..."
+  }, "MyProfile": {
+    "unauthorizedUser": "Unauthorized user",
+    "fetchUserFailed": "Failed to fetch user data",
+    "fetchUserError": "An error occurred while fetching user data"
+  },  "UpdatePhoneNumberForm": {
+    "updatePhoneNumber": "Update Phone Number",
+    "editPhoneNumber": "Edit Phone Number",
+    "unauthorizedUser": "Unauthorized user",
+    "fetchUserFailed": "Failed to fetch user data",
+    "fetchUserError": "An error occurred while fetching user data",
+    "phoneNumberMinLength": "Phone number must be at least 5 digits.",
+    "phoneNumberUpdateSuccess": "Phone number updated successfully",
+    "phoneNumberUpdateFailed": "Failed to update phone number",
+    "phoneNumberUpdateError": "An error occurred while updating the phone number"
+  },"FileUpload": {
+    "uploadButton": "Upload Files (Images or PDF Files)",
+    "uploadingFiles": "Uploading files ...",
+    "uploadError": "Error uploading file.",
+    "uploadSuccess": "Medical file uploaded successfully.",
+    "uploadFileFailed": "Failed to upload file.",
+    "uploadMedicalInfoFailed": "Failed to upload medical file info.",
+    "medicalFileInfoError": "Error uploading medical file info."
+  }, "FilePreview": {
+    "pdfFile": "PDF",
+    "download": "Download",
+    "fullSize": "Full Size"
   }
   }
   
