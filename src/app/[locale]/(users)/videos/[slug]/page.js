@@ -11,14 +11,6 @@ const extractVideoId = (url) => {
   }
 };
 
-export async function generateStaticParams() {
-  const res = await api.get("/Youtube");
-  const data = res.data;
-
-  return data.items.map((video) => ({
-    slug: `${video.youtubeLink.title.replace(/\s+/g, "-")}-${video.youtubeLink.id}`,
-  }));
-}
 
 export async function generateMetadata({ params }) {
   const { slug } = params;
