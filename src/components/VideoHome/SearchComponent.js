@@ -19,7 +19,7 @@ const SearchComponent = ({
 
   useEffect(() => {
     axios
-      .get("https://api.mettamena.com/api/Tags")
+      .get("https://mettamena.runasp.net/api/Tags")
       .then((response) => {
         const filteredTags = response.data.tags.filter(
           (tag) => tag.name !== "featured"

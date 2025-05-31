@@ -4,7 +4,7 @@ import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
 
 async function getDoctorData(id) {
   try {
-    const response = await axios.get(`https://api.mettamena.com/api/Doctor/${id}`, {
+    const response = await axios.get(`https://mettamena.runasp.net/api/Doctor/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Accept: "*/*",
@@ -22,7 +22,7 @@ async function getDoctorData(id) {
 
 // export async function generateStaticParams() {
 //   try {
-//     const response = await axios.get('https://api.mettamena.com/api/Doctor', {
+//     const response = await axios.get('https://mettamena.runasp.net/api/Doctor', {
 //       headers: {
 //         "Content-Type": "application/json",
 //         Accept: "*/*",

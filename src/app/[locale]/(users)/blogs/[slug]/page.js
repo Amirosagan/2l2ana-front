@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
 
   try {
     const responseSerilezed = await fetch(
-      `https://api.mettamena.com/api/Post/${slug}`,
+      `https://mettamena.runasp.net/api/Post/${slug}`,
       {
         cache: "no-cache",
       }
@@ -98,7 +98,7 @@ const BlogPage = async ({ params }) => {
 
   try {
     const responseSerilezed = await fetch(
-      `https://api.mettamena.com/api/Post/${slug}`,
+      `https://mettamena.runasp.net/api/Post/${slug}`,
       {
         cache: "no-cache",
       }

@@ -5,7 +5,7 @@ import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
 import { slug } from "github-slugger";
 
 export async function fetchBlogs() {
-  const response = await fetch('https://api.mettamena.com/api/Post?pageSize=15', {
+  const response = await fetch('https://mettamena.runasp.net/api/Post?pageSize=15', {
     cache: 'no-cache',  // Ensure the request bypasses the cache
   });
 

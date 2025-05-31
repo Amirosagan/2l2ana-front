@@ -38,7 +38,7 @@ export async function generateMetadata() {
 
 export async function fetchVideos() {
   try {
-    const response = await fetch('https://api.mettamena.com/api/Youtube', {
+    const response = await fetch('https://mettamena.runasp.net/api/Youtube', {
       cache: 'no-cache',  // Ensure the request bypasses the cache
     });
     const data = await response.json();
@@ -68,7 +68,7 @@ export async function fetchVideos() {
 
 export async function fetchPosts() {
   try {
-    const response = await fetch('https://api.mettamena.com/api/Post?pageSize=3', {
+    const response = await fetch('https://mettamena.runasp.net/api/Post?pageSize=3', {
       cache: 'no-cache',
     });
     const data = await response.json();

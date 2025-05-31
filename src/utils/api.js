@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://api.mettamena.com/api",
+  baseURL: "https://mettamena.runasp.net/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "*/*",

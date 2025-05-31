@@ -16,7 +16,7 @@ const SingleDoctorPage = ({ params }) => {
 
   const fetchDoctorData = async () => {
     try {
-      const response = await fetch(`https://api.mettamena.com/api/Doctor/${id}`, {
+      const response = await fetch(`https://mettamena.runasp.net/api/Doctor/${id}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get("authToken")}`,
         },
@@ -40,7 +40,7 @@ const SingleDoctorPage = ({ params }) => {
   const handleDeleteDoctor = async () => {
     try {
       const token = Cookies.get("authToken");
-      const response = await axios.delete(`https://api.mettamena.com/api/Doctor/${id}`, {
+      const response = await axios.delete(`https://mettamena.runasp.net/api/Doctor/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
