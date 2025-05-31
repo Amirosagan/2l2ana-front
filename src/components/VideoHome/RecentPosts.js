@@ -1,7 +1,7 @@
 import React from "react";
 import VideoLayoutThree from "./VideoLayoutThree";
 import { Link } from '@/src/i18n/routing';
-import { useTranslations } from 'next-intl'; // Import useTranslations for localization
+import { useTranslations } from 'next-intl'; 
 
 const RecentPost = ({ videos, hideHeader, Home }) => {
   const t = useTranslations('RecentPost'); // Use the 'RecentPost' namespace for translations

@@ -11,7 +11,7 @@ const UpdateConsultationPrice = ({ doctorId }) => {
     const fetchDoctorData = async () => {
       try {
         const token = Cookies.get("authToken");
-        const response = await fetch(`https://api.2l2ana.com/api/Doctor/${doctorId}`, {
+        const response = await fetch(`https://api.mettamena.com/api/Doctor/${doctorId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ const UpdateConsultationPrice = ({ doctorId }) => {
     try {
       const token = Cookies.get("authToken");
 
-      const response = await fetch(`https://api.2l2ana.com/api/Doctor/UpdateDoctorConsultationPrice`, {
+      const response = await fetch(`https://api.mettamena.com/api/Doctor/UpdateDoctorConsultationPrice`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

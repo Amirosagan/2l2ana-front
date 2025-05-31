@@ -7,7 +7,7 @@ export async function generateMetadata({ params }) {
 
   try {
     const responseSerilezed = await fetch(
-      `https://api.2l2ana.com/api/Post/${slug}`,
+      `https://api.mettamena.com/api/Post/${slug}`,
       {
         cache: "no-cache",
       }
@@ -16,17 +16,17 @@ export async function generateMetadata({ params }) {
     const blog = res;
 
     return {
-      metadataBase: new URL('https://2l2ana.com'),
-      title: `${blog.title} | قلقانة`,
+      metadataBase: new URL('https://mettamena.com'),
+      title: `${blog.title} | متطمنة`,
       description: blog.content.slice(0, 150) + "...",
       keywords:
         "مدونة طبية, نصائح طبية, استشارات طبية, صحة, صحة عامة, نصائح صحية, حجز طبيب, مدونة طبية عربية, Medical blog, Medical tips, Medical consultations, Health, General health, Health tips, Book a doctor, Arabic medical blog",
-      author: "قلقانة",
+      author: "متطمنة",
       openGraph: {
-        title: `${blog.title} | قلقانة`,
+        title: `${blog.title} | متطمنة`,
         description: blog.content.slice(0, 150) + "...",
         type: "article",
-        url: `https://2l2ana.com/blogs/${slug}`,
+        url: `https://mettamena.com/blogs/${slug}`,
         images: [
           {
             url: blog.imageUrl,
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
     };
   } catch (error) {
     return {
-      title: "Error | قلقانة",
+      title: "Error | متطمنة",
       description: "Error fetching blog data",
     };
   }
@@ -98,7 +98,7 @@ const BlogPage = async ({ params }) => {
 
   try {
     const responseSerilezed = await fetch(
-      `https://api.2l2ana.com/api/Post/${slug}`,
+      `https://api.mettamena.com/api/Post/${slug}`,
       {
         cache: "no-cache",
       }

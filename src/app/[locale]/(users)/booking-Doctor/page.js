@@ -5,26 +5,26 @@ import DoctorSearchClient from "@/src/components/Doctors/DoctorSearchClient";
 export async function generateMetadata() {
   try {
     const res = await api.get('/Doctor/GetDoctors', {
-      cache: 'no-cache'  // Ensure the request bypasses the cache
+      cache: 'no-cache' 
     });
     const data = res.data;
 
     const doctorInfo = data.items.map(doctor => `${doctor.firstName} ${doctor.lastName} - ${doctor.category}`).join(', ');
 
     return {
-      metadataBase: new URL('https://2l2ana.com'),
-      title: `احجز دكتور اونلاين | قلقانة`,
+      metadataBase: new URL('https://mettamena.com'),
+      title: `احجز دكتور اونلاين | متطمنة`,
       description: `اكتشف أفضل الأطباء واستفد من الاستشارات الطبية المتخصصة. تشمل القائمة: ${doctorInfo}.`,
       keywords: "احجز دكتور, استشارة طبية, نصائح طبية, حجز استشارة طبية, طبيب اونلاين, طبيب عبر الإنترنت, حجز موعد مع دكتور, استشارة دكتور, نصائح صحية, طبيب متخصص",
-      author: "قلقانة",
+      author: "متطمنة",
       openGraph: {
-        title: `احجز دكتور | قلقانة`,
+        title: `احجز دكتور | متطمنة`,
         description: `اكتشف أفضل الأطباء واستفد من الاستشارات الطبية المتخصصة. تشمل القائمة: ${doctorInfo}.`,
         type: 'website',
-        url: `https://2l2ana.com/doctors`,
+        url: `https://mettamena.com/doctors`,
         images: [
           {
-            url: 'https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdoctor-image.abc123.png&w=1080&q=75', 
+            url: 'https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdoctor-image.abc123.png&w=1080&q=75', 
             width: 800,
             height: 600,
             alt: 'احجز دكتور',
@@ -35,7 +35,7 @@ export async function generateMetadata() {
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: "Error | قلقانة",
+      title: "Error | متطمنة",
       description: "Error generating metadata",
     };
   }

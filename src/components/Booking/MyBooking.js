@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useTranslations } from 'next-intl'; // Import useTranslations
+import { useTranslations } from 'next-intl'; 
 import BookingList from "@/src/components/Booking/BookingList";
 import api from "@/src/utils/api";
 import { checkSession } from "@/src/utils/auth";
@@ -13,7 +13,7 @@ import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 const MyBookings = () => {
-  const t = useTranslations('MyBookings'); // Initialize useTranslations
+  const t = useTranslations('MyBookings');
   const router = useRouter(); 
   const [notDoneConsultations, setNotDoneConsultations] = useState([]);
   const [doneConsultations, setDoneConsultations] = useState([]);

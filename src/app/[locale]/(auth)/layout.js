@@ -8,7 +8,7 @@ import Header from '@/src/components/Header';
 const tajawal = Tajawal({ subsets: ['latin'], weight: '700', display: 'swap', variable: '--font-ta' });
 
 export const metadata = {
-  title: 'تسجيل الدخول | قلقانة',
+  title: 'تسجيل الدخول | متطمنة',
   description: 'اهلا بيكي في اكبر مجتمع يخص صحة النساء في الوطن العربي',
 };
 

@@ -20,19 +20,19 @@ export async function generateMetadata({ searchParams }) {
     }
 
     return {
-        metadataBase: new URL('https://2l2ana.com'),
-        title: `استمع إلى ${selectedPodcastTitle} | قلقانة`,
+        metadataBase: new URL('https://mettamena.com'),
+        title: `استمع إلى ${selectedPodcastTitle} | متطمنة`,
         description: `استمع إلى أحدث البودكاست واستمتع بالمحتوى الرائع والمفيد.`,
         keywords: "بودكاست, استمع للبودكاست, استشارات طبية, نصائح صحية, استشارات اونلاين",
-        author: "قلقانة",
+        author: "متطمنة",
         openGraph: {
-            title: `استمع إلى ${selectedPodcastTitle} | قلقانة`,
+            title: `استمع إلى ${selectedPodcastTitle} | متطمنة`,
             description: `استمع إلى أحدث البودكاست واستمتع بالمحتوى الرائع والمفيد.`,
             type: 'website',
-            url: `https://2l2ana.com/podcasts`,
+            url: `https://mettamena.com/podcasts`,
             images: [
                 {
-                    url: 'https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpodcast-image.abc123.png&w=1080&q=75',
+                    url: 'https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fpodcast-image.abc123.png&w=1080&q=75',
                     width: 800,
                     height: 600,
                     alt: 'بودكاست',

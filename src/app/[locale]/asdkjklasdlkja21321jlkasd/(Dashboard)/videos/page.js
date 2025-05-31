@@ -22,7 +22,7 @@ const VideoPage = () => {
     try {
       const token = Cookies.get("authToken");
       const response = await api.get(
-        `https://api.2l2ana.com/api/Youtube?page=${currentPage}&pageSize=${pageSize}`,
+        `https://api.mettamena.com/api/Youtube?page=${currentPage}&pageSize=${pageSize}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

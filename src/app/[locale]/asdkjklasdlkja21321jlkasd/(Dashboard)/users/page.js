@@ -8,7 +8,7 @@ const UserPage = () => {
   return (
     <AdminPage
       type="users"
-      apiUrl="https://api.2l2ana.com/api/User"
+      apiUrl="https://api.mettamena.com/api/User"
       headers={headers}
     />
   );

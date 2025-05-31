@@ -10,16 +10,16 @@ export async function generateMetadata({ params }) {
     const question = res.data.question;
 
     return {
-      metadataBase: new URL('https://2l2ana.com'),
-      title: `${question.title} | قلقانة`,
+      metadataBase: new URL('https://mettamena.com'),
+      title: `${question.title} | متطمنة`,
       description: question.content.slice(0, 150) + '...',
       keywords: "مدونة طبية, نصائح طبية, استشارات طبية, صحة, صحة عامة, نصائح صحية, حجز طبيب, مدونة طبية عربية, Medical blog, Medical tips, Medical consultations, Health, General health, Health tips, Book a doctor, Arabic medical blog",
-      author: "قلقانة",
+      author: "متطمنة",
       openGraph: {
-        title: `${question.title} | قلقانة`,
+        title: `${question.title} | متطمنة`,
         description: question.content.slice(0, 150) + '...',
         type: 'article',
-        url: `https://2l2ana.com/medical-questions/${id}`,
+        url: `https://mettamena.com/medical-questions/${id}`,
         images: [
           {
             url: question.imageUrl,
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
   } catch (error) {
     console.error('Error fetching question metadata:', error);
     return {
-      title: 'Error | قلقانة',
+      title: 'Error | متطمنة',
       description: 'Error fetching question data',
     };
   }

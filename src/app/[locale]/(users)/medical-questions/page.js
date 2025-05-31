@@ -14,19 +14,19 @@ export async function generateMetadata() {
     const titles = data.items.map(question => question.title).join(', ');
 
     return {
-      metadataBase: new URL('https://2l2ana.com'),
-      title: `اسئلة طبية | قلقانة`,
+      metadataBase: new URL('https://mettamena.com'),
+      title: `اسئلة طبية | متطمنة`,
       description: `احصل على إجابات لأسئلتك الطبية. قدم استفساراتك واحصل على نصائح مهنية عبر الإنترنت. تشمل المواضيع: ${titles}.`,
       keywords: "حجز دكتور, اسئلة طبية, استشارة طبية, نصائح طبية, استفسارات صحية, دكتور اونلاين, دكتور عبر الإنترنت, حجز استشارة طبية, سؤال طبي, طبيب استشاري, نصيحة طبية, استفسار طبي, حجز موعد مع دكتور, استشارة دكتور, نصائح صحية, طبيب متخصص, استفسارات طبية شائعة, book doctor, medical questions, doctor consultation, medical advice, health queries, online doctor, doctor appointment, medical consultation, ask doctor, professional medical advice",
-      author: "قلقانة",
+      author: "متطمنة",
       openGraph: {
-        title: `اسئلة طبية | قلقانة`,
+        title: `اسئلة طبية | متطمنة`,
         description: `احصل على إجابات لأسئلتك الطبية. قدم استفساراتك واحصل على نصائح مهنية عبر الإنترنت. تشمل المواضيع: ${titles}.`,
         type: 'website',
-        url: `https://2l2ana.com/questions`,
+        url: `https://mettamena.com/questions`,
         images: [
           {
-            url: 'https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-imgr.9825690a.png&w=1080&q=75', 
+            url: 'https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-imgr.9825690a.png&w=1080&q=75', 
             width: 800,
             height: 600,
             alt: 'اسئلة طبية',
@@ -37,7 +37,7 @@ export async function generateMetadata() {
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: "Error | قلقانة",
+      title: "Error | متطمنة",
       description: "Error generating metadata",
     };
   }

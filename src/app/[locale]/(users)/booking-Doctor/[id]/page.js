@@ -4,7 +4,7 @@ import SuggestionList from "@/src/components/Doctors/DoctorSuggestionList";
 
 async function getDoctorData(id) {
   try {
-    const response = await axios.get(`https://api.2l2ana.com/api/Doctor/${id}`, {
+    const response = await axios.get(`https://api.mettamena.com/api/Doctor/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Accept: "*/*",
@@ -22,7 +22,7 @@ async function getDoctorData(id) {
 
 // export async function generateStaticParams() {
 //   try {
-//     const response = await axios.get('https://api.2l2ana.com/api/Doctor', {
+//     const response = await axios.get('https://api.mettamena.com/api/Doctor', {
 //       headers: {
 //         "Content-Type": "application/json",
 //         Accept: "*/*",
@@ -49,16 +49,16 @@ export async function generateMetadata({ params }) {
   const doctor = await getDoctorData(id);
 
   return {
-    metadataBase: new URL('https://2l2ana.com'),
-    title: `قلقانة | ${doctor?.name || 'Doctor Details'}`,
+    metadataBase: new URL('https://mettamena.com'),
+    title: `متطمنة | ${doctor?.name || 'Doctor Details'}`,
     description: doctor?.description || "احصل على استشارة طبية من أفضل الأطباء المتخصصين.",
     keywords: "تفاصيل الطبيب, استشارة طبية, أطباء متخصصون, حجز استشارة, معلومات الطبيب",
-    author: "قلقانة",
+    author: "متطمنة",
     openGraph: {
       title: `تفاصيل الطبيب | ${doctor?.name || 'Doctor Details'}`,
       description: doctor?.description || "احصل على استشارة طبية من أفضل الأطباء المتخصصين.",
       type: 'profile',
-      url: `https://2l2ana.com/doctor/${id}`,
+      url: `https://mettamena.com/doctor/${id}`,
       images: [
         {
           url: doctor?.imageUrl || 'default-image-url.jpg',

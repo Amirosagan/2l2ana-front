@@ -10,8 +10,8 @@ const tajawal = Tajawal({ subsets: ['latin'], weight: '700', display: 'swap', va
 
 export async function generateMetadata() {
   return {
-    metadataBase: new URL('https://2l2ana.com'),
-    title: 'قلقانة',
+    metadataBase: new URL('https://mettamena.com'),
+    title: 'متطمنة',
     description: 'الموقع العربي الاول المهتم بصحة النساء',
   };
 }

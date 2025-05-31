@@ -4,7 +4,7 @@ import '@/src/app/globals.css';
 
 export const metadata = {
   title: 'Admin Dashboard',
-  description: '2l2ana Admin Dashboard',
+  description: 'mettamena Admin Dashboard',
 };
 
 export default async function AdminLayout({ children, params }) {

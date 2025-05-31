@@ -8,7 +8,7 @@ const PodcastPage = () => {
   return (
     <AdminPage
       type="podcasts"
-      apiUrl="https://api.2l2ana.com/api/Podcast"
+      apiUrl="https://api.mettamena.com/api/Podcast"
       addNewLink="/asdkjklasdlkja21321jlkasd/newPodcast"
       headers={headers}
     />

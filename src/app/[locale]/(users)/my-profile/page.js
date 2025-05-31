@@ -4,20 +4,20 @@ const MyProfileClient = dynamic(() => import("./client"), { ssr: false });
 
 export async function generateMetadata() {
   return {
-    metadataBase: new URL('https://2l2ana.com'),
-    title: `ملفي الشخصي | قلقانة`,
+    metadataBase: new URL('https://mettamena.com'),
+    title: `ملفي الشخصي | متطمنة`,
     description: `إدارة حسابك الشخصي والاطلاع على الحجوزات والمعلومات الطبية.`,
     keywords:
       "ملفي الشخصي, إدارة الحساب, معلومات طبية, حجز استشارة طبية, طبيب اونلاين",
-    author: "قلقانة",
+    author: "متطمنة",
     openGraph: {
-      title: `ملفي الشخصي | قلقانة`,
+      title: `ملفي الشخصي | متطمنة`,
       description: `إدارة حسابك الشخصي والاطلاع على الحجوزات والمعلومات الطبية.`,
       type: "website",
-      url: `https://2l2ana.com/myprofile`,
+      url: `https://mettamena.com/myprofile`,
       images: [
         {
-          url: "https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-image.abc123.png&w=1080&q=75",
+          url: "https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-image.abc123.png&w=1080&q=75",
           width: 800,
           height: 600,
           alt: "ملفي الشخصي",

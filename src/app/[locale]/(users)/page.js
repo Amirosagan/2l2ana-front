@@ -3,7 +3,7 @@ import HeroDoctor from "@/src/components/Doctors/HeroDoctor";
 import RecentPost from "@/src/components/VideoHome/RecentPosts";
 import ArticleCard from "@/src/components/ArticleCard";
 import Image from "next/image";
-import Podcast from "@/public/podcast.svg";
+import Podcast from "@/public/podcastt.png";
 import WhyCard from "@/src/components/AboutUs/WhyCard";
 import OfflineSection from "@/src/components/AboutUs/OfflineSection";
 import AdsSection from "@/src/components/AboutUs/AdsSection";
@@ -14,19 +14,19 @@ import { Link } from "@/src/i18n/routing";
 
 export async function generateMetadata() {
   return {
-    metadataBase: new URL('https://2l2ana.com'),
-    title: `قلقانة المنصة العربية الاولى المختصة بصحة النساء`,
+    metadataBase: new URL('https://mettamena.com'),
+    title: `متطمنة المنصة العربية الاولى المختصة بصحة النساء`,
     description: `أول منصة عربية تهتم بصحة النساء في الوطن العربي. اكتشف محتوى طبي شامل، فيديوهات، مقالات، استشارات طبية، وحجز دكاترة.`,
     keywords: "منصة صحة النساء, محتوى طبي, استشارات طبية, فيديوهات طبية, مقالات طبية, حجز دكاترة, معلومات طبية, صحة النساء, استفسارات صحية",
-    author: "قلقانة",
+    author: "متطمنة",
     openGraph: {
-      title: `محتوى طبي | قلقانة`,
+      title: `محتوى طبي | متطمنة`,
       description: `أول منصة عربية تهتم بصحة النساء في الوطن العربي. اكتشف محتوى طبي شامل، فيديوهات، مقالات، استشارات طبية، وحجز دكاترة.`,
       type: 'website',
-      url: `https://2l2ana.com`,
+      url: `https://mettamena.com`,
       images: [
         {
-          url: 'https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-imgr.9825690a.png&w=1080&q=75',
+          url: 'https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-imgr.9825690a.png&w=1080&q=75',
           width: 800,
           height: 600,
           alt: 'محتوى طبي',
@@ -38,28 +38,28 @@ export async function generateMetadata() {
 
 export async function fetchVideos() {
   try {
-    const response = await fetch('https://api.2l2ana.com/api/Youtube', {
+    const response = await fetch('https://api.mettamena.com/api/Youtube', {
       cache: 'no-cache',  // Ensure the request bypasses the cache
     });
     const data = await response.json();
     const allVideos = data.items;
 
+    // Filter for featured videos
     const featuredVideos = allVideos.filter(item =>
       item.youtubeLink.tags.some(tag => tag.name === "featured")
     );
 
-    let selectedVideos = featuredVideos;
-    if (featuredVideos.length < 2) {
-      const remainingVideos = allVideos.filter(item =>
-        !item.youtubeLink.tags.some(tag => tag.name === "featured")
-      );
-      selectedVideos = [
-        ...featuredVideos,
-        ...remainingVideos.slice(0, 2 - featuredVideos.length)
-      ];
-    }
+    // Fill up to 3 videos using non-featured if needed
+    const selectedVideos = featuredVideos.length >= 3
+      ? featuredVideos.slice(0, 3)
+      : [
+          ...featuredVideos,
+          ...allVideos
+            .filter(item => !item.youtubeLink.tags.some(tag => tag.name === "featured"))
+            .slice(0, 3 - featuredVideos.length),
+        ];
 
-    return selectedVideos.slice(0, 2);
+    return selectedVideos;
   } catch (error) {
     console.error('Error fetching videos:', error);
     return [];
@@ -68,7 +68,7 @@ export async function fetchVideos() {
 
 export async function fetchPosts() {
   try {
-    const response = await fetch('https://api.2l2ana.com/api/Post?pageSize=3', {
+    const response = await fetch('https://api.mettamena.com/api/Post?pageSize=3', {
       cache: 'no-cache',
     });
     const data = await response.json();

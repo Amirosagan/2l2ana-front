@@ -63,7 +63,7 @@ const ConsultationActions = ({
       }
 
       const { token } = sessionData;
-      const cancelUrl = `https://api.2l2ana.com/api/Consultation/CancleConsultation/${updatedConsultation.id}`;
+      const cancelUrl = `https://api.mettamena.com/api/Consultation/CancleConsultation/${updatedConsultation.id}`;
 
       const response = await axios.delete(cancelUrl, {
         headers: {

@@ -5,7 +5,7 @@ import DoctoorBoster from "@/src/components/AboutUs/DoctoorBoster";
 import { slug } from "github-slugger";
 
 export async function fetchBlogs() {
-  const response = await fetch('https://api.2l2ana.com/api/Post?pageSize=15', {
+  const response = await fetch('https://api.mettamena.com/api/Post?pageSize=15', {
     cache: 'no-cache',  // Ensure the request bypasses the cache
   });
 
@@ -33,20 +33,20 @@ export async function generateMetadata() {
   const titles = blogs.map((blog) => blog.title).join(", ");
 
   return {
-    metadataBase: new URL('https://2l2ana.com'),
-    title: `مقالات طبية | قلقانة`,
+    metadataBase: new URL('https://mettamena.com'),
+    title: `مقالات طبية | متطمنة`,
     description: `اكتشف مقالاتنا الجديدة واستفد من المعلومات الغنية. تشمل المواضيع: ${titles}.`,
     keywords:
       "حجز دكتور, مقالات طبية, استشارة طبية, نصائح طبية, استفسارات صحية, دكتور اونلاين, دكتور عبر الإنترنت, حجز استشارة طبية, مقال طبي, طبيب استشاري, نصيحة طبية, استفسار طبي, حجز موعد مع دكتور, استشارة دكتور, نصائح صحية, طبيب متخصص, استفسارات طبية شائعة, book doctor, medical articles, doctor consultation, medical advice, health queries, online doctor, doctor appointment, medical consultation, medical articles, professional medical advice",
-    author: "قلقانة",
+    author: "متطمنة",
     openGraph: {
-      title: `مدونة | قلقانة`,
+      title: `مدونة | متطمنة`,
       description: `اكتشف مقالاتنا الجديدة واستفد من المعلومات الغنية. تشمل المواضيع: ${titles}.`,
       type: "website",
-      url: `https://2l2ana.com/blog`,
+      url: `https://mettamena.com/blog`,
       images: [
         {
-          url: "https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fblog-image.abc123.png&w=1080&q=75",
+          url: "https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fblog-image.abc123.png&w=1080&q=75",
           width: 800,
           height: 600,
           alt: "مدونة طبية",

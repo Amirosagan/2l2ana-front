@@ -20,20 +20,20 @@ export async function generateMetadata({ params }) {
   const videoDetails = res.data.youtubeLink;
 
   return {
-    title: `${videoDetails.title} |  قلقانة `,
+    title: `${videoDetails.title} |  متطمنة `,
     description:
       videoDetails.description ||
       `شاهد الفيديو الطبي عن ${videoDetails.title} واحصل على معلومات مفيدة.`,
     keywords:
       "حجز دكتور, فيديوهات طبية, استشارة طبية, نصائح طبية, استفسارات صحية, دكتور اونلاين, دكتور عبر الإنترنت, حجز استشارة طبية, فيديو طبي, طبيب استشاري, نصيحة طبية, استفسار طبي, حجز موعد مع دكتور, استشارة دكتور, نصائح صحية, طبيب متخصص, استفسارات طبية شائعة, book doctor, medical videos, doctor consultation, medical advice, health queries, online doctor, doctor appointment, medical consultation, medical videos, professional medical advice",
-    author: "قلقانة",
+    author: "متطمنة",
     openGraph: {
       title: `${videoDetails.title} | فيديوهات طبية`,
       description:
         videoDetails.description ||
         `شاهد الفيديو الطبي عن ${videoDetails.title} واحصل على معلومات مفيدة.`,
       type: "video.movie",
-      url: `https://2l2ana.com/videos/${slug}`,
+      url: `https://mettamena.com/videos/${slug}`,
       video: {
         url: `https://www.youtube.com/watch?v=${extractVideoId(videoDetails.url)}`,
         type: "text/html",
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
       },
       images: [
         {
-          url: "https://2l2ana.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-imgr.9825690a.png&w=1080&q=75",
+          url: "https://mettamena.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofile-imgr.9825690a.png&w=1080&q=75",
           width: 800,
           height: 600,
           alt: "فيديو طبي",

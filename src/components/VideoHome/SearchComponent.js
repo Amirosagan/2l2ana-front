@@ -19,7 +19,7 @@ const SearchComponent = ({
 
   useEffect(() => {
     axios
-      .get("https://api.2l2ana.com/api/Tags")
+      .get("https://api.mettamena.com/api/Tags")
       .then((response) => {
         const filteredTags = response.data.tags.filter(
           (tag) => tag.name !== "featured"

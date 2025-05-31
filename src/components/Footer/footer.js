@@ -2,7 +2,7 @@ import { FaFacebookF, FaInstagram, FaYoutube, FaTiktok, FaSnapchatGhost, FaTwitt
 import { Link } from '@/src/i18n/routing';
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
-import profileImg from '@/public/profile-imgr.svg';
+import profileImg from '@/public/logoo.svg';
 
 const Footer = () => {
     const t = useTranslations('Footer'); 
@@ -30,19 +30,19 @@ const Footer = () => {
                                 <Link href="https://www.facebook.com/profile.php?id=61564115679821&mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
                                     <FaFacebookF className="bg-accent w-8 h-8 md:h-8 md:w-8  p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
-                                <Link href="https://www.instagram.com/2l2ana?igsh=MWM3OWtpbWQybGZkaQ==" target="_blank" rel="noopener noreferrer">
+                                <Link href="https://www.instagram.com/mettamena?igsh=MWM3OWtpbWQybGZkaQ==" target="_blank" rel="noopener noreferrer">
                                     <FaInstagram className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
-                                <Link href="https://www.youtube.com/@2l2ana" target="_blank" rel="noopener noreferrer">
+                                <Link href="https://www.youtube.com/@mettamena" target="_blank" rel="noopener noreferrer">
                                     <FaYoutube className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
-                                <Link href="https://www.tiktok.com/@2l2ana?_t=8ovfwccfiro&_r=1" target="_blank" rel="noopener noreferrer">
+                                <Link href="https://www.tiktok.com/@mettamena?_t=8ovfwccfiro&_r=1" target="_blank" rel="noopener noreferrer">
                                     <FaTiktok className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
-                                <Link href="https://www.snapchat.com/add/a2l2ana" target="_blank" rel="noopener noreferrer">
+                                <Link href="https://www.snapchat.com/add/amettamena" target="_blank" rel="noopener noreferrer">
                                     <FaSnapchatGhost className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
-                                <Link href="https://x.com/2l2ana?s=21&t=XJ-_AGsiIAzwqCjFwiR8OQ" target="_blank" rel="noopener noreferrer">
+                                <Link href="https://x.com/mettamena?s=21&t=XJ-_AGsiIAzwqCjFwiR8OQ" target="_blank" rel="noopener noreferrer">
                                     <FaTwitter className="bg-accent w-8 h-8 md:h-8 md:w-8 p-1 hover:scale-125 transition-all ease duration-200 text-white" />
                                 </Link>
                             </div>
@@ -70,7 +70,7 @@ const Footer = () => {
 
                                 <div>
                                     <a 
-                                        href="mailto:customer.care@2l2ana.com" 
+                                        href="mailto:customer.care@mettamena.com" 
                                         className="text-accent transition-all duration-200 block"
                                     >
                                          {t('email')}
@@ -89,7 +89,7 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <Image className="lg:w-[200px] md:hidden mt-10 lg:mt-0 lg:block w-[130px] pb-5" alt="Doctor" src={profileImg} />
+                <Image className="lg:w-[300px] md:hidden mt-10 lg:mt-0 lg:block w-[200px] pb-5" alt="Doctor" src={profileImg} />
             </div>
             <div className="w-full mt-8 relative font-medium pb-8 px-8 flex flex-col md:flex-row items-center justify-center">
             <span className="text-center text-sm md:text-base">

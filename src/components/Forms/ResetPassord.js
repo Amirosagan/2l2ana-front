@@ -59,7 +59,7 @@ const ResetPassword = () => {
 
     try {
       const response = await fetch(
-        "https://api.2l2ana.com/api/Auth/ResetPassword",
+        "https://api.mettamena.com/api/Auth/ResetPassword",
         {
           method: "POST",
           headers: {

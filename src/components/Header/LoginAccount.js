@@ -7,7 +7,7 @@ import Avatar from './Avatar';
 import MenuItem from './MenuItem';
 import Image from 'next/image';
 import { Link } from '@/src/i18n/routing';
-import profileImg from '@/public/profile-imgr.png';
+import profileImg from '@/public/logoo.svg';
 import { MenuIcon, XIcon, ChevronDownIcon, ChevronUpIcon, FileTextIcon, VideoIcon, HelpCircleIcon, SendIcon, InfoIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl'; 
 

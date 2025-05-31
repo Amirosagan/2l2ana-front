@@ -1,7 +1,7 @@
 import RegisterForm from "@/src/components/Login/RegisterForm";
 
 export const metadata = {
-  title: 'انشاء حساب | قلقانة ' ,
+  title: 'انشاء حساب | متطمنة ' ,
   description: 'اهلا بيكي في اكبر مجتمع يخص صحة النساء في الوطن العربي',
 };
 const RegisterPage = () => {

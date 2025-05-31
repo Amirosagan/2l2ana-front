@@ -1,6 +1,6 @@
 "use client";
 import ads1 from "@/public/ads1.jpeg";
-import ads2 from "@/public/ads2.jpeg";
+import ads2 from "@/public/ads2.jpg";
 import ads3 from "@/public/ads3.jpeg";
 import ads4 from "@/public/ads4.jpeg";
 import Image from "next/image";
@@ -41,17 +41,17 @@ function AdsSection() {
       <div className='flex justify-center relative'>
         <div className='overflow-hidden'>
           <Link href="/booking-Doctor"> 
-            <Image alt='خصومات قلقانة' className='hidden object-contain lg:h-[400px] lg:w-full' src={ads2} />
+            <Image alt='خصومات متطمنة' className='hidden object-contain lg:h-[400px] lg:w-full' src={ads2} />
           </Link>
         </div>
         <div className='overflow-hidden'>
           <Link href="/booking-Doctor"> 
-            <Image alt='خصومات قلقانة' className='hidden object-contain lg:h-[400px] mx-10 lg:w-full' src={ads1} />
+            <Image alt='خصومات متطمنة' className='hidden object-contain lg:h-[400px] mx-10 lg:w-full' src={ads1} />
           </Link>
         </div>
         <div className='overflow-hidden'>
           <Link href="/booking-Doctor"> 
-            <Image alt='خصومات قلقانة' className='object-contain w-[100vh] lg:h-[500px] lg:w-[600px]' src={images[currentImage]} />
+            <Image alt='خصومات متطمنة' className='object-contain w-[100vh] lg:h-[500px] lg:w-[600px]' src={images[currentImage]} />
           </Link>
         </div>
 

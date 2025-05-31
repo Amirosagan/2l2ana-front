@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Link } from '@/src/i18n/routing';
-import profileImg from '@/public/logo2.svg'
+import profileImg from '@/public/logoo.svg'
 
 
 const Logo = () => {

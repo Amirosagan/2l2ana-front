@@ -3,15 +3,26 @@
       "title": "Hello world!",
       "about": "Go to the about page"
     },
-    "GoalPage": {
-      "whoWeAre": "Who are we?",
-      "intro": "A platform that focuses on everything related to women across the Arab world. The services are divided into:",
-      "serviceOne": "The medical awareness and consultation section for women of different ages, aimed at enhancing the awareness of girls and women regarding their mental and physical health and helping them feel safe and reassured.",
-      "serviceTwo": "The women's needs section, where we provide all the products women need in one place and make it easily accessible.",
-      "ourGoalTitle": "Our Goal",
-      "ourGoalDescription": "To become the first place women turn to when they have a question about their health or need a specific product.",
-      "imageAlt": "Our Goal"
-    },
+  "GoalPage": {
+  "whoWeAre": "Welcome to",
+  "brandName": "Mettamena",
+  "slogan": "(Awareness & Health)",
+  "tagline": "Your private sanctuary for women's health and well-being",
+  "paragraph1": "At Mettamena, we believe that every woman deserves compassionate and specialized care, especially when it comes to sensitive health challenges that are often misunderstood or stigmatized.",
+  "paragraph2": "We are a safe and confidential online platform dedicated to supporting Arabic-speaking women facing mental and physical issues such as anxiety, depression, eating disorders (bulimia, anorexia, and binge eating), and sensitive sexual health concerns like vaginismus and sexual trauma.",
+  "whyUsTitle": "Why Choose Us?",
+  "whyUsPrivacyTitle": "Privacy and Confidentiality First",
+  "whyUsPrivacyText": "We understand that privacy is crucial. Our platform is designed to protect your identity and personal information with top-level security, allowing you to seek help from the comfort and safety of your home without fear of judgment or exposure.",
+  "whyUsCareTitle": "Specialized and Culturally Sensitive Care",
+  "whyUsCareText": "Our team consists of qualified mental health professionals and doctors who deeply understand the cultural and social challenges women face in the Arab world. We provide empathetic and respectful care tailored to your unique needs.",
+  "whyUsSupportTitle": "Expert Support for Eating Disorders and Sexual Health",
+  "whyUsSupportText": "Eating disorders and sexual health issues are often left undiscussed due to stigma and shame. At Mettamena, we provide specialized consultations and treatment plans to help you overcome challenges such as bulimia, anorexia, vaginismus, and trauma, enabling you to regain your health and confidence.",
+  "whyUsCommunityTitle": "Community and Education",
+  "whyUsCommunityText": "In addition to one-on-one consultations, we offer educational resources, workshops, and a supportive community where you can learn, share, and grow in a safe and judgment-free environment.",
+  "missionTitle": "Our Mission",
+  "missionText": "To break the silence around women's mental and sexual health in the Arab world by providing a trusted, safe, and accessible platform that prioritizes your privacy, dignity, and healing journey."
+}
+,
     "HeroDoctor": {
       "headlinePart1": "Check on your",
       "headlinePart2": "from home with ease!",
@@ -20,7 +31,7 @@
       "exploreDoctors": "Explore Doctors"
     },
     "WhyCard": {
-        "headline": "? Why use 2l2ana",
+        "headline": "? Why use mettamena",
         "cards": [
           {
             "number": "1",
@@ -83,12 +94,12 @@
         "askQuestion": "Ask your question"
       },
       "AdsSection": {
-        "title": "Best 2l2ana Offers",
-        "description": "Because your healthcare is our priority, we’ve brought you the best offers online and offline, exclusively for 2l2ana clients."
+        "title": "Best mettamena Offers",
+        "description": "Because your healthcare is our priority, we’ve brought you the best offers online and offline, exclusively for mettamena clients."
       },
       "Learning": {
     "title": "Learning and Awareness",
-    "description": "Learn and explore more about your physical and mental health through 2l2ana's medical content"
+    "description": "Learn and explore more about your physical and mental health through mettamena's medical content"
   }, "Footer": {
     "bookDoctor": "Book the best doctor",
     "specialist1": "Gynecologist",
@@ -99,7 +110,7 @@
     "ourServices": "Our Services",
     "medicalArticles": "Medical Articles",
     "medicalVideos": "Medical Videos",
-    "podcast": "2l2ana Podcast",
+    "podcast": "mettamena Podcast",
     "medicalQuestions": "Medical Questions",
     "askUs": "Ask Us?",
     "aboutUs": "About Us",
@@ -126,7 +137,7 @@
     "medicalContent": "Medical Content",
     "blogs": "Medical Articles",
     "videos": "Medical Videos",
-    "podcasts": "2l2ana Podcast",
+    "podcasts": "mettamena Podcast",
     "medicalQuestions": "Medical Questions",
     "askDoctor": "Send Us Your Question",
     "bookDoctor": "Book a Doctor",
@@ -141,7 +152,7 @@
     "medicalContent": "Medical Content",
     "blogs": "Medical Articles",
     "videos": "Medical Videos",
-    "podcasts": "2l2ana Podcast",
+    "podcasts": "mettamena Podcast",
     "medicalQuestions": "Medical Questions",
     "askDoctor": "Send Us Your Question",
     "bookDoctor": "Book a Doctor",
@@ -197,9 +208,9 @@
   },
   "PrivacyPolicy": {
     "title": "سياسة الخصوصية",
-    "intro": "شكرًا لاستخدامك \"2l2ana\". ويهمنا للغاية ثقتكم بنا، ونحن ملتزمون بحماية خصوصية وأمن معلوماتك الشخصية. وتساعدنا المعلومات التي تشاركها معنا في أن نقدم لك تجربة رائعة مع \"2l2ana\". وتشير سياسة الخصوصية إلى ممارسات الخصوصية التي نتبعها بشأن جميع الخدمات التي نقدمها في جميع أنحاء العالم. يشير مصطلح \"2l2ana\" أو \"لنا\" أو \"نحن\" إلى شركة \"2l2ana\" المحدودة، بينما يشير مصطلح \"المستخدم\" و\"أنت\" و\"لك\" إلى شخصك بصفك مستخدم لخدمات \"2l2ana\". وتتضمن سياسة الخصوصية، إلى جانب شروط الاستخدام، القواعد والسياسات العامة التي تحكم استخدامك لمنصتنا. وربما يُطلب منك الموافقة على شروط وأحكام إضافية بناءً على نشاطك عند زيارة منصتنا:",
-    "section1": "1. المعلومات التي نجمعها\n\n 1.1 تلتزم شركة \"2l2ana\" بالحفاظ على حماية خصوصية مستخدميها. وُوضعت سياسة الخصوصية التي نتبعها من أجل مساعدتك في فهم كيف نقوم بجمع المعلومات التي تزودنا بها واستخدامها وحمايتها. ولدى ولوجك إلى موقع \"2l2ana\"، نجمع تلقائيًا معلومات معينة حول جهازك، ومنها معلومات حول متصفح الويب الذي تستخدمه، وعنوان بروتوكول الإنترنت، ومنطقتك الزمنية، وبعض ملفات تعريف الارتباط (الكوكيز) المثبتة على جهازك. علاوة على ذلك، بينما تتصفح الموقع، نجمع معلومات حول صفحات الويب الفردية أو الأطباء الذين تشاهدهم، والمواقع الإلكترونية أو مصطلحات البحث التي أحالتك إلى موقع \"2l2ana\"، والمعلومات حول كيفية تفاعلك مع \"2l2ana\".\n\n 1.2 كما نقوم بجمع معلومات منك عند التسجيل على موقع \"2l2ana\" أو حجز موعد مع أحد الأطباء أو الاشتراك في نشرتنا الإخبارية. وعند الحجز أو التسجيل على موقعنا الإلكتروني، حسبما يكون مناسبًا، قد يُطلب منك إدخال اسمك وعنوان بريدك الإلكتروني وعنوانك البريدي ورقم هاتفك وتاريخ ميلادك (\"معلومات شخصية\").\n\n 1.3 قد نطلب منك أيضًا تزويدنا بمعلومات حول تحصيل المدفوعات من بطاقة ائتمانك أو بطاقة الخصم المباشر. وبعد إجراء معاملة ما، لن تُخزن هذه المعلومات الخاصة (بطاقات الائتمان، وأرقام الضمان الاجتماعي، والبيانات المالية، وما إلى ذلك) على خوادمنا.\n\n 1.4 يمكنك أن تطلب منا حذف هذه المعلومات في أي وقت، أو إلغاء الاشتراك من رسائل البريد الإلكتروني من خلال الولوج إلى إعدادات حسابك أو اتباع الإرشادات التفصيلية الواردة أسفل كل رسالة إلكترونية.",
-    "section2": "2. كيف نستخدم بياناتك\n\n 2.1 نستخدم بعض المعلومات التي نجمعها لمساعدتنا في الكشف عن المخاطر المحتملة والاحتيال (لا سيما عنوان بروتوكول الإنترنت الخاص بك)، وبوجه أعم لتحسين موقع \"2l2ana\" والنهوض به إلى أفضل مستوى (على سبيل المثال، من خلال إنشاء تحليلات حول كيفية تصفح الموقع أو التطبيق عملائنا وتفاعلهم معهما، وكذلك لتقييم نجاح حملاتنا التسويقية والإعلانية).\n\n 2.2 نستخدم المعلومات الشخصية التي نجمعها بشكل عام لتلبية أي حجوزات تُجرى من خلال \"2l2ana\"، والتواصل معك، والكشف عن المخاطر المحتملة أو الاحتيال، وتزويدك بالمعلومات أو الإعلانات المتعلقة بمنتجاتنا أو خدماتنا عندما تتماشى المعلومات مع التفضيلات التي شاركتها معنا.",
+    "intro": "شكرًا لاستخدامك \"mettamena\". ويهمنا للغاية ثقتكم بنا، ونحن ملتزمون بحماية خصوصية وأمن معلوماتك الشخصية. وتساعدنا المعلومات التي تشاركها معنا في أن نقدم لك تجربة رائعة مع \"mettamena\". وتشير سياسة الخصوصية إلى ممارسات الخصوصية التي نتبعها بشأن جميع الخدمات التي نقدمها في جميع أنحاء العالم. يشير مصطلح \"mettamena\" أو \"لنا\" أو \"نحن\" إلى شركة \"mettamena\" المحدودة، بينما يشير مصطلح \"المستخدم\" و\"أنت\" و\"لك\" إلى شخصك بصفك مستخدم لخدمات \"mettamena\". وتتضمن سياسة الخصوصية، إلى جانب شروط الاستخدام، القواعد والسياسات العامة التي تحكم استخدامك لمنصتنا. وربما يُطلب منك الموافقة على شروط وأحكام إضافية بناءً على نشاطك عند زيارة منصتنا:",
+    "section1": "1. المعلومات التي نجمعها\n\n 1.1 تلتزم شركة \"mettamena\" بالحفاظ على حماية خصوصية مستخدميها. وُوضعت سياسة الخصوصية التي نتبعها من أجل مساعدتك في فهم كيف نقوم بجمع المعلومات التي تزودنا بها واستخدامها وحمايتها. ولدى ولوجك إلى موقع \"mettamena\"، نجمع تلقائيًا معلومات معينة حول جهازك، ومنها معلومات حول متصفح الويب الذي تستخدمه، وعنوان بروتوكول الإنترنت، ومنطقتك الزمنية، وبعض ملفات تعريف الارتباط (الكوكيز) المثبتة على جهازك. علاوة على ذلك، بينما تتصفح الموقع، نجمع معلومات حول صفحات الويب الفردية أو الأطباء الذين تشاهدهم، والمواقع الإلكترونية أو مصطلحات البحث التي أحالتك إلى موقع \"mettamena\"، والمعلومات حول كيفية تفاعلك مع \"mettamena\".\n\n 1.2 كما نقوم بجمع معلومات منك عند التسجيل على موقع \"mettamena\" أو حجز موعد مع أحد الأطباء أو الاشتراك في نشرتنا الإخبارية. وعند الحجز أو التسجيل على موقعنا الإلكتروني، حسبما يكون مناسبًا، قد يُطلب منك إدخال اسمك وعنوان بريدك الإلكتروني وعنوانك البريدي ورقم هاتفك وتاريخ ميلادك (\"معلومات شخصية\").\n\n 1.3 قد نطلب منك أيضًا تزويدنا بمعلومات حول تحصيل المدفوعات من بطاقة ائتمانك أو بطاقة الخصم المباشر. وبعد إجراء معاملة ما، لن تُخزن هذه المعلومات الخاصة (بطاقات الائتمان، وأرقام الضمان الاجتماعي، والبيانات المالية، وما إلى ذلك) على خوادمنا.\n\n 1.4 يمكنك أن تطلب منا حذف هذه المعلومات في أي وقت، أو إلغاء الاشتراك من رسائل البريد الإلكتروني من خلال الولوج إلى إعدادات حسابك أو اتباع الإرشادات التفصيلية الواردة أسفل كل رسالة إلكترونية.",
+    "section2": "2. كيف نستخدم بياناتك\n\n 2.1 نستخدم بعض المعلومات التي نجمعها لمساعدتنا في الكشف عن المخاطر المحتملة والاحتيال (لا سيما عنوان بروتوكول الإنترنت الخاص بك)، وبوجه أعم لتحسين موقع \"mettamena\" والنهوض به إلى أفضل مستوى (على سبيل المثال، من خلال إنشاء تحليلات حول كيفية تصفح الموقع أو التطبيق عملائنا وتفاعلهم معهما، وكذلك لتقييم نجاح حملاتنا التسويقية والإعلانية).\n\n 2.2 نستخدم المعلومات الشخصية التي نجمعها بشكل عام لتلبية أي حجوزات تُجرى من خلال \"mettamena\"، والتواصل معك، والكشف عن المخاطر المحتملة أو الاحتيال، وتزويدك بالمعلومات أو الإعلانات المتعلقة بمنتجاتنا أو خدماتنا عندما تتماشى المعلومات مع التفضيلات التي شاركتها معنا.",
     "section3": "3. حماية معلوماتك\n\n 3.1 نحن نسعى جاهدين لحماية معلوماتك عن طريق تطبيق معايير الحماية الدولية واتخاذ مجموعة متنوعة من التدابير الأمنية للحفاظ على سلامة معلوماتك الشخصية عندما تقوم بإجراء حجز أو تدخل معلوماتك الشخصية أو ترسلها أو الوصول إليها.\n\n 3.2 نقوم بفحص موقعنا الإلكتروني وتطبيقنا بانتظام بحثًا عن الثغرات الأمنية ونقاط الضعف وذلك للتأكد من أن زيارتك لموقعنا آمنة قدر المستطاع. ونحمي موقعنا الإلكتروني من خلال جدار حماية تطبيقات الويب الذي يقوم بتصفية ومراقبة حركة المرور بين تطبيق الويب وشبكة الإنترنت. ويكتشف هذا الجدار نقاط الضعف الشائعة في طبقات التطبيق على حافة الشبكة ويحجبها.\n\n 3.3 نحن نوفر خاصية استخدام خادم آمن. وتُرسل جميع المعلومات الحساسة / الائتمانية المقدمة عبر تقنية \"بروتوكول طبقة المقبس الآمن\" ثم تسجل في قاعدة بيانات \"مزودي بوابة الدفع\" الخاصة بنا وذلك لكي تكون تلك المعلومات متاحة فقط للأفراد الممنوحين حقوق الولوج الخاصة إلى هذه الأنظمة والذين يُطلب منهم الحفاظ على سرية المعلومات.\n\n 3.4 تُخزن بياناتنا مع مزود خارجي يحمل شهادات وتدقيقات معترف بها في مجال الصناعة، بما في ذلك معيار أمان بيانات صناعة بطاقات الدفع المستوى الأول، ومعيار الآيزو 27001، ومعيار \"تأثير معتدل\" لقانون إدارة أمن المعلومات الفيدرالي، والبرنامج الفيدرالي لإدارة المخاطر والتفويض، وقانون نقل التأمين الصحي والمساءلة.\n\n 3.5 كما نضمن أن جميع بياناتنا محمية بكلمة مرور، ويمكن الوصول إلى تلك البيانات من خلال المصادقة متعددة العوامل.",
     "section4": "4. إلى متى نحتفظ ببياناتك\n\n 4.1 المعايير المستخدمة لتحديد فترة تخزين البيانات الشخصية هي فترة الاحتفاظ القانونية المعنية. وبعد انقضاء تلك الفترة، تُحذف البيانات المقابلة بشكل روتيني، لطالما أنها لم تعد ضرورية للاضطلاع بخدماتنا.\n\n 4.2 نقوم بمعالجة وتخزين بياناتك الشخصية للفترة اللازمة لتحقيق الغرض من التخزين فقط. ووفقًا لذلك، إذا كان لدينا عنوان بريدك الإلكتروني لأننا نقدم خدمات معينة لك، فإننا نحتفظ بعنوان البريد الإلكتروني طوال الفترة التي نقدم لك فيها هذه الخدمات.\n\n 4.3 بصورة أساسية، نحتفظ ببياناتك إلى أن يتم حذف حسابك. ويمكنك الاطلاع على البيانات التي نجمعها منك في أي وقت، ويجوز لك أن تطلب حذفها في أي وقت من خلال الولوج إلى إعدادات حسابك.",
     "section5": "5. سياسة استخدام ملفات تعريف الارتباط\n\n 5.1 ملفات تعريف الارتباط هي ملفات صغيرة ينقلها الموقع أو مزود الخدمة إلى القرص الصلب لجهاز الحاسب الآلي من خلال متصفح الويب الخاص بك (إذا سمحتَ بذلك) والتي تمكن الموقع الإلكتروني أو أنظمة مزودي الخدمة من التعرف على متصفحك والتقاط معلومات معينة وتذكرها.\n\n 5.2 نحن نستخدم ملفات تعريف الارتباط لتحسين تجربتك للتحليلات ولإظهار عروض مصصمة خصيصًا لزياراتك السابقة إلى موقعنا الإلكتروني. كما نستخدم ملفات تعريف الارتباط لمساعدتنا في تجميع البيانات المجمعة حول ارتياد الموقع والتفاعل معه حتى نتمكن من تقديم تجربة مميزة وأدوات أفضل في المستقبل.\n\n 5.3 إذا كنت تفضل ذلك، يمكنك اختيار تفعيل خاصية التحذير في جهاز الحاسوب الخاص بك في كل مرة يتم فيها إرسال ملف تعريف ارتباط، أو يمكنك اختيار إيقاف تشغيل جميع ملفات تعريف الارتباط من خلال الولوج إلى إعدادات المتصفح الخاص بك.",
@@ -260,7 +271,7 @@
     "bookNow": "Book now",
     "helpMessage": "Need help? Contact us via"
   }, "RecentPodcast": {
-    "titleHome": "2l2ana Podcast",
+    "titleHome": "mettamena Podcast",
     "titleWatchAlso": "Watch Also",
     "noPodcasts": "No podcasts available.",
     "errorLoading": "Error loading podcasts."
@@ -300,7 +311,7 @@
     "askAnotherQuestion": "Ask another question?",
     "bookOnlineNow": "Book with a doctor online now",
     "askYourQuestion": "Ask your question now and reach thousands of doctors",
-    "description": "Get an answer to your question within 48 hours, or subscribe to 2l2ana for an instant and private consultation with a certified doctor.",
+    "description": "Get an answer to your question within 48 hours, or subscribe to mettamena for an instant and private consultation with a certified doctor.",
     "talkToDoctorNow": "Talk to a doctor now",
     "questionTitlePlaceholder": "Question title (a brief summary of your health problem)",
     "questionContentPlaceholder": "Question content (explain all your inquiries)",

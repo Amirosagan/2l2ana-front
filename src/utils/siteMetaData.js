@@ -1,12 +1,12 @@
 // please update required information
 const siteMetadata = {
-    title: 'قلقانة',
-    author: 'قلقانة',
+    title: 'متطمنة',
+    author: 'متطمنة',
     headerTitle: 'اكبر منصة تخص صحة النساء في الوطن العربي',
     description: 'المنصة الاولي في الوطن العربي التي تختص بصحة النساء',
     language: 'ar',
     theme: 'light', 
-    siteUrl: 'https://2l2ana.com', // your website URL
+    siteUrl: 'https://mettamena.com', // your website URL
     // siteLogo: '/logo.png',
     // socialBanner: '/social-banner.png', // add social banner in the public folder
     // email: 'codebucks27@gmail.com', 

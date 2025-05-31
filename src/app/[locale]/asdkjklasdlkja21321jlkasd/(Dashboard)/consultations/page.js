@@ -6,7 +6,7 @@ const ConsultationsPage = () => {
   return (
     <AdminPage
       type="consultations"
-      apiUrl="https://api.2l2ana.com/api/Consultation/Admin/GetAllConsultations"
+      apiUrl="https://api.mettamena.com/api/Consultation/Admin/GetAllConsultations"
       headers={headers}
     />
   );
