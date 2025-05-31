@@ -5,9 +5,9 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
     Accept: "*/*",
-    "Cache-Control": "no-cache",  // Ensure no caching
-    Pragma: "no-cache",           // HTTP 1.0 backward compatibility
-    Expires: "0",                 // Proxies and caches should not cache the response
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+    Expires: "0",
   },
 });
 
