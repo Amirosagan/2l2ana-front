@@ -32,71 +32,79 @@
     },
     "WhyCard": {
         "headline": "? Why use mettamena",
-        "cards": [
-          {
-            "number": "1",
-            "title": "Available 24/7",
-            "paragraph": "No need to wait in clinics. Connect with the best doctors, available day and night."
-          },
-          {
-            "number": "2",
-            "title": "Privacy & Security",
-            "paragraph": "We prioritize your health information privacy and use the latest technology to ensure data security."
-          },
-          {
-            "number": "3",
-            "title": "Certified Doctors",
-            "paragraph": "Direct medical consultations with certified doctors via video or voice calls."
-          },
-          {
-            "number": "4",
-            "title": "Affordable Costs",
-            "paragraph": "Healthcare services with various packages to meet your needs."
-          }
-        ]
+     "cards": [
+  {
+    "number": "1",
+    "title": "Qualified Experts Without Judgement",
+    "paragraph": "Skilled and empathetic professionals provide you with expert support without judgment or stigma."
+  },
+  {
+    "number": "2",
+    "title": "Your Privacy is Our Priority",
+    "paragraph": "We provide options to protect your confidentiality, without revealing your personal details, and you can turn off the camera during the session."
+  },
+  {
+    "number": "3",
+    "title": "Deep Understanding of Your Case",
+    "paragraph": "We focus on explaining your medical and psychological case clearly to help you understand it without complexity."
+  },
+  {
+    "number": "4",
+    "title": "24/7 Support Available",
+    "paragraph": "Our platform is here for you anytime, so you can get the support you need instantly."
+  }
+]
+
       },
       "OfflineSection": {
         "headline": "Some Conditions That Can Be Treated Via Telehealth Services",
         "subtext": "Ask doctors about most health conditions without leaving your home",
-        "cases": [
-          {
-            "title": "Gynecological Conditions",
-            "lists": [
-              "Bacterial Vaginosis",
-              "Fungal Infections",
-              "Contraceptive Methods",
-              "Cystitis",
-              "Irregular Periods"
-            ]
-          },
-          {
-            "title": "Psychological Conditions",
-            "lists": [
-              "Depression",
-              "Anxiety",
-              "Bipolar Disorder",
-              "Sleep Disorders",
-              "Post-Traumatic Stress Disorder",
-              "Schizophrenia"
-            ]
-          },
-          {
-            "title": "Dermatological Conditions",
-            "lists": [
-              "Coming Soon"
-            ]
-          }
-        ]
+  "cases": [
+  {
+    "title": "Mental Health",
+    "lists": [
+      "Anxiety disorders",
+      "Mild to moderate depression",
+      "Sleep disorders",
+      "Daily life and relationship stress",
+      "Panic attacks and fear",
+      "Mood swings related to menstruation / pregnancy / postpartum",
+      "Post-traumatic stress disorder (PTSD)"
+    ]
+  },
+  {
+    "title": "Eating and Nutrition Disorders",
+    "lists": [
+      "Emotional or compulsive eating",
+      "Loss of appetite or binge eating",
+      "Distorted body image",
+      "Creating personal nutrition plans",
+      "Digestive issues or bloating",
+      "Nutrition during pregnancy or breastfeeding",
+      "Healthy weight loss or gain"
+    ]
+  },
+  {
+    "title": "Psychosexual Issues",
+    "lists": [
+      "Desire disorders",
+      "Arousal and orgasm issues",
+      "Pain during intercourse",
+      "Vaginismus"
+    ]
+  }
+]
+
       },
       "ArticleCard": {
         "title": "Confused about a question? Send your medical queries now",
         "seeQuestions": "See other questions",
         "askQuestion": "Ask your question"
       },
-      "AdsSection": {
-        "title": "Best mettamena Offers",
-        "description": "Because your healthcare is our priority, we’ve brought you the best offers online and offline, exclusively for mettamena clients."
-      },
+     "AdsSection": {
+  "title": "What Our Clients Say About Mettamena",
+  "description": "Because your opinion matters and we take it into account every step of the way"
+},
       "Learning": {
     "title": "Learning and Awareness",
     "description": "Learn and explore more about your physical and mental health through mettamena's medical content"
@@ -286,7 +294,7 @@
   },"CoverSection": {
     "videos": "Videos",
     "errorLoadingVideo": "Error loading video",
-      "consultationLink": "Confused about a consultation? Book a voice or video call now with the best doctors in Egypt from your home.",
+      "consultationLink": "Confused about a consultation? Book a voice or video call now with the best doctors  from your home.",
     "podcast": "Podcast",
     "errorLoadingPodcast": "Error loading podcast",
     "articles": "Articles",
@@ -297,7 +305,7 @@
     "mostPopular": "Most Popular",
     "errorFetchingBlogs": "Error fetching blogs."
   }, "DoctoorBoster": {
-    "onlineConsultation": "Your online consultation with the best doctor in Egypt",
+    "onlineConsultation": "Your online consultation with the best doctor, anytime any place",
     "seeDoctors": "See Doctors",
     "doctorImageAlt": "Doctor"
   },  "HeroQestion": {

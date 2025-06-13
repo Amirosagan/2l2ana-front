@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Link } from '@/src/i18n/routing';
-import Doctors from "@/public/doctors.jpeg";
+import Doctors from "@/public/4.png";
 import { useLocale, useTranslations } from 'next-intl';
 
 const HeroDoctor = () => {
@@ -31,7 +31,7 @@ const HeroDoctor = () => {
               width={800}
               height={800}
               src={Doctors}
-              className="absolute inset-0 h-full w-full object-cover rounded-3xl"
+              className="absolute inset-0 h-full w-full object-cover object-top lg:object-center rounded-3xl"
             />
           </div>
           <div className="lg:py-24">
