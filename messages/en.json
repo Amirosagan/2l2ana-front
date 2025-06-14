@@ -172,8 +172,8 @@
    "SearchDoctorBar": {
     "searchFavoriteDoctor": "Search for your ",
     "yourDoctor": "favorite Doctor",
-    "doctorDescription": "More than 100 specialized doctors in all fields, available for video or phone consultations. Get premium medical care from the comfort of your home.",
-    "searchPlaceholder": "Search",
+"doctorDescription": "A group of elite doctors and specialists in various fields, ready to provide safe and private consultations through video or audio sessions only. Choose comfort and medical support from anywhere that suits you."
+   , "searchPlaceholder": "Search",
     "searchButton": "Search",
     "allSpecialties": "All Specialties"
   },

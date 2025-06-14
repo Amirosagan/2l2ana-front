@@ -1,6 +1,6 @@
 import React from 'react';
 import OfflineCard from './OfflineCard';
-import firstCase from "@/public/case22.png";
+import firstCase from "@/public/female.png";
 import secondCase from "@/public/case11.png";
 import thirdCase from "@/public/case33.png";
 import { useTranslations } from 'next-intl';
